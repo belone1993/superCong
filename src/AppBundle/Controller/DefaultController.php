@@ -22,4 +22,40 @@ class DefaultController extends Controller
     {
         return [];
     }
+
+    /**
+     * @Route("/guestBook", name="guestBook")
+     * @Template()
+     */
+    public function guestBookAction()
+    {
+        return [];
+    }
+
+    /**
+     * @Route("/learn", name="learn")
+     * @Template()
+     */
+    public function learnAction()
+    {
+        return [];
+    }
+
+    /**
+     * @Route("/life", name="life")
+     * @Template()
+     */
+    public function lifeAction()
+    {
+        return [];
+    }
+
+    /**
+     * @Route("/about", name="about")
+     * @Template()
+     */
+    public function aboutAction()
+    {
+        return [];
+    }
 }

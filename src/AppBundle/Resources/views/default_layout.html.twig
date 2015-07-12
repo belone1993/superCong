@@ -22,12 +22,21 @@
 <body>
 
 <div id="wrapper">
-    {% include "AppBundle::default_navigation.html.twig" %}
+    {% block navigation %}
+        {% include "AppBundle::default_navigation.html.twig" %}
+    {% endblock %}
+
+    {% block banner %}
+        {% include "AppBundle:Default:banner.html.twig" %}
+    {% endblock %}
+
     {% block content %}{% endblock %}
+
+    {% block footer %}
+        {% include "AppBundle::default_footer.html.twig" %}
+    {% endblock %}
 </div>
 <a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
-
-{% block footer %}{% endblock %}
 
 <!-- javascript
     ================================================== -->

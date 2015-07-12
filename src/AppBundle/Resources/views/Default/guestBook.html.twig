@@ -1,0 +1,49 @@
+{% extends "AppBundle::default_layout.html.twig" %}
+{% block banner %}
+    <section id="inner-headline">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="breadcrumb">
+                        <li><a href="{{ url('homepage') }}"><i class="fa fa-home"></i></a><i class="icon-angle-right"></i></li>
+                        <li class="active">GuestBook</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block content %}
+<section class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="bs-callout bs-callout-info">
+                    <h4>人生处世如行路，常有山水阻身前。在我们走过的路上，对于过去，不要过分追悔，失去的永远无法找回；对于现在，不要过分吝啬， 付出才是最好的拥有；对于未来，不要过分奢望，属于你的，都将在你要走过的路上。人生就像坐在地铁里看窗外的风景， 你会看到很多...</h4>
+                </div>
+                <!-- 多说评论框 start -->
+                <div class="ds-thread" data-thread-key="guestBook" data-title="留言版" data-url="http://lattecake.com/guestBook"></div>
+                <!-- 多说评论框 end -->
+                <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+                <script type="text/javascript">
+                    var duoshuoQuery = {short_name:"lattecake"};
+                    (function() {
+                        var ds = document.createElement('script');
+                        ds.type = 'text/javascript';ds.async = true;
+                        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+                        ds.charset = 'UTF-8';
+                        (document.getElementsByTagName('head')[0]
+                        || document.getElementsByTagName('body')[0]).appendChild(ds);
+                    })();
+                </script>
+                <!-- 多说公共JS代码 end -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <p>某一人似曾相识、某一刻似曾经历</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
