@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Post;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -38,7 +39,25 @@ class DefaultController extends Controller
      */
     public function learnAction()
     {
-        return [];
+
+        $post = new Post();
+
+        $post->setTitle('测试标题')
+            ->setContent('测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容')
+            ->setDescription('简介简介简介简介简介简介简介简介简介简介');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $em->persist($post);
+        $em->flush();
+
+        $post = $this->getDoctrine()->getRepository('AppBundle:Post');
+
+        $posts = $post->findAll();
+
+        return [
+            'posts' => $posts
+        ];
     }
 
     /**
