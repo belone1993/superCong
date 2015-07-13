@@ -31,6 +31,13 @@ class Post
     /**
      * @var string
      *
+     * @ORM\Column(name="image", type="string", length=128, nullable=false, options={"comment": "图片"})
+     */
+    private $image;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="description", type="text", nullable=false, options={"comment": "简介"})
      */
     private $description;
@@ -41,6 +48,27 @@ class Post
      * @ORM\Column(name="content", type="text", nullable=false, options={"comment": "内容"})
      */
     private $content;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="authorId", type="integer", nullable=false, options={"comment": "作者"})
+     */
+    private $authorId;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="categoryId", type="integer", nullable=false, options={"comment": "分类ID"})
+     */
+    private $categoryId;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="isMarkdown", type="integer", nullable=false, options={"comment": "是否为Markdown编写"})
+     */
+    private $isMarkdown;
 
     /**
      * @var string
@@ -154,5 +182,97 @@ class Post
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set image
+     *
+     * @param string $image
+     * @return Post
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string 
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Set authorId
+     *
+     * @param integer $authorId
+     * @return Post
+     */
+    public function setAuthorId($authorId)
+    {
+        $this->authorId = $authorId;
+
+        return $this;
+    }
+
+    /**
+     * Get authorId
+     *
+     * @return integer 
+     */
+    public function getAuthorId()
+    {
+        return $this->authorId;
+    }
+
+    /**
+     * Set categoryId
+     *
+     * @param integer $categoryId
+     * @return Post
+     */
+    public function setCategoryId($categoryId)
+    {
+        $this->categoryId = $categoryId;
+
+        return $this;
+    }
+
+    /**
+     * Get categoryId
+     *
+     * @return integer 
+     */
+    public function getCategoryId()
+    {
+        return $this->categoryId;
+    }
+
+    /**
+     * Set isMarkdown
+     *
+     * @param integer $isMarkdown
+     * @return Post
+     */
+    public function setIsMarkdown($isMarkdown)
+    {
+        $this->isMarkdown = $isMarkdown;
+
+        return $this;
+    }
+
+    /**
+     * Get isMarkdown
+     *
+     * @return integer 
+     */
+    public function getIsMarkdown()
+    {
+        return $this->isMarkdown;
     }
 }
