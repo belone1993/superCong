@@ -1,0 +1,8 @@
+<div class="widget">
+    <h5 class="widgetheading">Categories</h5>
+    <ul class="cat">
+        {% for category in categoryList if categoryList %}
+        <li><i class="icon-angle-right"></i><a href="#">{{ category.categoryName }}</a><span> (20)</span></li>
+        {% endfor %}
+    </ul>
+</div>

@@ -6,6 +6,7 @@ use AppBundle\Entity\Post;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class DefaultController
@@ -34,31 +35,26 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/learn", name="learn")
+     * @param Request $request
+     * @param integer $page
+     *
+     * @Route("/learn/{page}", name="learn", defaults={"page":1}, requirements={"page"="\d+"})
      * @Template()
+     * @return array
      */
-    public function learnAction()
+    public function learnAction( Request $request, $page )
     {
-
-//        $post = new Post();
-//
-//        $post->setTitle('测试标题')
-//            ->setContent('测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容')
-//            ->setDescription('简介简介简介简介简介简介简介简介简介简介');
-//
-//        $em = $this->getDoctrine()->getManager();
-//
-//        $em->persist($post);
-//        $em->flush();
-
+        /** @var  $post \AppBundle\Entity\Repository\PostRepository */
         $post = $this->getDoctrine()->getRepository('AppBundle:Post');
 
-        $posts = $post->findBy([], [
-            'id' => 'DESC'
-        ]);
+        $posts = $post->findPostsPage( $page );
+
+        $postTotal = $post->countPosts();
 
         return [
-            'posts' => $posts
+            'posts'     => $posts,
+            'postTotal' => ceil( $postTotal / 10 ),
+            'page'      => $page
         ];
     }
 

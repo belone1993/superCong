@@ -2,15 +2,16 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Repository\PostRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Post
  *
- * @ORM\Table(name="post")
- * @ORM\Entity
+ * @ORM\Table(name="post", options={"collate": "utf8_general_ci", "character": "utf8"})
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\Repository\PostRepository")
  */
-class Post
+class Post extends PostRepository
 {
     /**
      * @var integer
@@ -66,7 +67,7 @@ class Post
     /**
      * @var integer
      *
-     * @ORM\Column(name="isMarkdown", type="integer", nullable=false, options={"comment": "是否为Markdown编写"})
+     * @ORM\Column(name="isMarkdown", type="integer", nullable=true, options={"comment": "是否为Markdown编写"})
      */
     private $isMarkdown;
 

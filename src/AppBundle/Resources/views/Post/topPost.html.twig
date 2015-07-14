@@ -1,0 +1,15 @@
+{% set sourcePath = 'http://source.lattecake.com/' %}
+<div class="widget">
+    <h5 class="widgetheading">Popular posts</h5>
+    <ul class="recent">
+        {% for post in topPosts if topPosts %}
+        <li>
+            <img src="{{ sourcePath }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}?imageView2/1/w/65/h/65" class="pull-left" alt="" />
+            <h6><a href="#">{{ post.title|length > 24 ? post.title|slice(0, 24) ~ '...' : post.title }}</a></h6>
+            <p>
+                {{ post.description|slice(0, 32) }} ...
+            </p>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
