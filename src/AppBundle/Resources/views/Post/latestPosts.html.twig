@@ -2,12 +2,12 @@
     <div class="widget">
         <h5 class="widgetheading">Latest posts</h5>
         <ul class="link-list">
-            {% for post in posts %}
+            {% for row in posts %}
                 {% set postHref = "post/postInfo/" %}
-                {% if post.action == 2 %}
+                {% if row.action == 2 %}
                     {% set postHref = "life/lifeInfo/" %}
                 {% endif %}
-                <li><a href="{{ postHref }}{{ post.id }}">{{ post.title|length > 16 ? post.title|slice(0, 16) ~ '...' : post.title }}</a></li>
+                <li><a href="{{ postHref }}{{ row.id }}">{{ row.title|length > 16 ? row.title|slice(0, 16) ~ '...' : row.title }}</a></li>
             {% endfor %}
         </ul>
     </div>
