@@ -5,7 +5,7 @@
         {% for row in topPosts if topPosts %}
         <li>
             <img src="{{ sourcePath }}images/{{ row.createdAt|date('Y/m') }}/{{ row.image }}?imageView2/1/w/65/h/65" class="pull-left" alt="" />
-            {% set rowHref = "post/postInfo/" %}
+            {% set rowHref = "learn/learnInfo/" %}
             {% if row.action == 2 %}
                 {% set rowHref = "life/lifeInfo/" %}
             {% endif %}
