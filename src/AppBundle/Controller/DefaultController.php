@@ -22,7 +22,9 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return [];
+        return [
+            'action' => 'homepage'
+        ];
     }
 
     /**
@@ -31,7 +33,9 @@ class DefaultController extends Controller
      */
     public function guestBookAction()
     {
-        return [];
+        return [
+            'action' => 'guestBook'
+        ];
     }
 
     /**
@@ -47,24 +51,40 @@ class DefaultController extends Controller
         /** @var  $post \AppBundle\Entity\Repository\PostRepository */
         $post = $this->getDoctrine()->getRepository('AppBundle:Post');
 
-        $posts = $post->findPostsPage( $page );
+        $posts = $post->findPostsPage( 1, $page );
 
-        $postTotal = $post->countPosts();
+        $postTotal = $post->countPosts( 1 );
 
         return [
             'posts'     => $posts,
             'postTotal' => ceil( $postTotal / 10 ),
-            'page'      => $page
+            'page'      => $page,
+            'action'    => 'learn'
         ];
     }
 
     /**
-     * @Route("/life", name="life")
+     * @Route("/life/{page}", name="life", defaults={"page":1}, requirements={"page"="\d+"})
      * @Template()
+     *
+     * @param int $page
+     * @return array
      */
-    public function lifeAction()
+    public function lifeAction( $page = 1 )
     {
-        return [];
+        /** @var  $post \AppBundle\Entity\Repository\PostRepository */
+        $post = $this->getDoctrine()->getRepository('AppBundle:Post');
+
+        $posts = $post->findPostsPage( 2, $page );
+
+        $postTotal = $post->countPosts( 2 );
+
+        return [
+            'posts'     => $posts,
+            'postTotal' => ceil( $postTotal / 10 ),
+            'page'      => $page,
+            'action'    => 'life'
+        ];
     }
 
     /**
@@ -73,6 +93,8 @@ class DefaultController extends Controller
      */
     public function aboutAction()
     {
-        return [];
+        return [
+            'action' => 'about'
+        ];
     }
 }

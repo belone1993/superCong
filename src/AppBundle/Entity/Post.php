@@ -72,6 +72,34 @@ class Post extends PostRepository
     private $isMarkdown;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="readNum", type="integer", nullable=false, options={"comment": "阅读量", "default": 1})
+     */
+    private $readNum;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="action", type="integer", nullable=false, options={"comment": "属于哪个模块,1为学夫止境,2为慢生活"})
+     */
+    private $action;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="oldId", type="integer", nullable=true, options={"comment": "之前的文章ID", "default": 0})
+     */
+    private $oldId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="source", type="string", nullable=true, options={"comment": "来源"})
+     */
+    private $source;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="createdAt", type="datetime", nullable=false, options={"comment": "创建时间"})
@@ -275,5 +303,97 @@ class Post extends PostRepository
     public function getIsMarkdown()
     {
         return $this->isMarkdown;
+    }
+
+    /**
+     * Set readNum
+     *
+     * @param integer $readNum
+     * @return Post
+     */
+    public function setReadNum($readNum)
+    {
+        $this->readNum = $readNum;
+
+        return $this;
+    }
+
+    /**
+     * Get readNum
+     *
+     * @return integer 
+     */
+    public function getReadNum()
+    {
+        return $this->readNum;
+    }
+
+    /**
+     * Set action
+     *
+     * @param integer $action
+     * @return Post
+     */
+    public function setAction($action)
+    {
+        $this->action = $action;
+
+        return $this;
+    }
+
+    /**
+     * Get action
+     *
+     * @return integer 
+     */
+    public function getAction()
+    {
+        return $this->action;
+    }
+
+    /**
+     * Set oldId
+     *
+     * @param integer $oldId
+     * @return Post
+     */
+    public function setOldId($oldId)
+    {
+        $this->oldId = $oldId;
+
+        return $this;
+    }
+
+    /**
+     * Get oldId
+     *
+     * @return integer 
+     */
+    public function getOldId()
+    {
+        return $this->oldId;
+    }
+
+    /**
+     * Set source
+     *
+     * @param string $source
+     * @return Post
+     */
+    public function setSource($source)
+    {
+        $this->source = $source;
+
+        return $this;
+    }
+
+    /**
+     * Get source
+     *
+     * @return string 
+     */
+    public function getSource()
+    {
+        return $this->source;
     }
 }

@@ -1,4 +1,7 @@
 {% extends "AppBundle::default_layout.html.twig" %}
+
+{% block pageTitle %}学无止镜{% endblock %}
+
 {% block banner %}
     <section id="inner-headline">
         <div class="container">
@@ -22,21 +25,21 @@
                         <article>
                             <div class="post-image">
                                 <div class="post-heading">
-                                    <h3><a href="#">{{ post.title }}</a></h3>
+                                    <h3><a href="{{ url('learn_learnInfo', {"id": post.id}) }}">{{ post.title }}</a></h3>
                                 </div>
-                                <img src="{{ sourcePath }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}?imageView2/2/h/710" alt="" />
+                                <img src="{{ sourcePath }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}?imageView2/2/w/710" alt="" />
                             </div>
                             <p>
                                 {{ post.description }}
                             </p>
                             <div class="bottom-article">
                                 <ul class="meta-post">
-                                    <li><i class="icon-calendar"></i><a href="#"> {{ post.createdAt|date() }}</a></li>
+                                    <li><i class="icon-calendar"></i><a href="{{ url('learn_learnInfo', {"id": post.id}) }}"> {{ post.createdAt|date() }}</a></li>
                                     <li><i class="icon-user"></i><a href="#"> super Cong</a></li>
                                     {#<li><i class="icon-folder-open"></i><a href="#"> Blog</a></li>#}
-                                    <li><i class="icon-comments"></i><a href="#">4 评论</a></li>
+                                    <li><i class="icon-comments"></i><a href="{{ url('learn_learnInfo', {"id": post.id}) }}">4 评论</a></li>
                                 </ul>
-                                <a href="" class="pull-right">继续阅读 <i class="icon-angle-right"></i></a>
+                                <a href="{{ url('learn_learnInfo', {"id": post.id}) }}" class="pull-right">继续阅读 <i class="icon-angle-right"></i></a>
                             </div>
                         </article>
                     {% endfor %}
@@ -55,11 +58,11 @@
                     <aside class="right-sidebar">
                         <div class="widget">
                             <form class="form-search">
-                                <input class="form-control" type="text" placeholder="Search..">
+                                <input class="form-control" type="text" placeholder="路漫漫而修远兮，吾将上下而求索">
                             </form>
                         </div>
-                        {{ render(controller('AppBundle:Category:bar')) }}
-                        {{ render(controller('AppBundle:Post:topPost')) }}
+                        {#{{ render(controller('AppBundle:Category:bar')) }}#}
+                        {{ render(controller('AppBundle:Post:topPost', {"action": 1})) }}
                         <div class="widget">
                             <h5 class="widgetheading">Popular tags</h5>
                             <ul class="tags">

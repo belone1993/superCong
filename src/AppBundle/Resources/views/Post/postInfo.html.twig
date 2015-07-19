@@ -1,0 +1,123 @@
+{% extends "AppBundle::default_layout.html.twig" %}
+
+{% block pageTitle %}{{ post.title }}{% endblock %}
+{% block pageDescription %}{{ post.description }}{% endblock %}
+
+{% block banner %}
+    <section id="inner-headline">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="breadcrumb">
+                        <li><a href="{{ url('homepage') }}"><i class="fa fa-home"></i></a><i class="icon-angle-right"></i></li>
+                        <li><a href="{{ url('learn') }}">学无止镜</a><i class="icon-angle-right"></i></li>
+                        <li class="active">分享是一种博爱的心境，学会分享，就学会了生活。</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block content %}
+    <section id="content" style="padding-top: 0;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">{{ post.title }}
+                        <small>作者: <a href="###" target="_blank">super cong</a>
+                        </small>
+                    </h1>
+                </div>
+                <div class="col-lg-8">
+                    <article>
+                        <!-- Preview Image -->
+                        <div style="overflow-y: hidden; max-height: 300px; text-align: center; margin:0 auto;">
+                            <img class="img-responsive" src="{{ sourcePath }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}?imageView2/2/h/300" alt="">
+                        </div>
+                        <!-- Post Content -->
+                        <div class="bs-callout bs-callout-info LifeContent">
+                            {% autoescape false %}
+                                {% if post.isMarkdown %}
+                                    {{ parseDown.text( post.content ) }}
+                                {% else %}
+                                    {{ post.content }}
+                                {% endif %}
+                            {% endautoescape %}
+                        </div>
+I
+                        <hr/>
+
+                        <!-- Date/Time -->
+                        <p><i class="fa fa-clock-o"></i>{{ post.createdAt|date() }}</p>
+
+                        <div class="ds-share flat"
+                             data-thread-key="{{ post.id }}"
+                             data-title="{{ post.title }}"
+                             data-images="{{ sourcePath }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}"
+                             data-content="{{ post.description }}"
+                             data-url="{{ url('post_postInfo', {'id': post.id}) }}">
+                            <div class="ds-share-inline">
+                                <ul  class="ds-share-icons-32">
+                                    <!--图标可以自定义-->
+
+                                    <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);" title="分享到："></a></li>
+                                    <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo" title="微博"></a></li>
+                                    <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone" title="QQ空间"></a></li>
+                                    <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt" title="腾讯微博"></a></li>
+                                    <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat" title="微信"></a></li>
+
+                                </ul>
+                                <div class="ds-share-icons-more"></div>
+                            </div>
+                        </div>
+
+                        <hr>
+                        <!-- 多说评论框 start -->
+                        <div class="ds-thread" data-thread-key="{{ post.id }}" data-title="{{ post.title }}" data-url="{{ url('post_postInfo', {'id': post.id}) }}"></div>
+                        <!-- 多说评论框 end -->
+                        <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+                        <script type="text/javascript">
+                            var duoshuoQuery = {short_name:"lattecake"};
+                            (function() {
+                                var ds = document.createElement('script');
+                                ds.type = 'text/javascript';ds.async = true;
+                                ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+                                ds.charset = 'UTF-8';
+                                (document.getElementsByTagName('head')[0]
+                                || document.getElementsByTagName('body')[0]).appendChild(ds);
+                            })();
+                        </script>
+                        <!-- 多说公共JS代码 end -->
+                    </article>
+
+                </div>
+                <div class="col-lg-4">
+                    <aside class="right-sidebar">
+                        <div class="widget">
+                            <form class="form-search">
+                                <input class="form-control" type="text" placeholder="Search..">
+                            </form>
+                        </div>
+                        {{ render(controller('AppBundle:Post:topPost', {"action": 1, "id": post.id})) }}
+                        <div class="widget">
+                            <h5 class="widgetheading">Popular tags</h5>
+                            <ul class="tags">
+                                <li><a href="#">Web design</a></li>
+                                <li><a href="#">Trends</a></li>
+                                <li><a href="#">Technology</a></li>
+                                <li><a href="#">Internet</a></li>
+                                <li><a href="#">Tutorial</a></li>
+                                <li><a href="#">Development</a></li>
+                            </ul>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>某一人似曾相识、某一刻似曾经历</p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
