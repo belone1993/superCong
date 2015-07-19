@@ -5,7 +5,11 @@
         {% for post in topPosts if topPosts %}
         <li>
             <img src="{{ sourcePath }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}?imageView2/1/w/65/h/65" class="pull-left" alt="" />
-            <h6><a href="{{ url('learn_learnInfo', {"id": post.id}) }}">{{ post.title|length > 24 ? post.title|slice(0, 24) ~ '...' : post.title }}</a></h6>
+            {% set postUrl = url('learn_learnInfo', {"id": post.id}) %}
+            {% if post.action == 2 %}
+                {% set postUrl = url('life_lifeInfo', {"id": post.id}) %}
+            {% endif %}
+            <h6><a href="">{{ post.title|length > 24 ? post.title|slice(0, 24) ~ '...' : post.title }}</a></h6>
             <p>
                 {{ post.description|slice(0, 32) }} ...
             </p>
