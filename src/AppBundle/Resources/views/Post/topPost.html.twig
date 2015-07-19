@@ -5,11 +5,11 @@
         {% for row in topPosts if topPosts %}
         <li>
             <img src="{{ sourcePath }}images/{{ row.createdAt|date('Y/m') }}/{{ row.image }}?imageView2/1/w/65/h/65" class="pull-left" alt="" />
-            {% set postUrl = url('learn_learnInfo', {"id": row.id}) %}
+            {% set rowHref = "post/postInfo/" %}
             {% if row.action == 2 %}
-                {% set postUrl = url('life_lifeInfo', {"id": row.id}) %}
+                {% set rowHref = "life/lifeInfo/" %}
             {% endif %}
-            <h6><a href="">{{ row.title|length > 24 ? row.title|slice(0, 24) ~ '...' : row.title }}</a></h6>
+            <h6><a href="{{ rowHref }}{{ row.id }}">{{ row.title|length > 24 ? row.title|slice(0, 24) ~ '...' : row.title }}</a></h6>
             <p>
                 {{ row.description|slice(0, 32) }} ...
             </p>
