@@ -3,9 +3,9 @@
         <h5 class="widgetheading">Latest posts</h5>
         <ul class="link-list">
             {% for row in posts %}
-                {% set rowHref = "post/postInfo/" %}
+                {% set rowHref = "/post/postInfo/" %}
                 {% if row.action == 2 %}
-                    {% set rowHref = "life/lifeInfo/" %}
+                    {% set rowHref = "/life/lifeInfo/" %}
                 {% endif %}
                 <li><a href="{{ rowHref }}{{ row.id }}">{{ row.title|length > 16 ? row.title|slice(0, 16) ~ '...' : row.title }}</a></li>
             {% endfor %}

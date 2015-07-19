@@ -5,9 +5,9 @@
         {% for row in topPosts if topPosts %}
         <li>
             <img src="{{ sourcePath }}images/{{ row.createdAt|date('Y/m') }}/{{ row.image }}?imageView2/1/w/65/h/65" class="pull-left" alt="" />
-            {% set rowHref = "learn/learnInfo/" %}
+            {% set rowHref = "/learn/learnInfo/" %}
             {% if row.action == 2 %}
-                {% set rowHref = "life/lifeInfo/" %}
+                {% set rowHref = "/life/lifeInfo/" %}
             {% endif %}
             <h6><a href="{{ rowHref }}{{ row.id }}">{{ row.title|length > 24 ? row.title|slice(0, 24) ~ '...' : row.title }}</a></h6>
             <p>
