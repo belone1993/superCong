@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Category;
 use AppBundle\Entity\Post;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -42,7 +43,7 @@ class DefaultController extends Controller
      * @param Request $request
      * @param integer $page
      *
-     * @Route("/learn/{page}", name="learn", defaults={"page":1}, requirements={"page"="\d+"})
+     * @Route("/learn/{page}/{category}", name="learn", defaults={"page":1, "category":""}, requirements={"page"="\d+"})
      * @Template()
      * @return array
      */
@@ -51,9 +52,18 @@ class DefaultController extends Controller
         /** @var  $post \AppBundle\Entity\Repository\PostRepository */
         $post = $this->getDoctrine()->getRepository('AppBundle:Post');
 
-        $posts = $post->findPostsPage( 1, $page );
+        $categoryId = null;
+        if( $request->get('category') )
+        {
+            $category     = $this->getDoctrine()->getRepository('AppBundle:Category');
+            /** @var  $categoryInfo Category */
+            $categoryInfo = $category->findOneBy(['categoryName' => $request->get('category')]);
+            $categoryId = $categoryInfo->getId();
+        }
 
-        $postTotal = $post->countPosts( 1 );
+        $posts = $post->findPostsPage( 1, $page, $categoryId );
+
+        $postTotal = $post->countPosts( 1, $categoryId );
 
         return [
             'posts'     => $posts,

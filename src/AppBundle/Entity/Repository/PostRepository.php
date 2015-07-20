@@ -94,15 +94,22 @@ class PostRepository extends EntityRepository
      * 获取文章列表
      * @param int $action
      * @param int $page
+     * @param int $categoryId
      * @return array
      */
-    public function findPostsPage( $action, $page = 1 )
+    public function findPostsPage( $action, $page = 1, $categoryId = null )
     {
-        return $this->_em->createQueryBuilder()
+        $post = $this->_em->createQueryBuilder()
             ->select("p")
             ->from("AppBundle:Post", "p")
-            ->where('p.action = :action')
-            ->setParameter( 'action', $action )
+            ->where('p.action = :action');
+        if( !is_null( $categoryId ) )
+        {
+            $post->andWhere('p.categoryId = :categoryId')
+                ->setParameter('categoryId', $categoryId);
+        }
+
+        return $post->setParameter( 'action', $action )
             ->setMaxResults( 10 )
             ->setFirstResult( ($page - 1) * 10 )
             ->orderBy("p.id", 'DESC')
@@ -112,15 +119,21 @@ class PostRepository extends EntityRepository
     /**
      * 统计文章数量
      * @param  int $action
+     * @param int $categoryId
      * @return mixed
      */
-    public function countPosts( $action )
+    public function countPosts( $action, $categoryId = null )
     {
-        return $this->_em->createQueryBuilder()
+        $post = $this->_em->createQueryBuilder()
             ->select("COUNT(p.id)")
             ->from("AppBundle:post", "p")
-            ->where('p.action = :action')
-            ->setParameter('action', $action)
+            ->where('p.action = :action');
+        if( !is_null( $categoryId ) )
+        {
+            $post->andWhere('p.categoryId = :categoryId')
+                ->setParameter('categoryId', $categoryId);
+        }
+        return $post->setParameter('action', $action)
             ->getQuery()->getSingleScalarResult();
     }
 }

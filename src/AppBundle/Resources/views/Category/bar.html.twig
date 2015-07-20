@@ -2,7 +2,7 @@
     <h5 class="widgetheading">Categories</h5>
     <ul class="cat">
         {% for category in categoryList if categoryList %}
-        <li><i class="icon-angle-right"></i><a href="#">{{ category.categoryName }}</a><span> ({{ category.categoryNum }})</span></li>
+        <li><i class="icon-angle-right"></i><a href="{{ url('learn', {"category": category.categoryName}) }}">{{ category.categoryName }}</a><span> ({{ category.categoryNum }})</span></li>
         {% endfor %}
     </ul>
 </div>
