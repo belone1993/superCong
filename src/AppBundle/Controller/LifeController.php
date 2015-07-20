@@ -60,4 +60,41 @@ class LifeController extends Controller
             'action'    => 'life'
         ];
     }
+
+    /**
+     * @Route("/grow/{page}", name="life_grow", defaults={"page":1}, requirements={"page"="\d+"})
+     * @Template()
+     *
+     * @param int $page
+     * @return array
+     */
+    public function growAction( $page )
+    {
+        /** @var  $post \AppBundle\Entity\Repository\PostRepository */
+        $post = $this->getDoctrine()->getRepository('AppBundle:Post');
+
+        $posts = $post->findPostsPage( 2, $page );
+
+        $postTotal = $post->countPosts( 2 );
+
+        return [
+            'posts'     => $posts,
+            'postTotal' => ceil( $postTotal / 10 ),
+            'page'      => $page,
+            'action'    => 'life'
+        ];
+    }
+
+    /**
+     * @Route("/picture", name="life_picture")
+     * @Template()
+     *
+     * @return array
+     */
+    public function pictureAction()
+    {
+        return [
+            'action' => 'life'
+        ];
+    }
 }
