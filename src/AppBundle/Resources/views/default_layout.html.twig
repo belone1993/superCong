@@ -20,6 +20,8 @@
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
+    {% block Cong_stylesheets %}{% endblock %}
+
     {% set sourcePath = 'http://source.lattecake.com/' %}
 
 </head>
@@ -55,21 +57,6 @@
 {% endblock %}
 
 <script>
-//    var urlPathname = window.location.pathname,
-//            params  = urlPathname.split("/");
-//    if( params )
-//    {
-//        $.grep(params, function(n) {
-//            var active = $.trim(n);
-//            if ( active == 'post' ) active = 'learn';
-//            if( active.length > 0 && active.split('.').length < 2 && $('#main_' + active).length != 0)
-//            {
-//                $('#main_navigation li').removeClass('active');
-//                $('#' + active).addClass('active');
-//                return false;
-//            }
-//        });
-//    }
     window.onload = function()
     {
         if (!window.applicationCache) {
