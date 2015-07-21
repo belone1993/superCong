@@ -1,13 +1,41 @@
 security:
 
-    providers:
-        in_memory:
-            memory: ~
+#    providers:
+#        in_memory:
+#            memory: ~
 
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt|error)|css|images|js)/
             security: false
-
-        main:
+        login:
+            pattern:  ^/security/login$
+            security: false
+        secured_area:
+            pattern:    ^/admin/
+            form_login:
+                check_path: login_check
+                login_path: login_route
+                post_only: true
+                username_parameter: _username
+                password_parameter: _password
+            logout:
+                path:   logout
             anonymous: ~
+
+    access_control:
+        - { path: ^/admin, roles: ROLE_ADMIN }
+
+    encoders:
+#        AppBundle\Entity\User:
+        Symfony\Component\Security\Core\User\User:
+            algorithm: bcrypt
+            cost: 12
+
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    providers:
+        administrators:
+            entity: { class: AppBundle:User, property: username }
