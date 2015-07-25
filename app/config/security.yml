@@ -12,7 +12,7 @@ security:
             pattern:  ^/security/login$
             security: false
         secured_area:
-            pattern:    ^/admin/
+            pattern:    ^/admin/1
             form_login:
                 check_path: login_check
                 login_path: login_route
