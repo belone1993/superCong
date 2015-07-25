@@ -1,0 +1,128 @@
+
+<title>Tables - Ace Admin</title>
+
+<!-- ajax layout which only needs content area -->
+<div class="page-header">
+    <h1>
+        学无止境
+        <small>
+            <i class="ace-icon fa fa-angle-double-right"></i>
+            分享是一种博爱的心境，学会分享，就学会了生活
+        </small>
+    </h1>
+</div><!-- /.page-header -->
+
+{#<div class="row">#}
+
+    <div class="col-xs-12">
+
+        <a href="#learn/write" class="btn btn-app btn-primary no-radius">
+            <i class="ace-icon fa fa-pencil-square-o bigger-230"></i>
+            添加文章
+        </a>
+
+        <div class="clearfix">
+            <div class="pull-right tableTools-container"></div>
+        </div>
+
+        <!-- div.dataTables_borderWrap -->
+        <div>
+            <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th class="center">
+                        <label class="pos-rel">
+                            <input type="checkbox" class="ace" />
+                            <span class="lbl"></span>
+                        </label>
+                    </th>
+                    <th>标题</th>
+                    <th>作者</th>
+                    <th>描述</th>
+                    <th>分类</th>
+                    <th>阅读</th>
+                    <th>发布时间</th>
+                    <th>更新时间</th>
+                    <th>状态</th>
+
+                    <th></th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for post in posts if posts %}
+                    <tr>
+                        <td class="center">
+                            <label class="pos-rel">
+                                <input type="checkbox" class="ace" />
+                                <span class="lbl"></span>
+                            </label>
+                        </td>
+
+                        <td>
+                            <a target="_blank" href="{{ url('learn_learnInfo', {"id": post.id}) }}">{{ post.title|length > 8 ? post.title|slice(0, 8) ~ '...' : post.title }}</a>
+                        </td>
+                        <td></td>
+                        <td>{{ post.description|slice(0, 16) }} ...</td>
+                        <td><span class="label label-sm label-warning">{{ post.categoryId }}</span></td>
+                        <td>
+                            {{ post.readNum }}
+                        </td>
+
+                        <td>
+                            {{ post.createdAt|date('Y/m/d H:i:s') }}
+                        </td>
+                        <td>
+                            {{ post.createdAt|date('Y/m/d H:i:s') }}
+                        </td>
+                        <td></td>
+                        <td>
+                            <div class="hidden-sm hidden-xs action-buttons">
+                                <a class="green" href="#">
+                                    <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                </a>
+
+                                <a class="red" href="#">
+                                    <i class="ace-icon fa fa-trash-o bigger-130"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <div class="col-xs-6">
+                <div class="dataTables_info" id="dynamic-table_info" role="status" aria-live="polite">
+                     当前 {{ startPost }} 至 {{ endPost }} 共 {{ postTotal }} 条
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="dataTables_paginate paging_simple_numbers" id="dynamic-table_paginate">
+                    <ul class="pagination">
+                        <li class="paginate_button previous disabled" aria-controls="dynamic-table" tabindex="0" id="dynamic-table_previous">
+                            <a href="#">上一页</a>
+                        </li>
+                        {% for i in 1..pageTotal %}
+                        <li class="paginate_button {% if page == i %}active{% endif %}" aria-controls="dynamic-table" tabindex="{{ i }}">
+                            <a href="#learn/archives/{{ i }}">{{ i }}</a>
+                        </li>
+                        {% endfor %}
+                        <li class="paginate_button next" aria-controls="dynamic-table" tabindex="0" id="dynamic-table_next">
+                            <a href="#">下一页</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{#</div>#}
+
+<!-- PAGE CONTENT ENDS -->
+
+<!-- page specific plugin scripts -->
+<script type="text/javascript">
+//    var scripts = [null,"../../assets/js/dataTables/jquery.dataTables.js","../../assets/js/dataTables/jquery.dataTables.bootstrap.js","../../assets/js/dataTables/extensions/TableTools/js/dataTables.tableTools.js","../../assets/js/dataTables/extensions/ColVis/js/dataTables.colVis.js", null]
+    $('.page-content-area').ace_ajax('loadScripts', '', function() {
+
+    });
+</script>
