@@ -37,13 +37,6 @@ class Category extends CategoryRepository
      */
     private $categoryNum;
 
-    /**
-     * @var Post
-     *
-     * @ORM\OneToMany(targetEntity="Post", mappedBy="category", mappedBy="category", fetch="EXTRA_LAZY", orphanRemoval=true)
-     */
-    private $posts;
-
 
     /**
      * Get id
