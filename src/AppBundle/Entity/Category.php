@@ -4,7 +4,6 @@ namespace AppBundle\Entity;
 
 use AppBundle\Entity\Repository\CategoryRepository;
 use Doctrine\ORM\Mapping as ORM;
-use StoreBundle\Entity\Post;
 
 /**
  * Category
