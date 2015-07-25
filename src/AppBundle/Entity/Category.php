@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use AppBundle\Entity\Repository\CategoryRepository;
 use Doctrine\ORM\Mapping as ORM;
+use StoreBundle\Entity\Post;
 
 /**
  * Category
@@ -35,6 +36,13 @@ class Category extends CategoryRepository
      * @ORM\Column(name="categoryNum", type="integer", nullable=true, options={"comment": "分类文章数量", "default": 0})
      */
     private $categoryNum;
+
+    /**
+     * @var Post
+     *
+     * @ORM\OneToMany(targetEntity="Post", mappedBy="category", mappedBy="category", fetch="EXTRA_LAZY", orphanRemoval=true)
+     */
+    private $posts;
 
 
     /**
