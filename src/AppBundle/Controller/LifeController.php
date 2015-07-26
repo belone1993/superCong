@@ -44,7 +44,10 @@ class LifeController extends Controller
         }else
         {
             /** @var  $postInfo Post */
-            $postInfo = $post->find( $id );
+            $postInfo = $post->findOneBy([
+                'id'     => $id,
+                'action' => 2
+            ]);
         }
 
         $postInfo->setReadNum( $postInfo->getReadNum() + 1 );
