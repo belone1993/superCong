@@ -13,6 +13,8 @@ use StoreBundle\Entity\Post;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -81,28 +83,31 @@ class LearnController extends Controller
             $response['message'] = '其他参数不能为空！';
             return new JsonResponse($response);
         }
+        var_dump($request->files);die;
         $imageName = '';
         if( $request->files )
         {
-//            $dir = './uploads/images/'.date('Y/m/');
-//
-//            /** @var $file \Symfony\Component\HttpFoundation\File\UploadedFile */
-//            foreach ($request->files as $file)
-//            {
-//                $name = md5( $file->getClientOriginalName(). microtime() ).'.'.$file->guessExtension();
-//                $fs = new Filesystem();
-//                if( !$fs->exists( $dir ) )
-//                {
-//                    try {
-//                        $fs->mkdir( $dir );
-//                    } catch (IOExceptionInterface $e) {
-//                        echo "An error occurred while creating your directory at ".$e->getPath();
-//                    }
-//                }
-//                $imageName = $name;
-//                $file->move( $dir,  $name );
-//                break;
-//            }
+            $dateTime = new \DateTime();
+            $dir = './uploads/images/'.$dateTime->format('Y/m');
+
+            /** @var $file \Symfony\Component\HttpFoundation\File\UploadedFile */
+            foreach ($request->files as $file)
+            {
+                $name = password_hash($file->getClientOriginalName(). microtime(), true).'.'.$file->guessExtension();
+                echo $name;die;
+                $fs = new Filesystem();
+                if( !$fs->exists( $dir ) )
+                {
+                    try {
+                        $fs->mkdir( $dir );
+                    } catch (IOException $e) {
+                        echo "An error occurred while creating your directory at ".$e->getPath();
+                    }
+                }
+                $imageName = $name;
+                $file->move( $dir,  $name );
+                break;
+            }
         }
 //        $em = $this->getDoctrine()->getManager();
 //

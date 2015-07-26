@@ -15,7 +15,7 @@
 <div class="row">
     <div class="col-xs-12">
         <!-- PAGE CONTENT BEGINS -->
-        <form class="form-horizontal" id="editArticle" role="form" action="{{ url('admin_learnWrite') }}" method="post" onsubmit="return false;">
+        <form class="form-horizontal" id="editArticle" enctype="multipart/form-data" role="form" action="{{ url('admin_learnWrite') }}" method="post">
             <!-- #section:elements.form -->
             <div class="form-group">
                 <label class="col-sm-2 control-label no-padding-right" for="form-field-postTitle"> 文章标题 </label>
@@ -33,13 +33,7 @@
 
                 <div class="col-sm-10">
                     <label class="ace-file-input width-60 inline">
-                        <input type="file" name="attachment[]">
-                        <span class="ace-file-container" data-title="选择">
-                            <span class="ace-file-name" data-title="没有选择图片 ...">
-                                <i class=" ace-icon fa fa-upload"></i>
-                            </span>
-                        </span>
-                        <a class="remove" href="#"><i class=" ace-icon fa fa-times"></i></a>
+                        <input type="file" name="postImage" multiple id="chooseImage">
                     </label>
                 </div>
             </div>
@@ -130,43 +124,13 @@
 <!-- page specific plugin scripts -->
 <script type="text/javascript">
 	var scripts = [null,
-//        base_url +  "assets/js/fuelux/fuelux.wizard.js",
         admin_static + "assets/js/jquery.validate.js",
         admin_static + "assets/js/additional-methods.js",
-//        base_url + "assets/js/bootbox.js",
-//        base_url + "assets/js/jquery.maskedinput.js",
-//        base_url + "assets/js/select2.js",
+        admin_static + "assets/js/ace/elements.fileinput.js",
         null];
 	$('.page-content-area').ace_ajax('loadScripts', scripts, function() {
 	  //inline scripts related to this page
 		 jQuery(function($) {
-
-            $('[data-rel=tooltip]').tooltip();
-
-            var $validation = false;
-            $('#fuelux-wizard-container')
-            .ace_wizard({
-                //step: 2 //optional argument. wizard will jump to step "2" at first
-                //buttons: '.wizard-actions:eq(0)'
-            })
-            .on('actionclicked.fu.wizard' , function(e, info){
-                if(info.step == 1 && $validation) {
-                    if(!$('#validation-form').valid()) e.preventDefault();
-                }
-            })
-            .on('finished.fu.wizard', function(e) {
-                bootbox.dialog({
-                    message: "Thank you! Your information was successfully saved!",
-                    buttons: {
-                        "success" : {
-                            "label" : "OK",
-                            "className" : "btn-sm btn-primary"
-                        }
-                    }
-                });
-            }).on('stepclick.fu.wizard', function(e){
-                //e.preventDefault();//this will prevent clicking and selecting steps
-            });
 
              $.extend($.validator.messages, {
                  required: "这是必填字段",
@@ -224,7 +188,11 @@
                         url: $(form)[0].action,
                         type: 'POST',
                         dataType: 'json',
-                        data: $(form).serialize(), // serialize form data
+//                        cache: false,
+                        contentType: false,
+                        processData: false,
+//                        data: $(form).serialize(), // serialize form data
+                        data: new FormData($(form)), // serialize form data
                         beforeSend: function () {
                         },
                         success: function (data) {
@@ -246,20 +214,17 @@
                 }
             });
 
-            $('#modal-wizard-container').ace_wizard();
-            $('#modal-wizard .wizard-actions .btn[data-dismiss=modal]').removeAttr('disabled');
-
-
-            /**
-            $('#date').datepicker({autoclose:true}).on('changeDate', function(ev) {
-                $(this).closest('form').validate().element($(this));
-            });
-
-            $('#mychosen').chosen().on('change', function(ev) {
-                $(this).closest('form').validate().element($(this));
-            });
-            */
-
+             $('#chooseImage').ace_file_input({
+                 no_file:'没有文件 ...',
+                 btn_choose: '选择',
+                 btn_change: '修改',
+                 droppable: false,
+                 onchange: null,
+                 thumbnail: false, //| true | large
+                 whitelist: 'gif|png|jpg|jpeg'
+                 //blacklist:'exe|php'
+                 //onchange:''
+             });
 
             $(document).one('ajaxloadstart.page', function(e) {
                 //in ajax mode, remove remaining elements before leaving page
