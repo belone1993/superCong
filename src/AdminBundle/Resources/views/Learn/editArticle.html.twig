@@ -1,0 +1,270 @@
+
+<title>编辑文章 - Latte Cake Admin</title>
+
+<!-- ajax layout which only needs content area -->
+<div class="page-header">
+    <h1>
+        学无止境
+        <small>
+            <i class="ace-icon fa fa-angle-double-right"></i>
+            添加文章
+        </small>
+    </h1>
+</div><!-- /.page-header -->
+
+<div class="row">
+    <div class="col-xs-12">
+        <!-- PAGE CONTENT BEGINS -->
+        <form class="form-horizontal" id="editArticle" role="form" action="{{ url('admin_learnWrite') }}" method="post" onsubmit="return false;">
+            <!-- #section:elements.form -->
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right" for="form-field-postTitle"> 文章标题 </label>
+
+                <div class="col-sm-10">
+                    <div class="widget-main no-padding">
+                        <input type="text" required name="postTitle" id="form-field-postTitle" placeholder="请输入标题" value="{{ post.title }}" class="col-xs-10 col-sm-5" />
+                    </div>
+                    &nbsp; &nbsp; &nbsp;
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right" for="form-field-postImage"> 文章头图 </label>
+
+                <div class="col-sm-10">
+                    <label class="ace-file-input width-60 inline">
+                        <input type="file" name="attachment[]">
+                        <span class="ace-file-container" data-title="选择">
+                            <span class="ace-file-name" data-title="没有选择图片 ...">
+                                <i class=" ace-icon fa fa-upload"></i>
+                            </span>
+                        </span>
+                        <a class="remove" href="#"><i class=" ace-icon fa fa-times"></i></a>
+                    </label>
+                </div>
+            </div>
+
+            {% if post.description %}
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 描述 </label>
+
+                    <div class="col-sm-8">
+                        <textarea required class="form-control" style="resize: none;" name="description"  placeholder="请输入描述信息..." rows="5">{{ post.description }}</textarea>
+                    </div>
+                </div>
+                <input type="hidden" name="postId" value="{{ post.id }}">
+            {% endif %}
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right" for="form-field-content">内容</label>
+
+                <div class="col-sm-10">
+                    <div class="widget-main no-padding">
+                        <textarea class="form-control" required style="resize: none;" name="content" data-provide="markdown" data-iconlibrary="fa" placeholder="支持Markdown语法..." rows="15">{{ post.content }}</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right" for="form-field-5">Markdown</label>
+
+                <div class="col-sm-10">
+                    <div class="widget-main no-padding">
+                        <label class="line-height-1 blue">
+                            <input name="markdown" value="1" {% if post.isMarkdown == 1 %}checked{% endif %} type="radio" class="ace valid" aria-required="true" aria-describedby="gender-error" aria-invalid="true">
+                            <span class="lbl"> 是</span>
+                        </label>
+                        <label class="line-height-1 blue">
+                            <input name="markdown" value="0" {% if post.isMarkdown == 0 %}checked{% endif %} type="radio" class="ace valid" aria-required="true" aria-describedby="gender-error" aria-invalid="false">
+                            <span class="lbl"> 否</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right" for="form-field-5">分类</label>
+
+                <div class="col-sm-2">
+                    <div class="widget-main no-padding">
+                        <select required class="chosen-select form-control" name="category" id="form-field-select-category" data-placeholder="请选择分类...">
+                            <option value="">请选择分类</option>
+                            {% for category in categoryList if categoryList %}
+                                <option value="{{ category.id }}" {% if post.categoryId == category.id %}selected{% endif %}>{{ category.categoryName }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clearfix form-actions">
+                <div class="col-md-offset-3 col-md-9">
+                    <a href="#learn/archives" class="btn btn-light" type="button">
+                        <i class="ace-icon fa fa-reply icon-only"></i>
+                        返回列表
+                    </a>
+
+                    &nbsp; &nbsp; &nbsp;
+                    <button class="btn" type="button">
+                        <i class="ace-icon fa fa-floppy-o bigger-110"></i>
+                        保存草稿
+                    </button>
+
+                    &nbsp; &nbsp; &nbsp;
+                    <button class="btn btn-warning" type="button">
+                        <i class="ace-icon fa fa-th-large"></i>
+                        预览文章
+                    </button>
+
+                    &nbsp; &nbsp; &nbsp;
+                    <button class="btn btn-info" type="submit">
+                        发布文章
+                        <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div><!-- /.col -->
+</div><!-- /.row -->
+
+<!-- page specific plugin scripts -->
+<script type="text/javascript">
+	var scripts = [null,
+//        base_url +  "assets/js/fuelux/fuelux.wizard.js",
+        admin_static + "assets/js/jquery.validate.js",
+        admin_static + "assets/js/additional-methods.js",
+//        base_url + "assets/js/bootbox.js",
+//        base_url + "assets/js/jquery.maskedinput.js",
+//        base_url + "assets/js/select2.js",
+        null];
+	$('.page-content-area').ace_ajax('loadScripts', scripts, function() {
+	  //inline scripts related to this page
+		 jQuery(function($) {
+
+            $('[data-rel=tooltip]').tooltip();
+
+            var $validation = false;
+            $('#fuelux-wizard-container')
+            .ace_wizard({
+                //step: 2 //optional argument. wizard will jump to step "2" at first
+                //buttons: '.wizard-actions:eq(0)'
+            })
+            .on('actionclicked.fu.wizard' , function(e, info){
+                if(info.step == 1 && $validation) {
+                    if(!$('#validation-form').valid()) e.preventDefault();
+                }
+            })
+            .on('finished.fu.wizard', function(e) {
+                bootbox.dialog({
+                    message: "Thank you! Your information was successfully saved!",
+                    buttons: {
+                        "success" : {
+                            "label" : "OK",
+                            "className" : "btn-sm btn-primary"
+                        }
+                    }
+                });
+            }).on('stepclick.fu.wizard', function(e){
+                //e.preventDefault();//this will prevent clicking and selecting steps
+            });
+
+             $.extend($.validator.messages, {
+                 required: "这是必填字段",
+                 remote: "请修正此字段",
+                 email: "请输入有效的电子邮件地址",
+                 url: "请输入有效的网址",
+                 date: "请输入有效的日期",
+                 dateISO: "请输入有效的日期 (YYYY-MM-DD)",
+                 number: "请输入有效的数字",
+                 digits: "只能输入数字",
+                 creditcard: "请输入有效的信用卡号码",
+                 equalTo: "你的输入不相同",
+                 extension: "请输入有效的后缀",
+                 maxlength: $.validator.format("最多可以输入 {0} 个字符"),
+                 minlength: $.validator.format("最少要输入 {0} 个字符"),
+                 rangelength: $.validator.format("请输入长度在 {0} 到 {1} 之间的字符串"),
+                 range: $.validator.format("请输入范围在 {0} 到 {1} 之间的数值"),
+                 max: $.validator.format("请输入不大于 {0} 的数值"),
+                 min: $.validator.format("请输入不小于 {0} 的数值")
+             });
+
+            $('#editArticle').validate({
+                onkeyup: false,
+//                errorClass: 'error',
+                validClass: 'valid',
+                errorElement: 'div',
+                errorClass: 'help-block',
+                focusInvalid: false,
+                highlight: function (e) {
+                    $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+                },
+
+                success: function (e) {
+                    $(e).closest('.form-group').removeClass('has-error');//.addClass('has-info');
+                    $(e).remove();
+                },
+
+                errorPlacement: function (error, element) {
+                    if(element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
+                        var controls = element.closest('div[class*="col-"]');
+                        if(controls.find(':checkbox,:radio').length > 1) controls.append(error);
+                        else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
+                    }
+                    else if(element.is('.select2')) {
+                        error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
+                    }
+                    else if(element.is('.chosen-select')) {
+                        error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
+                    }
+                    else error.insertAfter(element.parent());
+                },
+
+                submitHandler: function (form) {
+                    $.ajax({
+                        url: $(form)[0].action,
+                        type: 'POST',
+                        dataType: 'json',
+                        data: $(form).serialize(), // serialize form data
+                        beforeSend: function () {
+                        },
+                        success: function (data) {
+                            try{
+                                console.log(data);
+                            }catch ( err )
+                            {
+
+                            }
+                        },
+                        error: function (e) {
+
+                        }
+                    })
+                },
+                invalidHandler: function (form) {
+                    console.log('invalid');
+                    console.log(form);
+                }
+            });
+
+            $('#modal-wizard-container').ace_wizard();
+            $('#modal-wizard .wizard-actions .btn[data-dismiss=modal]').removeAttr('disabled');
+
+
+            /**
+            $('#date').datepicker({autoclose:true}).on('changeDate', function(ev) {
+                $(this).closest('form').validate().element($(this));
+            });
+
+            $('#mychosen').chosen().on('change', function(ev) {
+                $(this).closest('form').validate().element($(this));
+            });
+            */
+
+
+            $(document).one('ajaxloadstart.page', function(e) {
+                //in ajax mode, remove remaining elements before leaving page
+                $('[class*=select2]').remove();
+            });
+        });
+	});
+</script>

@@ -12,6 +12,7 @@ use StoreBundle\Entity\Post;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class HomeController
@@ -24,11 +25,11 @@ class HomeController extends Controller
     /**
      * @return string
      *
-     * @Route("/")
+     * @Route("/index")
      *
      */
     public function indexAction()
     {
-        return $this->renderView('AdminBundle::Default:dashboard.html.twig');
+        return new Response( $this->renderView('AdminBundle:Default:dashboard.html.twig'));
     }
 }

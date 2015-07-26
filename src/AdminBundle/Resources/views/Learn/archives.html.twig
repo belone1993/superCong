@@ -1,5 +1,5 @@
 
-<title>Tables - Ace Admin</title>
+<title>文章列表 - Latte Cake Admin</title>
 
 <!-- ajax layout which only needs content area -->
 <div class="page-header">
@@ -16,7 +16,7 @@
 
     <div class="col-xs-12">
 
-        <a href="#learn/write" class="btn btn-app btn-primary no-radius">
+        <a href="#learn/editArticle" class="btn btn-app btn-primary no-radius">
             <i class="ace-icon fa fa-pencil-square-o bigger-230"></i>
             添加文章
         </a>
@@ -78,7 +78,7 @@
                         <td></td>
                         <td>
                             <div class="hidden-sm hidden-xs action-buttons">
-                                <a class="green" href="#">
+                                <a class="green" href="#learn/editArticle/{{ post.id }}">
                                     <i class="ace-icon fa fa-pencil bigger-130"></i>
                                 </a>
 

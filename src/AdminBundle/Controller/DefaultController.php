@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/")
+     * @Route("/", name="admin_index")
      * @Template()
      *
      * @param Request $request

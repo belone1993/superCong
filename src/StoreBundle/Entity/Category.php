@@ -3,14 +3,15 @@
 namespace StoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use StoreBundle\Entity\Repository\CategoryRepository;
 
 /**
  * Category
  *
  * @ORM\Table(name="category", options={"collate": "utf8_general_ci", "character": "utf8"})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="StoreBundle\Entity\Repository\CategoryRepository")
  */
-class Category
+class Category extends CategoryRepository
 {
     /**
      * @var integer
