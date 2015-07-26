@@ -26,21 +26,17 @@ class DefaultController extends Controller
      */
     public function indexAction( Request $request )
     {
-        if( $request->isXmlHttpRequest() )
-        {
-            $template = $request->get('page');
-            if( $template == 'index' )
-                $template = 'Dashboard:index';
-            $template = ucwords($template);
-
-            $content = $this->renderView("AdminBundle:{$template}.html.twig", [
-                'page' => $request->get('page')
-            ]);
-
-            return new Response($content);
-        }
-
         return array('name' => 'hello');
+    }
+
+    /**
+     * @Route("/dashboard")
+     *
+     * @return array
+     */
+    public function dashboardAction()
+    {
+        return $this->renderView('AdminBundle::Default:dashboard.html.twig');
     }
 
     /**
