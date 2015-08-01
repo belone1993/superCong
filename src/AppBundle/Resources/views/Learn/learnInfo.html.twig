@@ -95,11 +95,8 @@
                 </div>
                 <div class="col-lg-4">
                     <aside class="right-sidebar">
-                        <div class="widget">
-                            <form class="form-search">
-                                <input class="form-control" type="text" placeholder="路漫漫而修远兮，吾将上下而求索..">
-                            </form>
-                        </div>
+                        {% set searchTitle = '路漫漫而修远兮，吾将上下而求索..' %}
+                        {% include "AppBundle:Post:search.html.twig" %}
                         {{ render(controller('AppBundle:Post:topPost', {"action": 1, "id": post.id})) }}
                         <div class="widget">
                             <h5 class="widgetheading">Popular tags</h5>
