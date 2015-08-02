@@ -8,7 +8,7 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Post;
+use StoreBundle\Entity\Post;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -34,8 +34,8 @@ class LifeController extends Controller
             throw $this->createNotFoundException('No product found for id '.$id);
         }
 
-        /** @var  $post \AppBundle\Entity\Post */
-        $post = $this->getDoctrine()->getRepository('AppBundle:Post');
+        /** @var  $post \StoreBundle\Entity\Post */
+        $post = $this->getDoctrine()->getRepository('StoreBundle:Post');
 
         if( $id < 20000 )
         {
@@ -73,8 +73,8 @@ class LifeController extends Controller
      */
     public function growAction( $page )
     {
-        /** @var  $post \AppBundle\Entity\Repository\PostRepository */
-        $post = $this->getDoctrine()->getRepository('AppBundle:Post');
+        /** @var  $post \StoreBundle\Entity\Repository\PostRepository */
+        $post = $this->getDoctrine()->getRepository('StoreBundle:Post');
 
         $posts = $post->findPostsPage( 2, $page );
 

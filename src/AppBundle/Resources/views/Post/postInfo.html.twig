@@ -32,7 +32,19 @@
                     <article>
                         <!-- Preview Image -->
                         <div style="overflow-y: hidden; max-height: 300px; text-align: center; margin:0 auto;">
-                            <img class="img-responsive" src="{{ sourcePath }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}?imageView2/2/h/300" alt="">
+                            {% if post.images.count > 1 %}
+                                <div id="post-slider" class="flexslider">
+                                    <ul class="slides">
+                                        {% for item in post.images %}
+                                        <li>
+                                            <img src="/{{ item.imagePath }}/{{ item.imageName }}">
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% else %}
+                                <img class="img-responsive" src="{{ sourcePath }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}?imageView2/2/h/300" alt="">
+                            {% endif %}
                         </div>
                         <!-- Post Content -->
                         <div class="bs-callout bs-callout-info LifeContent">

@@ -26,7 +26,7 @@ class Post extends PostRepository
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=128, nullable=false, options={"comment": "标题"})
+     * @ORM\Column(name="title", type="string", length=128, nullable=true, options={"comment": "标题"})
      */
     private $title;
 
@@ -40,14 +40,14 @@ class Post extends PostRepository
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text", nullable=false, options={"comment": "简介"})
+     * @ORM\Column(name="description", type="text", nullable=true, options={"comment": "简介"})
      */
     private $description;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="content", type="text", nullable=false, options={"comment": "内容"})
+     * @ORM\Column(name="content", type="text", nullable=true, options={"comment": "内容"})
      */
     private $content;
 
@@ -122,16 +122,17 @@ class Post extends PostRepository
      */
     private $category;
 
-//    /**
-//     * @var Image
-//     *
-//     * @ORM\OneToMany(targetEntity="Image", mappedBy="postInfo", fetch="EAGER")
-//     */
-//    private $images;
+    /**
+     * @var Image
+     *
+     * @ORM\OneToMany(targetEntity="Image", fetch="EXTRA_LAZY", mappedBy="postInfo", cascade={"persist", "remove", "merge"}, orphanRemoval=true)
+     */
+    private $images;
 
     public function __construct()
     {
         $this->createdAt = new \DateTime('now');
+        $this->readNum   = 1;
     }
 
     /**

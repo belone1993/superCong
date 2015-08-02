@@ -2,8 +2,8 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Category;
-use AppBundle\Entity\Post;
+use StoreBundle\Entity\Category;
+use StoreBundle\Entity\Post;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -49,13 +49,13 @@ class DefaultController extends Controller
      */
     public function learnAction( Request $request, $page )
     {
-        /** @var  $post \AppBundle\Entity\Repository\PostRepository */
-        $post = $this->getDoctrine()->getRepository('AppBundle:Post');
+        /** @var  $post \StoreBundle\Entity\Repository\PostRepository */
+        $post = $this->getDoctrine()->getRepository('StoreBundle:Post');
 
         $categoryId = null;
         if( $request->get('category') )
         {
-            $category     = $this->getDoctrine()->getRepository('AppBundle:Category');
+            $category     = $this->getDoctrine()->getRepository('StoreBundle:Category');
             /** @var  $categoryInfo Category */
             $categoryInfo = $category->findOneBy(['categoryName' => $request->get('category')]);
             $categoryId = $categoryInfo->getId();
@@ -82,8 +82,8 @@ class DefaultController extends Controller
      */
     public function lifeAction( $page = 1 )
     {
-        /** @var  $post \AppBundle\Entity\Repository\PostRepository */
-        $post = $this->getDoctrine()->getRepository('AppBundle:Post');
+        /** @var  $post \StoreBundle\Entity\Repository\PostRepository */
+        $post = $this->getDoctrine()->getRepository('StoreBundle:Post');
 
         $posts = $post->findPostsPage( 2, $page );
 

@@ -22,7 +22,7 @@ class PostRepository extends EntityRepository
     {
         return $this->_em->createQueryBuilder()
             ->select("p")
-            ->from('AppBundle:Post', 'p')
+            ->from('StoreBundle:Post', 'p')
             ->orderBy('p.id', 'DESC')
             ->where('p.status = 1')
             ->setMaxResults(5)

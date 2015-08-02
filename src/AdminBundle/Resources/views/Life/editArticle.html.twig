@@ -91,10 +91,10 @@
                     </button>
 
                     &nbsp; &nbsp; &nbsp;
-                    <button class="btn btn-warning" type="button">
+                    <a class="btn btn-warning" href="{{ url('admin_postPreview', {'id': post.id}) }}" target="_blank">
                         <i class="ace-icon fa fa-th-large"></i>
                         预览文章
-                    </button>
+                    </a>
 
                     &nbsp; &nbsp; &nbsp;
                     <button class="btn btn-info" type="submit">
@@ -229,15 +229,15 @@
                  btn_change: '修改',
 //                 droppable: false,
                  onchange: null,
-                 thumbnail: false, //| true | large
+//                 thumbnail: false, //| true | large
                  whitelist: 'gif|png|jpg|jpeg',
-//                 style: 'well',
-//                 droppable: true, //html5 browsers only
-//                 thumbnail: 'small', //html5 browsers only
+                 style: 'well',
+                 droppable: true, //html5 browsers only
+                 thumbnail: 'small', //html5 browsers only
 
                  maxSize: 10000000, //~10MB
-                 allowExt:  ['jpg', 'jpeg', 'png', 'gif', 'tif', 'tiff', 'bmp'],
-                 allowMime: ['image/jpg', 'image/jpeg', 'image/png', 'image/gif', 'image/tif', 'image/tiff', 'image/bmp'] //html5 browsers only
+                 allowExt:  ['jpg', 'jpeg', 'png', 'gif'],
+                 allowMime: ['image/jpg', 'image/jpeg', 'image/png', 'image/gif'] //html5 browsers only
              });
 
             $(document).one('ajaxloadstart.page', function(e) {

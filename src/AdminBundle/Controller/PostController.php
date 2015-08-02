@@ -17,9 +17,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\Util\SecureRandom;
 use Symfony\Component\Filesystem\Exception\IOException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * Class PostController
@@ -59,7 +59,7 @@ class PostController extends Controller
             $response['message'] = '其他参数不能为空！';
             return new JsonResponse($response);
         }
-
+        $em = $this->getDoctrine()->getManager();
         if( !empty( $request->get('postId') ) )
         {
             $post = $this->getDoctrine()->getRepository('StoreBundle:Post');
@@ -70,13 +70,8 @@ class PostController extends Controller
             $postInfo->setAction(2)
                 ->setAuthorId( 1 )
                 ->setCategoryId( 0 )
-                ->setContent( ' ' )
-                ->setDescription( ' ' )
-                ->setImage( ' ' )
-                ->setIsMarkdown( 1 )
-                ->setTitle( ' ' );
+                ->setIsMarkdown( 1 );
 
-            $em = $this->getDoctrine()->getManager();
             $em->persist($postInfo);
             $em->flush();
         }
@@ -84,7 +79,7 @@ class PostController extends Controller
         if( $request->files->get('postImage') )
         {
             $dateTime = new \DateTime();
-            $dir = './uploads/images/'.$dateTime->format('Y/m');
+            $dir = 'uploads/images/'.$dateTime->format('Y/m');
 
             /** @var $file \Symfony\Component\HttpFoundation\File\UploadedFile */
             foreach ($request->files->get('postImage') as $file)
@@ -112,28 +107,41 @@ class PostController extends Controller
                     ->setImageSize( $fileData->getSize() )
                     ->setPostInfo( $postInfo );
 
-                $em = $this->getDoctrine()->getManager();
+
                 $em->persist( $image );
                 $em->flush();
             }
         }
-//        $em = $this->getDoctrine()->getManager();
-//
-//        $posts = new Posts();
-//        $posts->setPostAuthor($this->getUser()->getId());
-//        $posts->setPostTime(time());
-//        $posts->setPostImage($imageName);
-//        $posts->setPostTitle( $request->get('learnTitle') );
-//        $posts->setPostContent( $request->get('learnContent') );
-//        $posts->setPostDesc( $request->get('learnDesc'));
-//        $posts->setPostKeyword( $request->get('learnKeyword') );
-//        $posts->setPostReadNum(1);
-//        $posts->setPostAction(0);
-//        $posts->setPostCategoryId( $request->get('learnCategory') );
-//
-//        $em->persist($posts);
-//        $em->flush();
+
+        $postInfo->setTitle( $request->get('postTitle') )
+            ->setIsMarkdown( $request->get('markdown') )
+            ->setDescription( $request->get('description') )
+            ->setContent( $request->get('content') )
+            ->setAuthorId( 1 )
+            ->setStatus( 1 );
+
+        $em->persist( $postInfo );
+        $em->flush();
 
         return new JsonResponse($response);
+    }
+
+    /**
+     * 预览文章
+     * @Route("/preview/{id}", name="admin_postPreview", requirements={"id"="\d+"})
+     * @ParamConverter("post", class="StoreBundle:Post")
+     *
+     * @param Post $postInfo
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function previewAction( Post $postInfo )
+    {
+        $parseDown = new \Parsedown();
+
+        return $this->render('AppBundle:Post:postInfo.html.twig', [
+            'parseDown' => $parseDown,
+            'post'      => $postInfo,
+            'action'    => 'learn'
+        ]);
     }
 }

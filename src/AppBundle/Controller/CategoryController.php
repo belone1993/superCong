@@ -25,7 +25,7 @@ class CategoryController extends Controller
      */
     public function barAction()
     {
-        $category = $this->getDoctrine()->getRepository('AppBundle:Category');
+        $category = $this->getDoctrine()->getRepository('StoreBundle:Category');
 
         $categoryList = $category->findAll();
 

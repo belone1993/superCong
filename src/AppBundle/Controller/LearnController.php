@@ -7,7 +7,7 @@
  */
 
 namespace AppBundle\Controller;
-use AppBundle\Entity\Post;
+use StoreBundle\Entity\Post;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -25,7 +25,7 @@ class LearnController extends Controller
     /**
      * @Route("/learnInfo/{id}", name="learn_learnInfo", requirements={"id"="\d+"})
      * @Template()
-     * @ParamConverter("posts", class="AppBundle:Post")
+     * @ParamConverter("posts", class="StoreBundle:Post")
      *
      * @param Request $request
      * @param Post $postInfo

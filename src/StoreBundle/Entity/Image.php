@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Image
  *
- * @ORM\Table(name="image")
+ * @ORM\Table(name="image", options={"collate": "utf8_general_ci", "character": "utf8"})
  * @ORM\Entity(repositoryClass="StoreBundle\Entity\Repository\ImageRepository")
  */
 class Image
@@ -66,7 +66,7 @@ class Image
     /**
      * @var string
      *
-     * @ORM\Column(name="imageStatus", type="datetime", nullable=true, options={"comment": "图片状态", "default": 0})
+     * @ORM\Column(name="imageStatus", type="integer", nullable=true, options={"comment": "图片状态", "default": 0})
      */
     private $imageStatus = 0;
 
@@ -80,10 +80,15 @@ class Image
     /**
      * @var Post
      *
-     * @ORM\ManyToOne(targetEntity="Post", cascade={"all"}, fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="Post", inversedBy="images", fetch="EXTRA_LAZY")
      * @ORM\JoinColumn(name="postId", referencedColumnName="id")
      */
     private $postInfo;
+
+    function __construct()
+    {
+        $this->imageTime = new \DateTime();
+    }
 
     /**
      * Get id
@@ -234,29 +239,6 @@ class Image
     }
 
     /**
-     * Set imageStatus
-     *
-     * @param \DateTime $imageStatus
-     * @return Image
-     */
-    public function setImageStatus($imageStatus)
-    {
-        $this->imageStatus = $imageStatus;
-
-        return $this;
-    }
-
-    /**
-     * Get imageStatus
-     *
-     * @return \DateTime 
-     */
-    public function getImageStatus()
-    {
-        return $this->imageStatus;
-    }
-
-    /**
      * Set imageSize
      *
      * @param string $imageSize
@@ -300,5 +282,28 @@ class Image
     public function getPostInfo()
     {
         return $this->postInfo;
+    }
+
+    /**
+     * Set imageStatus
+     *
+     * @param integer $imageStatus
+     * @return Image
+     */
+    public function setImageStatus($imageStatus)
+    {
+        $this->imageStatus = $imageStatus;
+
+        return $this;
+    }
+
+    /**
+     * Get imageStatus
+     *
+     * @return integer 
+     */
+    public function getImageStatus()
+    {
+        return $this->imageStatus;
     }
 }

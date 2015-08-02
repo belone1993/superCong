@@ -9,7 +9,7 @@
 namespace AppBundle\Controller;
 
 
-use AppBundle\Entity\User;
+use StoreBundle\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Query\Parameter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -83,12 +83,12 @@ class SecurityController extends Controller
         $email    = $request->get('email');
         $password = $request->get('password');
 
-//        $userRepository = $this->getDoctrine()->getRepository('AppBundle:User');
+//        $userRepository = $this->getDoctrine()->getRepository('StoreBundle:User');
 
-        $userInfo = $this->getDoctrine()->getEntityManager()
+        $userInfo = $this->getDoctrine()->getManager()
             ->createQueryBuilder()
             ->select("u")
-            ->from('AppBundle:User', 'u')
+            ->from('StoreBundle:User', 'u')
             ->where(' u.username = :username ')
             ->orWhere( 'u.email = :email' )
             ->setParameters( new ArrayCollection(
