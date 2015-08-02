@@ -33,6 +33,7 @@ class PostController extends Controller
     /**
      * 保存草稿活直接发布文章
      * @Route("/write", name="admin_postWrite")
+     * @Method({"POST"})
      *
      * @param Request $request
      * @return JsonResponse
