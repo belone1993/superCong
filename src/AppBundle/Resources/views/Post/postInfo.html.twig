@@ -133,11 +133,29 @@ I
 
 {% block Cong_javascripts %}
     <script src="http://storage.lattecake.com/static/moderna/js/jquery.fancybox.pack.js"></script>
-    <script src="http://storage.lattecake.com/static/moderna/js/jquery.fancybox-media.min.js"></script>
-    {#<script src="http://storage.lattecake.com/static/moderna/js/google-code-prettify/prettify.js"></script>#}
-    {#<script src="http://storage.lattecake.com/static/moderna/js/portfolio/jquery.quicksand.js"></script>#}
-    {#<script src="http://storage.lattecake.com/static/moderna/js/portfolio/setting.js"></script>#}
-    <script src="http://storage.lattecake.com/static/moderna/js/jquery.flexslider.min.js"></script>
-    {#<script src="http://storage.lattecake.com/static/moderna/js/animate.min.js"></script>#}
-    {#<script src="http://storage.lattecake.com/static/moderna/js/custom.min.js"></script>#}
+    <script src="http://storage.lattecake.com/static/moderna/js/jquery.fancybox-media.js"></script>
+    <script src="http://storage.lattecake.com/static/moderna/js/jquery.flexslider.js"></script>
+    <script>
+        $('#post-slider').flexslider({
+            // Primary Controls
+            controlNav          : false,              //Boolean: Create navigation for paging control of each clide? Note: Leave true for manualControls usage
+            directionNav        : true,              //Boolean: Create navigation for previous/next navigation? (true/false)
+            prevText            : "上一张",        //String: Set the text for the "previous" directionNav item
+            nextText            : "下一张",            //String: Set the text for the "next" directionNav item
+
+            // Secondary Navigation
+            keyboard            : true,              //Boolean: Allow slider navigating via keyboard left/right keys
+            multipleKeyboard    : false,             //{NEW} Boolean: Allow keyboard navigation to affect multiple sliders. Default behavior cuts out keyboard navigation with more than one slider present.
+            mousewheel          : false,             //{UPDATED} Boolean: Requires jquery.mousewheel.js (https://github.com/brandonaaron/jquery-mousewheel) - Allows slider navigating via mousewheel
+            pausePlay           : false,             //Boolean: Create pause/play dynamic element
+            pauseText           : '暂停',           //String: Set the text for the "pause" pausePlay item
+            playText            : '开始',            //String: Set the text for the "play" pausePlay item
+
+            // Special properties
+            controlsContainer   : "",                //{UPDATED} Selector: USE CLASS SELECTOR. Declare which container the navigation elements should be appended too. Default container is the FlexSlider element. Example use would be ".flexslider-container". Property is ignored if given element is not found.
+            manualControls      : "",                //Selector: Declare custom control navigation. Examples would be ".flex-control-nav li" or "#tabs-nav li img", etc. The number of elements in your controlNav should match the number of slides/tabs.
+            sync                : "",                //{NEW} Selector: Mirror the actions performed on this slider with another slider. Use with care.
+            asNavFor            : "",                //{NEW} Selector: Internal property exposed for turning the slider into a thumbnail navigation for another slider
+        });
+    </script>
 {% endblock %}
