@@ -79,7 +79,7 @@ class PostController extends Controller
         if( $request->files->get('postImage') )
         {
             $dateTime = new \DateTime();
-            $dir = 'uploads/images/'.$dateTime->format('Y/m');
+            $dir = './uploads/images/'.$dateTime->format('Y/m');
 
             /** @var $file \Symfony\Component\HttpFoundation\File\UploadedFile */
             foreach ($request->files->get('postImage') as $file)
