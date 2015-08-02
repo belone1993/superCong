@@ -59,7 +59,7 @@ class PostController extends Controller
             return new JsonResponse($response);
         }
         $em = $this->getDoctrine()->getManager();
-        if( !empty( $request->get('postId') ) )
+        if( $request->get('postId') )
         {
             $post = $this->getDoctrine()->getRepository('StoreBundle:Post');
             $postInfo = $post->find( $request->get('postId') );
