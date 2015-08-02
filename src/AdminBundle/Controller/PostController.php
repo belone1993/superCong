@@ -16,10 +16,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 use Symfony\Component\Security\Core\Util\SecureRandom;
 use Symfony\Component\Filesystem\Exception\IOException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * Class PostController
