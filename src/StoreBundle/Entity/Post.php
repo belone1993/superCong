@@ -33,7 +33,7 @@ class Post extends PostRepository
     /**
      * @var string
      *
-     * @ORM\Column(name="image", type="string", length=128, nullable=false, options={"comment": "图片"})
+     * @ORM\Column(name="image", type="string", length=128, nullable=true, options={"comment": "图片"})
      */
     private $image;
 
@@ -61,7 +61,7 @@ class Post extends PostRepository
     /**
      * @var integer
      *
-     * @ORM\Column(name="categoryId", type="integer", nullable=false, options={"comment": "分类ID"})
+     * @ORM\Column(name="categoryId", type="integer", nullable=true, options={"comment": "分类ID", "default": 0})
      */
     private $categoryId;
 
@@ -70,14 +70,14 @@ class Post extends PostRepository
      *
      * @ORM\Column(name="isMarkdown", type="integer", nullable=true, options={"comment": "是否为Markdown编写"})
      */
-    private $isMarkdown;
+    private $isMarkdown = 1;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="readNum", type="integer", nullable=false, options={"comment": "阅读量", "default": 1})
+     * @ORM\Column(name="readNum", type="integer", nullable=true, options={"comment": "阅读量", "default": 1})
      */
-    private $readNum;
+    private $readNum = 1;
 
     /**
      * @var integer
@@ -91,7 +91,7 @@ class Post extends PostRepository
      *
      * @ORM\Column(name="oldId", type="integer", nullable=true, options={"comment": "之前的文章ID", "default": 0})
      */
-    private $oldId;
+    private $oldId = 0;
 
     /**
      * @var string
@@ -103,16 +103,31 @@ class Post extends PostRepository
     /**
      * @var string
      *
-     * @ORM\Column(name="createdAt", type="datetime", nullable=false, options={"comment": "创建时间"})
+     * @ORM\Column(name="createdAt", type="datetime", nullable=true, options={"comment": "创建时间"})
      */
     private $createdAt;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="status", type="integer", nullable=true, options={"comment": "状态,1为已发布", "default": 0})
+     */
+    private $status = 0;
+
+    /**
      * @var \StoreBundle\Entity\Category
+     *
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="posts", cascade={"all"}, fetch="EXTRA_LAZY")
      * @ORM\JoinColumn(name="categoryId", referencedColumnName="id")
      */
     private $category;
+
+//    /**
+//     * @var Image
+//     *
+//     * @ORM\OneToMany(targetEntity="Image", mappedBy="postInfo", fetch="EAGER")
+//     */
+//    private $images;
 
     public function __construct()
     {
@@ -426,5 +441,61 @@ class Post extends PostRepository
     public function getCategory()
     {
         return $this->category;
+    }
+
+    /**
+     * Set status
+     *
+     * @param integer $status
+     * @return Post
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return integer 
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Add images
+     *
+     * @param \StoreBundle\Entity\Image $images
+     * @return Post
+     */
+    public function addImage(\StoreBundle\Entity\Image $images)
+    {
+        $this->images[] = $images;
+
+        return $this;
+    }
+
+    /**
+     * Remove images
+     *
+     * @param \StoreBundle\Entity\Image $images
+     */
+    public function removeImage(\StoreBundle\Entity\Image $images)
+    {
+        $this->images->removeElement($images);
+    }
+
+    /**
+     * Get images
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getImages()
+    {
+        return $this->images;
     }
 }

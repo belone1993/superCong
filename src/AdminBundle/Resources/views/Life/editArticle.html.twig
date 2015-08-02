@@ -15,13 +15,15 @@
 <div class="row">
     <div class="col-xs-12">
         <!-- PAGE CONTENT BEGINS -->
-        <form class="form-horizontal" id="editArticle" enctype="multipart/form-data" role="form" action="{{ url('admin_lifeWrite') }}" method="post">
+        <form class="form-horizontal" id="editArticle" enctype="multipart/form-data" role="form" action="{{ url('admin_postWrite') }}" method="post">
             <!-- #section:elements.form -->
             <div class="form-group">
                 <label class="col-sm-2 control-label no-padding-right" for="form-field-postTitle"> 文章标题 </label>
 
                 <div class="col-sm-10">
                     <div class="widget-main no-padding">
+                        <input type="hidden" name="active" value="2">
+                        <input type="hidden" name="postId" value="{{ post.id }}">
                         <input type="text" required name="postTitle" id="form-field-postTitle" placeholder="请输入标题" value="{{ post.title }}" class="col-xs-10 col-sm-5" />
                     </div>
                     &nbsp; &nbsp; &nbsp;
@@ -33,12 +35,12 @@
 
                 <div class="col-sm-10">
                     <label class="ace-file-input width-60 inline">
-                        <input type="file" name="postImage" multiple id="chooseImage">
+                        <input type="file" name="postImage[]" multiple id="chooseImage">
                     </label>
                 </div>
             </div>
 
-            {% if post.description %}
+            {% if post.description is not empty %}
                 <div class="form-group">
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 描述 </label>
 
@@ -46,7 +48,6 @@
                         <textarea required class="form-control" style="resize: none;" name="description"  placeholder="请输入描述信息..." rows="5">{{ post.description }}</textarea>
                     </div>
                 </div>
-                <input type="hidden" name="postId" value="{{ post.id }}">
             {% endif %}
 
             <div class="form-group">
@@ -78,7 +79,7 @@
 
             <div class="clearfix form-actions">
                 <div class="col-md-offset-3 col-md-9">
-                    <a href="#learn/archives" class="btn btn-light" type="button">
+                    <a href="#life/grow" class="btn btn-light" type="button">
                         <i class="ace-icon fa fa-reply icon-only"></i>
                         返回列表
                     </a>
@@ -169,15 +170,38 @@
                 },
 
                 submitHandler: function (form) {
+
+                    var myForm = $('#editArticle');
+
+                    var fd = new FormData();//empty FormData object
+
+                    $.each(myForm.serializeArray(), function(i, item) {
+                        //add form fields one by one to our FormData
+                        fd.append(item.name, item.value);
+                    });
+
+                    myForm.find('input[type=file]').each(function(){
+                        var field_name = $(this).attr('name');
+                        //for fields with "multiple" file support
+                        //field name should be something like `myfile[]`
+
+                        var files = $(this).data('ace_input_files');
+                        if(files && files.length > 0) {
+                            for(var f = 0; f < files.length; f++) {
+                                fd.append(field_name, files[f]);
+                            }
+                        }
+                    });
+
                     $.ajax({
                         url: $(form)[0].action,
                         type: 'POST',
                         dataType: 'json',
 //                        cache: false,
-                        contentType: false,
-                        processData: false,
-//                        data: $(form).serialize(), // serialize form data
-                        data: new FormData($(form)), // serialize form data
+                        processData: false, //important
+                        contentType: false, //important
+                        data: fd, // serialize form data
+//                        data: new FormData($(form)), // serialize form data
                         beforeSend: function () {
                         },
                         success: function (data) {
@@ -203,12 +227,17 @@
                  no_file:'没有文件 ...',
                  btn_choose: '选择',
                  btn_change: '修改',
-                 droppable: false,
+//                 droppable: false,
                  onchange: null,
                  thumbnail: false, //| true | large
-                 whitelist: 'gif|png|jpg|jpeg'
-                 //blacklist:'exe|php'
-                 //onchange:''
+                 whitelist: 'gif|png|jpg|jpeg',
+//                 style: 'well',
+//                 droppable: true, //html5 browsers only
+//                 thumbnail: 'small', //html5 browsers only
+
+                 maxSize: 10000000, //~10MB
+                 allowExt:  ['jpg', 'jpeg', 'png', 'gif', 'tif', 'tiff', 'bmp'],
+                 allowMime: ['image/jpg', 'image/jpeg', 'image/png', 'image/gif', 'image/tif', 'image/tiff', 'image/bmp'] //html5 browsers only
              });
 
             $(document).one('ajaxloadstart.page', function(e) {

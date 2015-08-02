@@ -71,17 +71,42 @@ class LifeController extends Controller
      */
     public function editArticleAction( $id )
     {
-        $post = new Post();
 
         if( !empty( $id ) )
         {
             $postRepository = $this->getDoctrine()->getRepository('StoreBundle:Post');
 
             $post = $postRepository->find($id);
+        }else
+        {
+            $postRepository = $this->getDoctrine()->getRepository('StoreBundle:Post');
+            $post = $postRepository->findOneBy([
+                'status' => 0,
+                'action' => 2
+            ], [
+                'id' => 'DESC'
+            ]);
+            if( empty( $post ) )
+            {
+                $post = new Post();
+                $post->setAction(2)
+                    ->setAuthorId( 1 )
+                    ->setCategoryId( 0 )
+                    ->setContent( ' ' )
+                    ->setDescription( ' ' )
+                    ->setImage( ' ' )
+                    ->setIsMarkdown( 1 )
+                    ->setTitle( ' ' );
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($post);
+                $em->flush();
+            }
+
         }
 
         return [
-            'post'         => $post
+            'post' => $post
         ];
     }
 

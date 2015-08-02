@@ -24,6 +24,7 @@ class PostRepository extends EntityRepository
             ->select("p")
             ->from('AppBundle:Post', 'p')
             ->orderBy('p.id', 'DESC')
+            ->where('p.status = 1')
             ->setMaxResults(5)
             ->getQuery()->getResult();
     }
@@ -40,7 +41,7 @@ class PostRepository extends EntityRepository
         return $this->_em->createQueryBuilder()
             ->select('p')
             ->from('StoreBundle:Post', 'p')
-            ->where("p.id = :id")
+            ->where("p.id = :id AND p.status = 1")
             ->setParameter( 'id', $id )
             ->getQuery()->getSingleResult();
     }
@@ -76,7 +77,7 @@ class PostRepository extends EntityRepository
         $posts =  $this->_em->createQueryBuilder()
             ->select("p")
             ->from("StoreBundle:Post", "p")
-            ->where('p.id IS NOT NULL');
+            ->where('p.status = 1');
         if( $action )
         {
             $posts->andWhere( "p.action = {$action}" );
@@ -102,7 +103,7 @@ class PostRepository extends EntityRepository
         $post = $this->_em->createQueryBuilder()
             ->select("p")
             ->from("StoreBundle:Post", "p")
-            ->where('p.action = :action');
+            ->where('p.action = :action AND p.status = 1');
         if( !is_null( $categoryId ) )
         {
             $post->andWhere('p.categoryId = :categoryId')
@@ -127,7 +128,7 @@ class PostRepository extends EntityRepository
         $post = $this->_em->createQueryBuilder()
             ->select("COUNT(p.id)")
             ->from("StoreBundle:post", "p")
-            ->where('p.action = :action');
+            ->where('p.action = :action AND p.status = 1');
         if( !is_null( $categoryId ) )
         {
             $post->andWhere('p.categoryId = :categoryId')

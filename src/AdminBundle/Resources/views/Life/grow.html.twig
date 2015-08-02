@@ -60,7 +60,7 @@
                     </td>
 
                     <td>
-                        <a target="_blank" href="{{ url('learn_learnInfo', {"id": post.id}) }}">{{ post.title|length > 8 ? post.title|slice(0, 8) ~ '...' : post.title }}</a>
+                        <a target="_blank" href="{{ url('life_lifeInfo', {"id": post.id}) }}">{{ post.title|length > 8 ? post.title|slice(0, 8) ~ '...' : post.title }}</a>
                     </td>
                     <td></td>
                     <td>{{ post.description|slice(0, 16) }} ...</td>
@@ -78,7 +78,7 @@
                     <td></td>
                     <td>
                         <div class="hidden-sm hidden-xs action-buttons">
-                            <a class="green" href="#learn/editArticle/{{ post.id }}">
+                            <a class="green" href="#life/lifeArticle/{{ post.id }}">
                                 <i class="ace-icon fa fa-pencil bigger-130"></i>
                             </a>
 
@@ -104,7 +104,7 @@
                     </li>
                     {% for i in 1..pageTotal %}
                         <li class="paginate_button {% if page == i %}active{% endif %}" aria-controls="dynamic-table" tabindex="{{ i }}">
-                            <a href="#learn/archives/{{ i }}">{{ i }}</a>
+                            <a href="#life/grow/{{ i }}">{{ i }}</a>
                         </li>
                     {% endfor %}
                     <li class="paginate_button next" aria-controls="dynamic-table" tabindex="0" id="dynamic-table_next">
