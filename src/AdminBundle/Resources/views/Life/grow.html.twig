@@ -51,7 +51,7 @@
 
             <tbody>
             {% for post in posts if posts %}
-                <tr>
+                <tr id="article-{{ post.id }}">
                     <td class="center">
                         <label class="pos-rel">
                             <input type="checkbox" class="ace" />
@@ -78,11 +78,11 @@
                     <td></td>
                     <td>
                         <div class="hidden-sm hidden-xs action-buttons">
-                            <a class="green" href="#life/lifeArticle/{{ post.id }}">
+                            <a class="green" href="#life/lifeArticle">
                                 <i class="ace-icon fa fa-pencil bigger-130"></i>
                             </a>
 
-                            <a class="red" href="#">
+                            <a class="red removeArticle" data-href="#post/removeArticle" data-id="{{ post.id }}">
                                 <i class="ace-icon fa fa-trash-o bigger-130"></i>
                             </a>
                         </div>
@@ -122,7 +122,60 @@
 <!-- page specific plugin scripts -->
 <script type="text/javascript">
     //    var scripts = [null,"../../assets/js/dataTables/jquery.dataTables.js","../../assets/js/dataTables/jquery.dataTables.bootstrap.js","../../assets/js/dataTables/extensions/TableTools/js/dataTables.tableTools.js","../../assets/js/dataTables/extensions/ColVis/js/dataTables.colVis.js", null]
-    $('.page-content-area').ace_ajax('loadScripts', '', function() {
+    var scripts = [
+    ];
+    $('.page-content-area').ace_ajax('loadScripts', scripts, function() {
+        /** 删除文章 */
+        $(".removeArticle").on(ace.click_event, function() {
+            var hash = $(this).attr('data-href'),
+                    postId = $(this).attr('data-id');
+            swal({
+                title: "Are you sure?",
+                text: "你确定要删除这篇文章？它将会放在垃圾箱里!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel plx!",
+                showLoaderOnConfirm: true,
+                closeOnConfirm: false,
+                closeOnCancel: true
+            }, function(isConfirm){
+                if (isConfirm) {
+                    hash = hash.replace(/^(\#\!)?\#/, '');
+                    $.ajax({
+                        url: base_url + hash,
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+                            id: postId
+                        },
+                        beforeSend: function () {
+                            $('.page-content-area').append('<div class="message-loading-overlay"><i class="fa-spin ace-icon fa fa-spinner orange2 bigger-160"></i></div>');
+                        },
+                        success: function (data) {
+                            try{
+                                if( data.success == true )
+                                {
+                                    swal("Good job!", data.message, "success")
+                                    $('#article-' + postId).remove();
+                                }else
+                                {
+                                    swal("错误", data.message, "error");
+                                }
+                            }catch ( err )
+                            {
+                                swal("错误", error, "error");
+                            }
+                            $('.page-content-area').find('.message-loading-overlay').remove();
+                        },
+                        error: function (e) {
+                            $('.page-content-area').find('.message-loading-overlay').remove();
+                        }
+                    })
+                }
+            });
+        });
 
     });
 </script>

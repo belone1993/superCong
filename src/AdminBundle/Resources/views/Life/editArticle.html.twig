@@ -40,7 +40,7 @@
                 </div>
             </div>
 
-            {% if post.description is not empty %}
+            {% if post.description|trim is not empty %}
                 <div class="form-group">
                     <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 描述 </label>
 
@@ -77,27 +77,28 @@
                 </div>
             </div>
 
-            <div class="clearfix form-actions">
+            <div class="clearfix form-actions" id="postSaveActions">
                 <div class="col-md-offset-3 col-md-9">
-                    <a href="#life/grow" class="btn btn-light" type="button">
+                    <input type="hidden" name="postStatus" value="1">
+                    <a href="#life/grow" class="btn btn-light back-page" type="button">
                         <i class="ace-icon fa fa-reply icon-only"></i>
                         返回列表
                     </a>
 
                     &nbsp; &nbsp; &nbsp;
-                    <button class="btn" type="button">
+                    <button class="btn" type="button" data-status="3">
                         <i class="ace-icon fa fa-floppy-o bigger-110"></i>
                         保存草稿
                     </button>
 
                     &nbsp; &nbsp; &nbsp;
-                    <a class="btn btn-warning" href="{{ url('admin_postPreview', {'id': post.id}) }}" target="_blank">
+                    <button class="btn btn-warning" href="{{ url('admin_postPreview', {'id': post.id}) }}" data-status="0">
                         <i class="ace-icon fa fa-th-large"></i>
                         预览文章
-                    </a>
+                    </button>
 
                     &nbsp; &nbsp; &nbsp;
-                    <button class="btn btn-info" type="submit">
+                    <button class="btn btn-info" type="submit" data-status="1">
                         发布文章
                         <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
                     </button>
@@ -138,6 +139,12 @@
                  min: $.validator.format("请输入不小于 {0} 的数值")
              });
 
+             $('#postSaveActions > button').bind('click', function()
+             {
+                var saveStatus = $(this).attr('data-status');
+                 $('input[name=postStatus]').val( saveStatus );
+             });
+
             $('#editArticle').validate({
                 onkeyup: false,
 //                errorClass: 'error',
@@ -171,51 +178,71 @@
 
                 submitHandler: function (form) {
 
-                    var myForm = $('#editArticle');
+                    swal({
+                        title: "您确定要发布这篇文章?",
+                        text: "发布完之后将会在前台展示？",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#87b87f",
+                        confirmButtonText: "Yes, release it!",
+                        cancelButtonText: "No, cancel!",
+                        showLoaderOnConfirm: true,
+                        closeOnConfirm: false,
+                        closeOnCancel: true
+                    }, function(isConfirm){
+                        if (isConfirm) {
+                            var myForm = $('#editArticle');
 
-                    var fd = new FormData();//empty FormData object
+                            var fd = new FormData();//empty FormData object
 
-                    $.each(myForm.serializeArray(), function(i, item) {
-                        //add form fields one by one to our FormData
-                        fd.append(item.name, item.value);
-                    });
+                            $.each(myForm.serializeArray(), function(i, item) {
+                                //add form fields one by one to our FormData
+                                fd.append(item.name, item.value);
+                            });
 
-                    myForm.find('input[type=file]').each(function(){
-                        var field_name = $(this).attr('name');
-                        //for fields with "multiple" file support
-                        //field name should be something like `myfile[]`
+                            myForm.find('input[type=file]').each(function(){
+                                var field_name = $(this).attr('name');
+                                //for fields with "multiple" file support
+                                //field name should be something like `myfile[]`
 
-                        var files = $(this).data('ace_input_files');
-                        if(files && files.length > 0) {
-                            for(var f = 0; f < files.length; f++) {
-                                fd.append(field_name, files[f]);
-                            }
+                                var files = $(this).data('ace_input_files');
+                                if(files && files.length > 0) {
+                                    for(var f = 0; f < files.length; f++) {
+                                        fd.append(field_name, files[f]);
+                                    }
+                                }
+                            });
+
+                            $.ajax({
+                                url: $(form)[0].action,
+                                type: 'POST',
+                                dataType: 'json',
+                                processData: false,
+                                contentType: false,
+                                data: fd,
+                                beforeSend: function () {
+                                },
+                                success: function (data) {
+                                    try{
+                                        if( data.success == true )
+                                        {
+                                            swal("Good job!", data.message, "success");
+                                        }else
+                                        {
+                                            swal("错误", data.message, "error");
+                                        }
+                                    }catch ( err )
+                                    {
+                                        swal("错误", error, "error");
+                                    }
+                                },
+                                error: function (e) {
+                                    swal("错误", '啥错？', "error");
+                                }
+                            })
                         }
                     });
 
-                    $.ajax({
-                        url: $(form)[0].action,
-                        type: 'POST',
-                        dataType: 'json',
-//                        cache: false,
-                        processData: false, //important
-                        contentType: false, //important
-                        data: fd, // serialize form data
-//                        data: new FormData($(form)), // serialize form data
-                        beforeSend: function () {
-                        },
-                        success: function (data) {
-                            try{
-                                console.log(data);
-                            }catch ( err )
-                            {
-
-                            }
-                        },
-                        error: function (e) {
-
-                        }
-                    })
                 },
                 invalidHandler: function (form) {
                     console.log('invalid');

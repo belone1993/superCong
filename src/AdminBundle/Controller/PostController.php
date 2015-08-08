@@ -31,6 +31,44 @@ class PostController extends Controller
 {
 
     /**
+     * 删除文章
+     * @Route("/removeArticle", name="admin_postRemoveArticle", )
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function removeArticle( Request $request )
+    {
+        $response = [
+            'success' => true,
+            'status'  => '00000',
+            'message' => '操作成功',
+            'data'    => []
+        ];
+
+        $id = $request->get('id');
+
+        $postEntity = $this->getDoctrine()->getRepository('StoreBundle:Post');
+
+        /** @var  $postInfo Post */
+        $postInfo = $postEntity->find( $id );
+        if( !$postInfo )
+        {
+            $response['success'] = false;
+            $response['message'] = '文章不存在';
+            return new JsonResponse( $response );
+        }
+
+        $postInfo->setStatus( 2 );
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($postInfo);
+        $em->flush();
+
+        return new JsonResponse( $response );
+    }
+
+    /**
      * 保存草稿活直接发布文章
      * @Route("/write", name="admin_postWrite")
      * @Method({"POST"})
@@ -118,11 +156,24 @@ class PostController extends Controller
             ->setDescription( $request->get('description') )
             ->setContent( $request->get('content') )
             ->setAuthorId( 1 )
-            ->setStatus( 1 );
+            ->setStatus( $request->get('postStatus') );
 
         $em->persist( $postInfo );
         $em->flush();
 
+        $redirectUrl = '';
+
+        /** 预览文章 */
+        switch( $request->get('postStatus') )
+        {
+            case 0:
+                $redirectUrl = $this->redirectToRoute('admin_postPreview', ['id' => $postInfo->getId()]);
+                break;
+            case 3: // 草稿
+                $redirectUrl = $this->redirectToRoute('admin_postPreview', ['id' => $postInfo->getId()]);
+                break;
+        }
+        $response['data'] = $redirectUrl;
         return new JsonResponse($response);
     }
 
