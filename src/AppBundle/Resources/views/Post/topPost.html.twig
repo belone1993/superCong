@@ -1,10 +1,10 @@
-{% set sourcePath = 'http://source.lattecake.com/' %}
+
 <div class="widget">
     <h5 class="widgetheading">Popular posts</h5>
     <ul class="recent">
         {% for row in topPosts if topPosts %}
         <li>
-            <img src="{{ sourcePath }}images/{{ row.createdAt|date('Y/m') }}/{{ row.image }}?imageView2/1/w/65/h/65" class="pull-left" alt="" />
+            <img src="{{ source_url }}images/{{ row.createdAt|date('Y/m') }}/{{ row.image }}?imageView2/1/w/65/h/65" class="pull-left" alt="" />
             {% set rowHref = "/learn/learnInfo/" %}
             {% if row.action == 2 %}
                 {% set rowHref = "/life/lifeInfo/" %}

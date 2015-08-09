@@ -80,7 +80,7 @@ class Image
     /**
      * @var Post
      *
-     * @ORM\ManyToOne(targetEntity="Post", inversedBy="images", fetch="EXTRA_LAZY")
+     * @ORM\ManyToOne(targetEntity="Post", inversedBy="images", fetch="EAGER")
      * @ORM\JoinColumn(name="postId", referencedColumnName="id")
      */
     private $postInfo;

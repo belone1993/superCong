@@ -125,7 +125,7 @@ class Post extends PostRepository
     /**
      * @var Image
      *
-     * @ORM\OneToMany(targetEntity="Image", fetch="EXTRA_LAZY", mappedBy="postInfo", cascade={"persist", "remove", "merge"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="Image", fetch="EAGER", mappedBy="postInfo", cascade={"persist", "remove", "merge"}, orphanRemoval=true)
      */
     private $images;
 

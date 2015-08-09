@@ -39,6 +39,39 @@
                     </label>
                 </div>
             </div>
+            {% if post.images.count > 0 %}
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-postImages"> 图片列表 </label>
+                    <div class="col-sm-10">
+                        <ul class="ace-thumbnails clearfix">
+                            <!-- #section:pages/gallery.caption -->
+                            {% for image in post.images %}
+                                <li>
+                                    <a href="{{ source_url }}images/{{ image.imageTime|date('Y/m') }}/{{ image.imageName }}" data-rel="colorbox">
+                                        <img width="150" height="150" alt="150x150" src="{{ source_url }}images/{{ image.imageTime|date('Y/m') }}/{{ image.imageName }}" />
+                                    </a>
+
+                                    <div class="tools tools-bottom">
+                                        <a href="#">
+                                            <i class="ace-icon fa fa-link"></i>
+                                        </a>
+                                        <a href="#">
+                                            <i class="ace-icon fa fa-pencil"></i>
+                                        </a>
+                                        <a href="#">
+                                            <i class="ace-icon fa fa-share"></i>
+                                        </a>
+                                        <a href="#">
+                                            <i class="ace-icon fa fa-times red"></i>
+                                        </a>
+
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
 
             {% if post.description|trim is not empty %}
                 <div class="form-group">
@@ -77,7 +110,7 @@
                 </div>
             </div>
 
-            <div class="clearfix form-actions" id="postSaveActions">
+            <div class="clearfix form-actions">
                 <div class="col-md-offset-3 col-md-9">
                     <input type="hidden" name="postStatus" value="1">
                     <a href="#life/grow" class="btn btn-light back-page" type="button">
@@ -86,7 +119,7 @@
                     </a>
 
                     &nbsp; &nbsp; &nbsp;
-                    <button class="btn" type="button" data-status="3">
+                    <button class="btn" type="submit" data-status="3">
                         <i class="ace-icon fa fa-floppy-o bigger-110"></i>
                         保存草稿
                     </button>
@@ -114,10 +147,17 @@
         admin_static + "assets/js/jquery.validate.js",
         admin_static + "assets/js/additional-methods.js",
         admin_static + "assets/js/ace/elements.fileinput.js",
+        admin_static + "assets/js/jquery.colorbox.js",
         null];
 	$('.page-content-area').ace_ajax('loadScripts', scripts, function() {
 	  //inline scripts related to this page
 		 jQuery(function($) {
+
+             $('.form-actions button').on(ace.click_event, function()
+             {
+                 var saveStatus = $(this).attr('data-status');
+                 $('input[name=postStatus]').val( saveStatus );
+             });
 
              $.extend($.validator.messages, {
                  required: "这是必填字段",
@@ -137,12 +177,6 @@
                  range: $.validator.format("请输入范围在 {0} 到 {1} 之间的数值"),
                  max: $.validator.format("请输入不大于 {0} 的数值"),
                  min: $.validator.format("请输入不小于 {0} 的数值")
-             });
-
-             $('#postSaveActions > button').bind('click', function()
-             {
-                var saveStatus = $(this).attr('data-status');
-                 $('input[name=postStatus]').val( saveStatus );
              });
 
             $('#editArticle').validate({
@@ -177,7 +211,6 @@
                 },
 
                 submitHandler: function (form) {
-
                     swal({
                         title: "您确定要发布这篇文章?",
                         text: "发布完之后将会在前台展示？",
@@ -227,6 +260,7 @@
                                         if( data.success == true )
                                         {
                                             swal("Good job!", data.message, "success");
+                                            $('.form-actions a').trigger('click');
                                         }else
                                         {
                                             swal("错误", data.message, "error");
@@ -245,8 +279,7 @@
 
                 },
                 invalidHandler: function (form) {
-                    console.log('invalid');
-                    console.log(form);
+                    swal("错误", '有一些错误', "error");
                 }
             });
 
@@ -270,7 +303,39 @@
             $(document).one('ajaxloadstart.page', function(e) {
                 //in ajax mode, remove remaining elements before leaving page
                 $('[class*=select2]').remove();
+                $('#colorbox, #cboxOverlay').remove();
             });
+             var $overflow = '';
+             var colorbox_params = {
+                 rel: 'colorbox',
+                 reposition:true,
+                 scalePhotos:true,
+                 scrolling:false,
+                 previous:'<i class="ace-icon fa fa-arrow-left"></i>',
+                 next:'<i class="ace-icon fa fa-arrow-right"></i>',
+                 close:'&times;',
+                 current:'{current} of {total}',
+                 maxWidth:'100%',
+                 maxHeight:'100%',
+                 onOpen:function(){
+                     $overflow = document.body.style.overflow;
+                     document.body.style.overflow = 'hidden';
+                 },
+                 onClosed:function(){
+                     document.body.style.overflow = $overflow;
+                 },
+                 onComplete:function(){
+                     $.colorbox.resize();
+                 }
+             };
+
+             $('.ace-thumbnails [data-rel="colorbox"]').colorbox(colorbox_params);
+             $("#cboxLoadingGraphic").html("<i class='ace-icon fa fa-spinner orange fa-spin'></i>");//let's add a custom loading icon
         });
 	});
 </script>
+{% stylesheets
+'@AdminBundle/Resources/public/css/colorbox.css'
+%}
+<link rel="stylesheet" href="{{ asset_url }}">
+{% endstylesheets %}

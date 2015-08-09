@@ -43,7 +43,7 @@
                                     </ul>
                                 </div>
                             {% else %}
-                                <img class="img-responsive" src="{{ sourcePath }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}?imageView2/2/h/300" alt="">
+                                <img class="img-responsive" src="{{ source_url }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}?imageView2/2/h/300" alt="">
                             {% endif %}
                         </div>
                         <!-- Post Content -->
@@ -65,7 +65,7 @@ I
                         <div class="ds-share flat"
                              data-thread-key="{{ post.id }}"
                              data-title="{{ post.title }}"
-                             data-images="{{ sourcePath }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}"
+                             data-images="{{ source_url }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}"
                              data-content="{{ post.description }}"
                              data-url="{{ url('post_postInfo', {'id': post.id}) }}">
                             <div class="ds-share-inline">

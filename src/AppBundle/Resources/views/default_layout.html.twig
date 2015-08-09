@@ -9,12 +9,12 @@
     <link rel="shortcut icon" href="http://lattecake.com/favicon.ico?v=2" />
     <meta name="author" content="http://lattecake.com" />
     <!-- css -->
-    {#<link rel="stylesheet" href="http://storage.lattecake.com/static/moderna/css/bootstrap.min.css">#}
+    {#<link rel="stylesheet" href="{{ storage_url }}static/moderna/css/bootstrap.min.css">#}
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="http://storage.lattecake.com/static/moderna/css/fancybox/jquery.fancybox.css">
-    <link rel="stylesheet" href="http://storage.lattecake.com/static/moderna/css/flexslider.min.css">
-    <link rel="stylesheet" href="http://storage.lattecake.com/static/moderna/css/style.min.css">
-    <link rel="stylesheet" href="http://storage.lattecake.com/static/moderna/skins/default.min.css">
+    <link rel="stylesheet" href="{{ storage_url }}static/moderna/css/fancybox/jquery.fancybox.css">
+    <link rel="stylesheet" href="{{ storage_url }}static/moderna/css/flexslider.min.css">
+    <link rel="stylesheet" href="{{ storage_url }}static/moderna/css/style.min.css">
+    <link rel="stylesheet" href="{{ storage_url }}static/moderna/skins/default.min.css">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -22,8 +22,6 @@
     <![endif]-->
 
     {% block Cong_stylesheets %}{% endblock %}
-
-    {% set sourcePath = 'http://source.lattecake.com/' %}
 
     {% set searchTitle = '' %}
 
@@ -51,9 +49,9 @@
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 
-{#<script src="http://storage.lattecake.com/static/moderna/js/jquery.js"></script>#}
-{#<script src="http://storage.lattecake.com/static/moderna/js/jquery.easing.1.3.js"></script>#}
-{#<script src="http://storage.lattecake.com/static/moderna/js/bootstrap.min.js"></script>#}
+{#<script src="{{ storage_url }}static/moderna/js/jquery.js"></script>#}
+{#<script src="{{ storage_url }}static/moderna/js/jquery.easing.1.3.js"></script>#}
+{#<script src="{{ storage_url }}static/moderna/js/bootstrap.min.js"></script>#}
 <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 

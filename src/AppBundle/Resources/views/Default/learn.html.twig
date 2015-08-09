@@ -27,7 +27,7 @@
                                 <div class="post-heading">
                                     <h3><a href="{{ url('learn_learnInfo', {"id": post.id}) }}">{{ post.title }}</a></h3>
                                 </div>
-                                <img src="{{ sourcePath }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}?imageView2/2/w/710" alt="" />
+                                <img src="{{ source_url }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}?imageView2/2/w/710" alt="" />
                             </div>
                             <p>
                                 {{ post.description }}

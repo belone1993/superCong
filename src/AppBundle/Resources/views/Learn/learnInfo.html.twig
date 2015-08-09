@@ -32,7 +32,7 @@
                     <article>
                         <!-- Preview Image -->
                         <div style="overflow-y: hidden; max-height: 300px; text-align: center; margin:0 auto;">
-                            <img class="img-responsive" src="{{ sourcePath }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}?imageView2/2/h/300" style="margin: auto;">
+                            <img class="img-responsive" src="{{ source_url }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}?imageView2/2/h/300" style="margin: auto;">
                         </div>
                         <!-- Post Content -->
                         <div class="bs-callout bs-callout-info LifeContent">
@@ -55,7 +55,7 @@
                         <div class="ds-share flat"
                              data-thread-key="{{ post.id }}"
                              data-title="{{ post.title }}"
-                             data-images="{{ sourcePath }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}"
+                             data-images="{{ source_url }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}"
                              data-content="{{ post.description }}"
                              data-url="{{ url('post_postInfo', {'id': post.id}) }}">
                             <div class="ds-share-inline">
