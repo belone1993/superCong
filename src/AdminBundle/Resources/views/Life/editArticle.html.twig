@@ -48,7 +48,7 @@
                             {% for image in post.images %}
                                 <li>
                                     <a href="{{ source_url }}images/{{ image.imageTime|date('Y/m') }}/{{ image.imageName }}" data-rel="colorbox">
-                                        <img width="150" height="150" alt="150x150" src="{{ source_url }}images/{{ image.imageTime|date('Y/m') }}/{{ image.imageName }}" />
+                                        <img width="150" height="150" alt="150x150" src="{{ source_url }}images/{{ image.imageTime|date('Y/m') }}/{{ image.imageName }}?imageView2/1/w/150/h/150" />
                                     </a>
 
                                     <div class="tools tools-bottom">
