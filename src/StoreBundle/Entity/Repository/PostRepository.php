@@ -96,18 +96,27 @@ class PostRepository extends EntityRepository
      * @param int $action
      * @param int $page
      * @param int $categoryId
+     * @param array $status
      * @return array
      */
-    public function findPostsPage( $action, $page = 1, $categoryId = null )
+    public function findPostsPage( $action, $page = 1, $categoryId = null, $status = [] )
     {
         $post = $this->_em->createQueryBuilder()
             ->select("p")
             ->from("StoreBundle:Post", "p")
-            ->where('p.action = :action AND p.status = 1');
+            ->where('p.action = :action');
         if( !is_null( $categoryId ) )
         {
             $post->andWhere('p.categoryId = :categoryId')
                 ->setParameter('categoryId', $categoryId);
+        }
+        if( !empty( $status ) )
+        {
+            $post->andWhere('p.status IN(:status)')
+                ->setParameter('status', $status);
+        }else
+        {
+            $post->andWhere('p.status = 1');
         }
 
         return $post->setParameter( 'action', $action )
@@ -128,7 +137,7 @@ class PostRepository extends EntityRepository
         $post = $this->_em->createQueryBuilder()
             ->select("COUNT(p.id)")
             ->from("StoreBundle:post", "p")
-            ->where('p.action = :action AND p.status = 1');
+            ->where('p.action = :action AND p.status IN( 0, 1, 3)');
         if( !is_null( $categoryId ) )
         {
             $post->andWhere('p.categoryId = :categoryId')

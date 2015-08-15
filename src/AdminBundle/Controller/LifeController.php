@@ -36,7 +36,7 @@ class LifeController extends Controller
     {
         /** @var  $post Post */
         $post = $this->getDoctrine()->getRepository('StoreBundle:Post');
-        $posts = $post->findPostsPage( 2, $page );
+        $posts = $post->findPostsPage( 2, $page, null, [0, 1, 3] );
 
         $postTotal = $post->countPosts( 2 );
 
@@ -88,9 +88,13 @@ class LifeController extends Controller
             ]);
             if( empty( $post ) )
             {
+                $user = $this->getDoctrine()->getRepository('AppBundle:User');
+
+                $author = $user->find(1);
+
                 $post = new Post();
                 $post->setAction(2)
-                    ->setAuthorId( 1 )
+                    ->setAuthor( $author )
                     ->setCategoryId( 0 )
                     ->setContent( ' ' )
                     ->setDescription( ' ' )

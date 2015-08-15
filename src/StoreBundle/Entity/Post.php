@@ -117,7 +117,7 @@ class Post extends PostRepository
     /**
      * @var \StoreBundle\Entity\Category
      *
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="posts", cascade={"all"}, fetch="EXTRA_LAZY")
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="posts", cascade={"all"}, fetch="EAGER")
      * @ORM\JoinColumn(name="categoryId", referencedColumnName="id")
      */
     private $category;
@@ -125,9 +125,17 @@ class Post extends PostRepository
     /**
      * @var Image
      *
-     * @ORM\OneToMany(targetEntity="Image", fetch="EAGER", mappedBy="postInfo", cascade={"persist", "remove", "merge"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="Image", fetch="EXTRA_LAZY", mappedBy="postInfo", cascade={"persist", "remove", "merge"}, orphanRemoval=true)
      */
     private $images;
+
+    /**
+     * @var \AppBundle\Entity\User
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", fetch="EXTRA_LAZY", inversedBy="posts")
+     * @ORM\JoinColumn(name="authorId", referencedColumnName="id")
+     */
+    private $author;
 
     public function __construct()
     {
@@ -498,5 +506,29 @@ class Post extends PostRepository
     public function getImages()
     {
         return $this->images;
+    }
+
+
+    /**
+     * Set author
+     *
+     * @param \AppBundle\Entity\User $author
+     * @return Post
+     */
+    public function setAuthor(\AppBundle\Entity\User $author = null)
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * Get author
+     *
+     * @return \AppBundle\Entity\User 
+     */
+    public function getAuthor()
+    {
+        return $this->author;
     }
 }

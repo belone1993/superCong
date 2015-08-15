@@ -9,6 +9,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use StoreBundle\Entity\Post;
 
 /**
  * @ORM\Table(name="user", indexes={@ORM\Index(name="username", columns={"username"})}, options={"collate": "utf8_general_ci", "character": "utf8"})
@@ -52,6 +53,13 @@ class User
      * @ORM\Column(type="datetime", name="createAt", options={"comment": "创建时间"})
      */
     protected $createAt;
+
+    /**
+     * @var Post
+     *
+     * @ORM\OneToMany(targetEntity="StoreBundle\Entity\Post", mappedBy="author")
+     */
+    private $posts;
 
     public function __construct()
     {
@@ -158,5 +166,38 @@ class User
     public function getCreateAt()
     {
         return $this->createAt;
+    }
+
+    /**
+     * Add posts
+     *
+     * @param \StoreBundle\Entity\Post $posts
+     * @return User
+     */
+    public function addPost(\StoreBundle\Entity\Post $posts)
+    {
+        $this->posts[] = $posts;
+
+        return $this;
+    }
+
+    /**
+     * Remove posts
+     *
+     * @param \StoreBundle\Entity\Post $posts
+     */
+    public function removePost(\StoreBundle\Entity\Post $posts)
+    {
+        $this->posts->removeElement($posts);
+    }
+
+    /**
+     * Get posts
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPosts()
+    {
+        return $this->posts;
     }
 }

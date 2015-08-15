@@ -145,7 +145,6 @@ class PostController extends Controller
                     ->setImageSize( $fileData->getSize() )
                     ->setPostInfo( $postInfo );
 
-
                 $em->persist( $image );
                 $em->flush();
             }
@@ -167,13 +166,15 @@ class PostController extends Controller
         switch( $request->get('postStatus') )
         {
             case 0:
-                $redirectUrl = $this->redirectToRoute('admin_postPreview', ['id' => $postInfo->getId()]);
+                $redirectUrl = $this->generateUrl('admin_postPreview', ['id' => $postInfo->getId()]);
                 break;
             case 3: // 草稿
-                $redirectUrl = $this->redirectToRoute('admin_postPreview', ['id' => $postInfo->getId()]);
+//                $redirectUrl = $this->generateUrl('admin_postPreview');
                 break;
         }
-        $response['data'] = $redirectUrl;
+        $response['data'] = [
+            'redirect' => $redirectUrl
+        ];
         return new JsonResponse($response);
     }
 

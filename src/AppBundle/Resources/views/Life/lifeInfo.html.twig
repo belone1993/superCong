@@ -33,8 +33,22 @@
                     <article>
                         <!-- Preview Image -->
                         <div style="overflow-y: hidden; max-height: 300px; text-align: center; margin:0 auto;">
-                            <img class="img-responsive" src="{{ source_url }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}?imageView2/2/h/300" style="margin: auto;">
+                            {#<img class="img-responsive" src="{{ source_url }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}?imageView2/2/h/300" style="margin: auto;">#}
+                            {% if post.images.count > 1 %}
+                                <div id="post-slider" class="flexslider">
+                                    <ul class="slides">
+                                        {% for item in post.images %}
+                                            <li>
+                                                <img src="{{ source_url }}images/{{ item.imageTime|date('Y/m') }}/{{ item.imageName }}?imageView2/2/h/300">
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% else %}
+                                <img class="img-responsive" src="{{ source_url }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}?imageView2/2/h/300" alt="" style="margin: auto;">
+                            {% endif %}
                         </div>
+
                         <!-- Post Content -->
                         <div class="bs-callout bs-callout-info LifeContent">
                             {% autoescape false %}
@@ -118,4 +132,11 @@
             </div>
         </div>
     </section>
+{% endblock %}
+
+{% block Cong_javascripts %}
+    <script src="{{ storage_url }}static/moderna/js/jquery.fancybox.pack.js"></script>
+    <script src="{{ storage_url }}static/moderna/js/jquery.fancybox-media.min.js"></script>
+    <script src="{{ storage_url }}static/moderna/js/jquery.flexslider.min.js"></script>
+    <script src="{{ storage_url }}static/moderna/js/custom.js"></script>
 {% endblock %}
