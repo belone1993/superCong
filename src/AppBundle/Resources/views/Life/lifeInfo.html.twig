@@ -39,13 +39,13 @@
                                     <ul class="slides">
                                         {% for item in post.images %}
                                             <li>
-                                                <img src="{{ source_url }}images/{{ item.imageTime|date('Y/m') }}/{{ item.imageName }}?imageView2/1/w/900/h/300">
+                                                <img src="{{ source_url }}images/{{ item.imageTime|date('Y/m') }}/{{ item.imageName }}?imageView2/1/w/750/h/300">
                                             </li>
                                         {% endfor %}
                                     </ul>
                                 </div>
                             {% else %}
-                                <img class="img-responsive" src="{{ source_url }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}?imageView2/1/w/900/h/300" alt="" style="margin: auto;">
+                                <img class="img-responsive" src="{{ source_url }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}?imageView2/1/w/750/h/300" alt="" style="margin: auto;">
                             {% endif %}
                         </div>
 
