@@ -1,0 +1,12 @@
+{% for image in images %}
+    {#{{ dump(image) }}#}
+    <li class="item-thumbs col-lg-3 design" data-id="image-{{ image.id }}" data-type="web">
+        <!-- Fancybox - Gallery Enabled - Title - Full Image -->
+        <a class="hover-wrap fancybox" data-fancybox-group="gallery" title="Portfolio name" href="{{ storage_url }}images/{{ image.imageTime|date('Y/m') }}/{{ image.imageName }}?imageView2/1/w/800/h/600">
+            <span class="overlay-img"></span>
+            <span class="overlay-img-thumb font-icon-plus"></span>
+        </a>
+        <!-- Thumb Image and Description -->
+        <img src="{{ source_url }}images/{{ image.imageTime|date('Y/m') }}/{{ image.imageName }}?imageView2/1/w/260/h/195" alt="">
+    </li>
+{% endfor %}

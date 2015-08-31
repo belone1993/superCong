@@ -12,4 +12,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class ImageRepository extends EntityRepository
 {
+    /**
+     * 根据分页查找图片
+     * @param int $page
+     * @return array
+     */
+    public function findImagesByPage( $page = 1 )
+    {
+        return $this->_em->createQueryBuilder()
+            ->select("i")
+            ->from('StoreBundle:Image', 'i')
+            ->getQuery()->getResult();
+    }
 }

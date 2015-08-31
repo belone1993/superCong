@@ -3,6 +3,7 @@
 namespace StoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use StoreBundle\Entity\Repository\ImageRepository;
 
 /**
  * Image
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="image", options={"collate": "utf8_general_ci", "character": "utf8"})
  * @ORM\Entity(repositoryClass="StoreBundle\Entity\Repository\ImageRepository")
  */
-class Image
+class Image extends ImageRepository
 {
     /**
      * @var integer
