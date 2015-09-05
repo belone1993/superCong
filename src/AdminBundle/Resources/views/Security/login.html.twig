@@ -56,25 +56,32 @@
                         <div id="login-box" class="login-box visible widget-box no-border">
                             <div class="widget-body">
                                 <div class="widget-main">
+                                    {% trans_default_domain 'FOSUserBundle' %}
                                     <h4 class="header blue lighter bigger">
                                         <i class="ace-icon fa fa-coffee green"></i>
-                                        {% if error %}{{ error }}{% else %}请输入您的信息{% endif %}
+                                        {#{% if error %}{{ error }}{% else %}请输入您的信息{% endif %}#}
+                                        {% if error %}
+                                            {{ error.messageKey|trans(error.messageData, 'security') }}
+                                        {% else %}
+                                            请输入您的信息
+                                        {% endif %}
                                     </h4>
 
                                     <div class="space-6"></div>
 
-                                    <form action="{{ url('login_check') }}" method="post">
+                                    <form action="{{ url('fos_user_security_check') }}" data-ajax="false" method="post">
+                                        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
                                         <fieldset>
                                             <label class="block clearfix">
                                                 <span class="block input-icon input-icon-right">
-                                                    <input type="text" name="_username" class="form-control" value="{{ last_username }}" placeholder="登录名" />
+                                                    <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}" required="required" placeholder="{{ 'security.login.username'|trans }}" />
                                                     <i class="ace-icon fa fa-user"></i>
                                                 </span>
                                             </label>
 
                                             <label class="block clearfix">
                                                 <span class="block input-icon input-icon-right">
-                                                    <input type="password" name="_password" class="form-control" placeholder="密码" />
+                                                    <input type="password" id="password" name="_password" required="required" class="form-control" placeholder="{{ 'security.login.password'|trans }}" />
                                                     <i class="ace-icon fa fa-lock"></i>
                                                 </span>
                                             </label>
@@ -83,13 +90,13 @@
 
                                             <div class="clearfix">
                                                 <label class="inline">
-                                                    <input type="checkbox" class="ace" />
-                                                    <span class="lbl"> 记住我</span>
+                                                    <input type="checkbox" id="remember_me" name="_remember_me" value="on" class="ace" />
+                                                    <span class="lbl"> {{ 'security.login.remember_me'|trans }}</span>
                                                 </label>
-
-                                                <button type="submit" class="width-35 pull-right btn btn-sm btn-primary">
+                                                <input type="hidden" name="_target_path" value="{{ url('admin_index') }}" />
+                                                <button type="submit" id="_submit" name="_submit" class="width-35 pull-right btn btn-sm btn-primary">
                                                     <i class="ace-icon fa fa-key"></i>
-                                                    <span class="bigger-110">登陆</span>
+                                                    <span class="bigger-110">{{ 'security.login.submit'|trans }}</span>
                                                 </button>
                                             </div>
 
@@ -188,7 +195,7 @@
                                     <div class="space-6"></div>
                                     <p> 请输入注册信息: </p>
 
-                                    <form action="{{ url('register_check') }}" method="post">
+                                    <form action="" method="post">
                                         <fieldset>
                                             <label class="block clearfix">
                                                 <span class="block input-icon input-icon-right">

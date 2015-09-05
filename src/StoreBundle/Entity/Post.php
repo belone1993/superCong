@@ -130,9 +130,9 @@ class Post extends PostRepository
     private $images;
 
     /**
-     * @var \AppBundle\Entity\User
+     * @var \StoreBundle\Entity\User
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", fetch="EXTRA_LAZY", inversedBy="posts")
+     * @ORM\ManyToOne(targetEntity="StoreBundle\Entity\User", fetch="EXTRA_LAZY", inversedBy="posts")
      * @ORM\JoinColumn(name="authorId", referencedColumnName="id")
      */
     private $author;
@@ -512,10 +512,10 @@ class Post extends PostRepository
     /**
      * Set author
      *
-     * @param \AppBundle\Entity\User $author
+     * @param \StoreBundle\Entity\User $author
      * @return Post
      */
-    public function setAuthor(\AppBundle\Entity\User $author = null)
+    public function setAuthor(\StoreBundle\Entity\User $author = null)
     {
         $this->author = $author;
 
@@ -525,7 +525,7 @@ class Post extends PostRepository
     /**
      * Get author
      *
-     * @return \AppBundle\Entity\User 
+     * @return \StoreBundle\Entity\User
      */
     public function getAuthor()
     {

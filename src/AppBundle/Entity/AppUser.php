@@ -8,14 +8,17 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use StoreBundle\Entity\Post;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @ORM\Table(name="user", indexes={@ORM\Index(name="username", columns={"username"})}, options={"collate": "utf8_general_ci", "character": "utf8"})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\Repository\UserRepository")
  */
-class User
+class User extends UserRepository implements UserInterface, \Serializable
 {
     /**
      * @var integer
@@ -166,6 +169,52 @@ class User
     public function getCreateAt()
     {
         return $this->createAt;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRoles()
+    {
+        return array('ROLE_USER');
+    }
+
+    public function eraseCredentials()
+    {
+    }
+
+
+    public function getSalt()
+    {
+
+    }
+
+    /**
+     * @return string
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            // $this->salt,
+        ));
+    }
+
+    /**
+     * @param string $serialized
+     */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            // $this->salt
+            ) = unserialize($serialized);
     }
 
     /**

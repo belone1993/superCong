@@ -6,7 +6,7 @@ imports:
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: en
+    locale: zh_CN
 
 framework:
     #esi:             ~
@@ -30,6 +30,7 @@ framework:
         handler_id:  ~
     fragments:       ~
     http_method_override: true
+    translator: { fallbacks: %locale% }
 
 # Twig Configuration
 twig:
@@ -81,3 +82,8 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+fos_user:
+    db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
+    firewall_name: main
+    user_class: StoreBundle\Entity\User

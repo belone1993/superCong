@@ -79,6 +79,7 @@ class LifeController extends Controller
             $post = $postRepository->find($id);
         }else
         {
+            /** @var  $postRepository Post */
             $postRepository = $this->getDoctrine()->getRepository('StoreBundle:Post');
             $post = $postRepository->findOneBy([
                 'status' => 0,
@@ -88,13 +89,9 @@ class LifeController extends Controller
             ]);
             if( empty( $post ) )
             {
-                $user = $this->getDoctrine()->getRepository('AppBundle:User');
-
-                $author = $user->find(1);
-
                 $post = new Post();
                 $post->setAction(2)
-                    ->setAuthor( $author )
+                    ->setAuthor( $this->getUser() )
                     ->setCategoryId( 0 )
                     ->setContent( ' ' )
                     ->setDescription( ' ' )
