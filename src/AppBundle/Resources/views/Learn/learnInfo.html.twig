@@ -31,8 +31,27 @@
                 <div class="col-lg-8">
                     <article>
                         <!-- Preview Image -->
-                        <div style="overflow-y: hidden; max-height: 300px; text-align: center; margin:0 auto;">
-                            <img class="img-responsive" src="{{ source_url }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}?imageView2/1/w/750/h/300" style="margin: auto;">
+                        <div style="max-height: 300px; text-align: center; margin:0 auto;">
+                            {#<img class="img-responsive" src="{{ source_url }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}?imageView2/1/w/750/h/300" style="margin: auto;">#}
+
+                            {% if post.image|trim is not empty %}
+                                <img class="img-responsive img-hover" src="{{ source_url }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}?imageView2/1/w/750/h/300" alt=""/>
+                            {% elseif post.images.count > 1 %}
+                                <div id="post-slider" class="flexslider">
+                                    <ul class="slides">
+                                        {% for image in post.images %}
+                                            <li>
+                                                <img src="{{ source_url }}images/{{ image.imageTime|date('Y/m') }}/{{ image.imageName }}?imageView2/1/w/750/h/300">
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% elseif post.images.count == 1 %}
+                                {% for image in post.images %}
+                                    <img class="img-responsive img-hover" src="{{ source_url }}images/{{ image.imageTime|date('Y/m') }}/{{ image.imageName }}?imageView2/1/w/750/h/300" alt=""/>
+                                {% endfor %}
+                            {% endif %}
+
                         </div>
                         <!-- Post Content -->
                         <div class="bs-callout bs-callout-info LifeContent">
