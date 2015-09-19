@@ -27,7 +27,23 @@
                                 <div class="post-heading">
                                     <h3><a href="{{ url('learn_learnInfo', {"id": post.id}) }}">{{ post.title }}</a></h3>
                                 </div>
-                                <img src="{{ source_url }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}?imageView2/2/w/710" alt="" />
+                                {% if post.image|trim is not empty %}
+                                    <img class="img-responsive img-hover" src="{{ source_url }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}?imageView/1/w/460/h/240" alt=""/>
+                                {% elseif post.images.count > 1 %}
+                                    <div id="post-slider" class="flexslider">
+                                        <ul class="slides">
+                                            {% for image in post.images %}
+                                                <li>
+                                                    <img src="{{ source_url }}images/{{ image.imageTime|date('Y/m') }}/{{ image.imageName }}?imageView/1/w/460/h/240">
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% elseif post.images.count == 1 %}
+                                    {% for image in post.images %}
+                                        <img class="img-responsive img-hover" src="{{ source_url }}images/{{ image.imageTime|date('Y/m') }}/{{ image.imageName }}?imageView/1/w/460/h/240" alt=""/>
+                                    {% endfor %}
+                                {% endif %}
                             </div>
                             <p>
                                 {{ post.description }}
