@@ -152,67 +152,60 @@
                  min: $.validator.format("请输入不小于 {0} 的数值")
              });
 
-            $('#editArticle').validate({
-                onkeyup: false,
+             $('#editArticle').validate({
+                 onkeyup: false,
 //                errorClass: 'error',
-                validClass: 'valid',
-                errorElement: 'div',
-                errorClass: 'help-block',
-                focusInvalid: false,
-                highlight: function (e) {
-                    $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
-                },
+                 validClass: 'valid',
+                 errorElement: 'div',
+                 errorClass: 'help-block',
+                 focusInvalid: false,
+                 highlight: function (e) {
+                     $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+                 },
 
-                success: function (e) {
-                    $(e).closest('.form-group').removeClass('has-error');//.addClass('has-info');
-                    $(e).remove();
-                },
+                 success: function (e) {
+                     $(e).closest('.form-group').removeClass('has-error');//.addClass('has-info');
+                     $(e).remove();
+                 },
 
-                errorPlacement: function (error, element) {
-                    if(element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
-                        var controls = element.closest('div[class*="col-"]');
-                        if(controls.find(':checkbox,:radio').length > 1) controls.append(error);
-                        else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
-                    }
-                    else if(element.is('.select2')) {
-                        error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
-                    }
-                    else if(element.is('.chosen-select')) {
-                        error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
-                    }
-                    else error.insertAfter(element.parent());
-                },
+                 errorPlacement: function (error, element) {
+                     if(element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
+                         var controls = element.closest('div[class*="col-"]');
+                         if(controls.find(':checkbox,:radio').length > 1) controls.append(error);
+                         else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
+                     }
+                     else if(element.is('.select2')) {
+                         error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
+                     }
+                     else if(element.is('.chosen-select')) {
+                         error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
+                     }
+                     else error.insertAfter(element.parent());
+                 },
 
-                submitHandler: function (form) {
-                    $.ajax({
-                        url: $(form)[0].action,
-                        type: 'POST',
-                        dataType: 'json',
-//                        cache: false,
-                        contentType: false,
-                        processData: false,
-//                        data: $(form).serialize(), // serialize form data
-                        data: new FormData($(form)), // serialize form data
-                        beforeSend: function () {
-                        },
-                        success: function (data) {
-                            try{
-                                console.log(data);
-                            }catch ( err )
-                            {
+                 submitHandler: function (form) {
+                     swal({
+                         title: "您确定要发布这篇文章?",
+                         text: "发布完之后将会在前台展示？",
+                         type: "warning",
+                         showCancelButton: true,
+                         confirmButtonColor: "#87b87f",
+                         confirmButtonText: "Yes, release it!",
+                         cancelButtonText: "No, cancel!",
+                         showLoaderOnConfirm: true,
+                         closeOnConfirm: false,
+                         closeOnCancel: true
+                     }, function(isConfirm){
+                         if (isConfirm) {
+                             editArticle.sendFormData( $(form)[0].action, editArticle.getFormData() );
+                         }
+                     });
 
-                            }
-                        },
-                        error: function (e) {
-
-                        }
-                    })
-                },
-                invalidHandler: function (form) {
-                    console.log('invalid');
-                    console.log(form);
-                }
-            });
+                 },
+                 invalidHandler: function (form) {
+                     swal("错误", '有一些错误', "error");
+                 }
+             });
 
              $('#chooseImage').ace_file_input({
                  no_file:'没有文件 ...',
@@ -230,6 +223,84 @@
                 //in ajax mode, remove remaining elements before leaving page
                 $('[class*=select2]').remove();
             });
+
+
+             var editArticle = {
+
+                 myForm: $('#editArticle'),
+
+                 /**
+                  * 获取表单数据
+                  * @returns {*}
+                  */
+                 getFormData: function()
+                 {
+                     var myForm = this.myForm;
+
+                     var fd = new FormData();//empty FormData object
+
+                     $.each(myForm.serializeArray(), function(i, item) {
+                         //add form fields one by one to our FormData
+                         fd.append(item.name, item.value);
+                     });
+
+                     myForm.find('input[type=file]').each(function(){
+                         var field_name = $(this).attr('name');
+                         //for fields with "multiple" file support
+                         //field name should be something like `myfile[]`
+
+                         var files = $(this).data('ace_input_files');
+                         if(files && files.length > 0) {
+                             for(var f = 0; f < files.length; f++) {
+                                 fd.append(field_name, files[f]);
+                             }
+                         }
+                     });
+                     return fd
+                 },
+
+                 /**
+                  * 发送数据至后台
+                  * @param action
+                  * @param formData
+                  * @param isRedirect
+                  */
+                 sendFormData: function( action, formData, isRedirect )
+                 {
+                     $.ajax({
+                         url: action,
+                         type: 'POST',
+                         dataType: 'json',
+                         processData: false,
+                         contentType: false,
+                         data: formData,
+                         beforeSend: function () {
+                         },
+                         success: function (data) {
+                             try{
+                                 if( data.success == true )
+                                 {
+                                     swal("Good job!", data.message, "success");
+                                     if( isRedirect )
+                                     {
+                                         window.location = data.data.redirect;
+                                     }
+                                 }else
+                                 {
+                                     swal("错误", data.message, "error");
+                                 }
+                             }catch ( err )
+                             {
+                                 swal("错误", error, "error");
+                             }
+                         },
+                         error: function (e) {
+                             swal("错误", '啥错？', "error");
+                         }
+                     });
+                 }
+             };
+
         });
 	});
 </script>
