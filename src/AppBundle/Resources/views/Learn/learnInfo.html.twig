@@ -48,7 +48,7 @@
                                 </div>
                             {% elseif post.images.count == 1 %}
                                 {% for image in post.images %}
-                                    <img class="img-responsive img-hover" src="{{ source_url }}images/{{ image.imageTime|date('Y/m') }}/{{ image.imageName }}?imageView2/1/w/750/h/300" alt=""/>
+                                    <img class="img-responsive img-hover" src="{{ source_url }}images/{{ image.imageTime|date('Y/m') }}/{{ image.imageName }}?imageView2/1/w/750/h/300" style="margin: auto;"/>
                                 {% endfor %}
                             {% endif %}
 
