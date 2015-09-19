@@ -74,7 +74,13 @@
                         <div class="ds-share flat"
                              data-thread-key="{{ post.id }}"
                              data-title="{{ post.title }}"
+
+                        {% if post.image|trim is not empty %}
                              data-images="{{ source_url }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}"
+                        {% elseif post.images.count > 0 %}
+                            data-images="{{ source_url }}images/{{ post.images[0].imageTime|date('Y/m') }}/{{ post.images[0].imageName }}"
+                        {% endif %}
+
                              data-content="{{ post.description }}"
                              data-url="{{ url('post_postInfo', {'id': post.id}) }}">
                             <div class="ds-share-inline">
