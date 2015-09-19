@@ -111,7 +111,7 @@
                     </button>
 
                     &nbsp; &nbsp; &nbsp;
-                    <button class="btn btn-info" type="submit">
+                    <button class="btn btn-info sendPost" type="submit" data-status="1" >
                         发布文章
                         <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
                     </button>
@@ -150,6 +150,11 @@
                  range: $.validator.format("请输入范围在 {0} 到 {1} 之间的数值"),
                  max: $.validator.format("请输入不大于 {0} 的数值"),
                  min: $.validator.format("请输入不小于 {0} 的数值")
+             });
+
+             $('.sendPost').on(ace.click_event, function () {
+                 var saveStatus = $(this).attr('data-status');
+                 $('input[name=postStatus]').val( saveStatus );
              });
 
              $('#editArticle').validate({
