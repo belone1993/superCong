@@ -9,7 +9,7 @@
                 <div class="col-lg-12">
                     <ul class="breadcrumb">
                         <li><a href="{{ url('homepage') }}"><i class="fa fa-home"></i></a><i class="icon-angle-right"></i></li>
-                        <li><a href="{{ url('life') }}">慢生活</a><i class="icon-angle-right"></i></li>
+                        <li><a href="{{ url('life_grow') }}">慢生活</a><i class="icon-angle-right"></i></li>
                         <li class="active">在成长</li>
                     </ul>
                 </div>
@@ -28,12 +28,12 @@
                             <div class="col-md-1 text-center">
                                 <p>{{ post.createdAt|date() }}</p>
                             </div>
-                            <div class="col-md-5" style="max-height: 240px; overflow-y: hidden;">
+                            <div class="col-md-5" style="max-height: 240px;">
                                 <a href="{{ url('life_lifeInfo', {"id": post.id}) }}">
                                     {% if post.image|trim is not empty %}
                                         <img class="img-responsive img-hover" src="{{ source_url }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}?imageView/1/w/460/h/240" alt=""/>
                                     {% elseif post.images.count > 0 %}
-                                        <div id="post-slider" class="flexslider">
+                                        <div class="flexslider post-slider">
                                             <ul class="slides">
                                                 {% for image in post.images %}
                                                     <li>
@@ -108,7 +108,7 @@
     <script src="{{ storage_url }}static/moderna/js/jquery.fancybox-media.js"></script>
     <script src="{{ storage_url }}static/moderna/js/jquery.flexslider.js"></script>
     <script>
-        $('#post-slider').flexslider({
+        $('.post-slider').flexslider({
             // Primary Controls
             controlNav          : false,              //Boolean: Create navigation for paging control of each clide? Note: Leave true for manualControls usage
             directionNav        : true,              //Boolean: Create navigation for previous/next navigation? (true/false)

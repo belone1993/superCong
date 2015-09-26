@@ -82,19 +82,20 @@ class DefaultController extends Controller
      */
     public function lifeAction( $page = 1 )
     {
-        /** @var  $post \StoreBundle\Entity\Repository\PostRepository */
-        $post = $this->getDoctrine()->getRepository('StoreBundle:Post');
-
-        $posts = $post->findPostsPage( 2, $page );
-
-        $postTotal = $post->countPosts( 2 );
-
-        return [
-            'posts'     => $posts,
-            'postTotal' => ceil( $postTotal / 10 ),
-            'page'      => $page,
-            'action'    => 'life'
-        ];
+//        /** @var  $post \StoreBundle\Entity\Repository\PostRepository */
+//        $post = $this->getDoctrine()->getRepository('StoreBundle:Post');
+//
+//        $posts = $post->findPostsPage( 2, $page );
+//
+//        $postTotal = $post->countPosts( 2 );
+//
+//        return [
+//            'posts'     => $posts,
+//            'postTotal' => ceil( $postTotal / 10 ),
+//            'page'      => $page,
+//            'action'    => 'life'
+//        ];
+        $this->redirectToRoute('life_grow', ['page' => $page]);
     }
 
     /**
