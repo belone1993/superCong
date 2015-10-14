@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>匆匆十月</title>
+    <meta name="description" content="时间是一个很强大的东西，很容易在回忆里美好沉睡，让人沉溺。" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    {% stylesheets
+    '@AppBundle/Resources/public/css/screen.css'
+    %}
+    <link rel="stylesheet" type="text/css" href="{{ asset_url }}" />
+    {% endstylesheets %}
+    {#<link rel="stylesheet" type="text/css" href="http://lattecake.com/assets/css/screen.css?v=8b8e9c5bb4" />#}
+    {#<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />#}
+
+    <link rel="canonical" href="http://lattecake.com/" />
+    <meta name="referrer" content="origin" />
+
+    <meta property="og:site_name" content="匆匆十月" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="匆匆十月" />
+    <meta property="og:description" content="时间是一个很强大的东西，很容易在回忆里美好沉睡，让人沉溺。" />
+    <meta property="og:url" content="http://lattecake.com/" />
+    <meta property="og:image" content="http://lattecake.com/content/images/2015/10/IMG_2378.jpg" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="匆匆十月" />
+    <meta name="twitter:description" content="时间是一个很强大的东西，很容易在回忆里美好沉睡，让人沉溺。" />
+    <meta name="twitter:url" content="http://lattecake.com/" />
+    <meta name="twitter:image:src" content="http://lattecake.com/content/images/2015/10/IMG_2378.jpg" />
+
+</head>
+<body class="home-template nav-closed">
+
+<span class="nav-cover"></span>
+
+
+<div class="site-wrapper">
+    <header class="main-header " style="background-image: url(http://storage.lattecake.com/static/images/background/20150321-web-0-IMG_9844.jpg); margin-bottom: 0px;">
+        <div class="vertical">
+            <div class="main-header-content inner">
+                <h1 class="page-title">某一刻似曾经历</h1>
+                <h2 class="page-description">时间是一个很强大的东西，很容易在回忆里美好沉睡，让人沉溺。</h2>
+            </div>
+        </div>
+        <a class="scroll-down" href="{{ url('homepage') }}" data-offset="-45">
+            <span> << </span>
+        </a>
+    </header>
+</div>
+
+
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+{#<script type="text/javascript" src="http://lattecake.com/assets/js/jquery.fitvids.js?v=8b8e9c5bb4"></script>#}
+<script>
+    (function ($, undefined) {
+        "use strict";
+
+//        var $document = $(document);
+//
+//        $document.ready(function () {
+//
+//            var $postContent = $(".post-content");
+//            $postContent.fitVids();
+//
+//            $(".scroll-down").arctic_scroll();
+//
+//            $(".menu-button, .nav-cover, .nav-close").on("click", function(e){
+//                e.preventDefault();
+//                $("body").toggleClass("nav-opened nav-closed");
+//            });
+//
+//        });
+
+        // Arctic Scroll by Paul Adam Davis
+        // https://github.com/PaulAdamDavis/Arctic-Scroll
+        $.fn.arctic_scroll = function (options) {
+
+            var defaults = {
+                        elem: $(this),
+                        speed: 500
+                    },
+
+                    allOptions = $.extend(defaults, options);
+
+            allOptions.elem.click(function (event) {
+                event.preventDefault();
+                var $this = $(this),
+                        $htmlBody = $('html, body'),
+                        offset = ($this.attr('data-offset')) ? $this.attr('data-offset') : false,
+                        position = ($this.attr('data-position')) ? $this.attr('data-position') : false,
+                        toMove;
+
+                if (offset) {
+                    toMove = parseInt(offset);
+                    $htmlBody.stop(true, false).animate({scrollTop: ($(this.hash).offset().top + toMove) }, allOptions.speed);
+                } else if (position) {
+                    toMove = parseInt(position);
+                    $htmlBody.stop(true, false).animate({scrollTop: toMove }, allOptions.speed);
+                } else {
+                    $htmlBody.stop(true, false).animate({scrollTop: ($(this.hash).offset().top) }, allOptions.speed);
+                }
+            });
+
+        };
+    })(jQuery);
+</script>
+
+</body>
+</html>

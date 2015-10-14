@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/", name="homepage")
+     * @Route("/home", name="homepage")
      * @Template()
      */
     public function indexAction()
@@ -26,6 +26,17 @@ class DefaultController extends Controller
         return [
             'action' => 'homepage'
         ];
+    }
+
+    /**
+     * @Route("/", name="index_page")
+     * @Template()
+     *
+     * @return array
+     */
+    public function homeAction()
+    {
+        return [];
     }
 
     /**
