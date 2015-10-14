@@ -100,4 +100,59 @@ class LifeController extends Controller
             'action' => 'life'
         ];
     }
+
+    /**
+     * 生活
+     * @Route("/feel", name="life_feel")
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function feelAction()
+    {
+        return $this->render('AppBundle:Life:picture.html.twig', [
+            'action' => 'life'
+        ]);
+    }
+
+    /**
+     * 生活
+     * @Route("/gallery", name="life_gallery")
+     * @Template()
+     *
+     * @return array
+     */
+    public function galleryAction()
+    {
+        return [
+            'action' => 'life'
+        ];
+    }
+
+    /**
+     * 生活
+     * @Route("/music", name="life_music")
+     * @Template()
+     *
+     * @return array
+     */
+    public function musicAction()
+    {
+        return [
+            'action' => 'life'
+        ];
+    }
+
+    /**
+     * 生活
+     * @Route("/video", name="life_video")
+     * @Template()
+     *
+     * @return array
+     */
+    public function videoAction()
+    {
+        return [
+            'action' => 'life'
+        ];
+    }
 }

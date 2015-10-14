@@ -1,0 +1,412 @@
+
+<title>编辑相册 - Latte Cake Admin</title>
+
+<!-- ajax layout which only needs content area -->
+<div class="page-header">
+    <h1>
+        慢生活
+        <small>
+            <i class="ace-icon fa fa-angle-double-right"></i>
+            编辑相册
+        </small>
+    </h1>
+</div><!-- /.page-header -->
+
+<div class="row">
+    <div class="col-xs-12">
+        <!-- PAGE CONTENT BEGINS -->
+        <form class="form-horizontal" id="editArticle" enctype="multipart/form-data" role="form" action="{{ url('admin_postWrite') }}" method="post">
+            <!-- #section:elements.form -->
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right" for="form-field-postTitle"> 文章标题 </label>
+
+                <div class="col-sm-10">
+                    <div class="widget-main no-padding">
+                        <input type="hidden" name="active" value="2">
+                        <input type="hidden" name="postId" value="{{ post.id }}">
+                        <input type="text" required name="postTitle" id="form-field-postTitle" placeholder="请输入标题" value="{{ post.title }}" class="col-xs-10 col-sm-5" />
+                    </div>
+                    &nbsp; &nbsp; &nbsp;
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right" for="form-field-postImage"> 文章头图 </label>
+
+                <div class="col-sm-10">
+                    <label class="ace-file-input width-60 inline">
+                        <input type="file" name="postImage[]" multiple id="chooseImage">
+                    </label>
+                </div>
+            </div>
+            {% if post.images and post.images.count > 0 %}
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-postImages"> 图片列表 </label>
+                    <div class="col-sm-10">
+                        <ul class="ace-thumbnails clearfix">
+                            <!-- #section:pages/gallery.caption -->
+                            {% for image in post.images %}
+                                <li>
+                                    <a href="{{ source_url }}images/{{ image.imageTime|date('Y/m') }}/{{ image.imageName }}" data-rel="colorbox">
+                                        <img width="150" height="150" alt="150x150" src="{{ source_url }}images/{{ image.imageTime|date('Y/m') }}/{{ image.imageName }}?imageView2/1/w/150/h/150" />
+                                    </a>
+
+                                    <div class="tools tools-bottom">
+                                        <a href="#">
+                                            <i class="ace-icon fa fa-link"></i>
+                                        </a>
+                                        <a href="#">
+                                            <i class="ace-icon fa fa-pencil"></i>
+                                        </a>
+                                        <a href="#">
+                                            <i class="ace-icon fa fa-share"></i>
+                                        </a>
+                                        <a href="#">
+                                            <i class="ace-icon fa fa-times red"></i>
+                                        </a>
+
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if post.description|trim is not empty %}
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 描述 </label>
+
+                    <div class="col-sm-8">
+                        <textarea required class="form-control" style="resize: none;" name="description"  placeholder="请输入描述信息..." rows="5">{{ post.description }}</textarea>
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right" for="form-field-content">内容</label>
+
+                <div class="col-sm-10">
+                    <div class="widget-main no-padding">
+                        <textarea class="form-control" required style="resize: none;" name="content" data-provide="markdown" data-iconlibrary="fa" placeholder="支持Markdown语法..." rows="15">{{ post.content }}</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right" for="form-field-5">Markdown</label>
+
+                <div class="col-sm-10">
+                    <div class="widget-main no-padding">
+                        <label class="line-height-1 blue">
+                            <input name="markdown" value="1" {% if post.isMarkdown == 1 %}checked{% endif %} type="radio" class="ace valid" aria-required="true" aria-describedby="gender-error" aria-invalid="true">
+                            <span class="lbl"> 是</span>
+                        </label>
+                        <label class="line-height-1 blue">
+                            <input name="markdown" value="0" {% if post.isMarkdown == 0 %}checked{% endif %} type="radio" class="ace valid" aria-required="true" aria-describedby="gender-error" aria-invalid="false">
+                            <span class="lbl"> 否</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clearfix form-actions">
+                <div class="col-md-offset-3 col-md-9">
+                    <input type="hidden" name="postStatus" value="1">
+                    <a href="#life/grow" class="btn btn-light back-page" type="button">
+                        <i class="ace-icon fa fa-reply icon-only"></i>
+                        返回列表
+                    </a>
+
+                    &nbsp; &nbsp; &nbsp;
+                    <button class="btn saveDraft" type="button" data-status="3">
+                        <i class="ace-icon fa fa-floppy-o bigger-110"></i>
+                        保存草稿
+                    </button>
+
+                    &nbsp; &nbsp; &nbsp;
+                    <button class="btn btn-warning savePreview" type="button" data-status="0">
+                        <i class="ace-icon fa fa-th-large"></i>
+                        预览文章
+                    </button>
+
+                    &nbsp; &nbsp; &nbsp;
+                    <button class="btn btn-info sendPost" type="submit" data-status="1">
+                        发布文章
+                        <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div><!-- /.col -->
+</div><!-- /.row -->
+
+<!-- page specific plugin scripts -->
+<script type="text/javascript">
+    var scripts = [null,
+        admin_static + "assets/js/jquery.validate.js",
+        admin_static + "assets/js/additional-methods.js",
+        admin_static + "assets/js/ace/elements.fileinput.js",
+        admin_static + "assets/js/jquery.colorbox.js",
+        null];
+    $('.page-content-area').ace_ajax('loadScripts', scripts, function() {
+        //inline scripts related to this page
+        jQuery(function($) {
+
+            $('.saveDraft').on(ace.click_event, function(e)
+            {
+                var saveStatus = $(this).attr('data-status');
+                $('input[name=postStatus]').val( saveStatus );
+                swal({
+                    title: "您确写?",
+                    text: "该文章将会保存至草稿箱？",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#abbac3",
+                    confirmButtonText: "Yes, save it!",
+                    cancelButtonText: "No, cancel!",
+                    showLoaderOnConfirm: true,
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+                }, function(isConfirm){
+                    if (isConfirm) {
+                        editArticle.sendFormData( $(editArticle.myForm)[0].action, editArticle.getFormData() );
+                    }
+                });
+            });
+
+            $('.savePreview').on(ace.click_event, function()
+            {
+                var saveStatus = $(this).attr('data-status');
+                $('input[name=postStatus]').val( saveStatus );
+                swal({
+                    title: "您确定?",
+                    text: "下次新建文章时会打开该文章，您也可以将它保存到草稿箱？",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#abbac3",
+                    confirmButtonText: "Yes, preview it!",
+                    cancelButtonText: "No, cancel!",
+                    showLoaderOnConfirm: true,
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+                }, function(isConfirm){
+                    if (isConfirm) {
+                        editArticle.sendFormData( $(editArticle.myForm)[0].action, editArticle.getFormData(), true );
+                    }
+                });
+            });
+
+            $('.sendPost').on(ace.click_event, function () {
+                var saveStatus = $(this).attr('data-status');
+                $('input[name=postStatus]').val( saveStatus );
+            });
+
+            $.extend($.validator.messages, {
+                required: "这是必填字段",
+                remote: "请修正此字段",
+                email: "请输入有效的电子邮件地址",
+                url: "请输入有效的网址",
+                date: "请输入有效的日期",
+                dateISO: "请输入有效的日期 (YYYY-MM-DD)",
+                number: "请输入有效的数字",
+                digits: "只能输入数字",
+                creditcard: "请输入有效的信用卡号码",
+                equalTo: "你的输入不相同",
+                extension: "请输入有效的后缀",
+                maxlength: $.validator.format("最多可以输入 {0} 个字符"),
+                minlength: $.validator.format("最少要输入 {0} 个字符"),
+                rangelength: $.validator.format("请输入长度在 {0} 到 {1} 之间的字符串"),
+                range: $.validator.format("请输入范围在 {0} 到 {1} 之间的数值"),
+                max: $.validator.format("请输入不大于 {0} 的数值"),
+                min: $.validator.format("请输入不小于 {0} 的数值")
+            });
+
+            $('#editArticle').validate({
+                onkeyup: false,
+//                errorClass: 'error',
+                validClass: 'valid',
+                errorElement: 'div',
+                errorClass: 'help-block',
+                focusInvalid: false,
+                highlight: function (e) {
+                    $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+                },
+
+                success: function (e) {
+                    $(e).closest('.form-group').removeClass('has-error');//.addClass('has-info');
+                    $(e).remove();
+                },
+
+                errorPlacement: function (error, element) {
+                    if(element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
+                        var controls = element.closest('div[class*="col-"]');
+                        if(controls.find(':checkbox,:radio').length > 1) controls.append(error);
+                        else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
+                    }
+                    else if(element.is('.select2')) {
+                        error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
+                    }
+                    else if(element.is('.chosen-select')) {
+                        error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
+                    }
+                    else error.insertAfter(element.parent());
+                },
+
+                submitHandler: function (form) {
+                    swal({
+                        title: "您确定要发布这篇文章?",
+                        text: "发布完之后将会在前台展示？",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#87b87f",
+                        confirmButtonText: "Yes, release it!",
+                        cancelButtonText: "No, cancel!",
+                        showLoaderOnConfirm: true,
+                        closeOnConfirm: false,
+                        closeOnCancel: true
+                    }, function(isConfirm){
+                        if (isConfirm) {
+                            editArticle.sendFormData( $(form)[0].action, editArticle.getFormData() );
+                        }
+                    });
+
+                },
+                invalidHandler: function (form) {
+                    swal("错误", '有一些错误', "error");
+                }
+            });
+
+            $('#chooseImage').ace_file_input({
+                no_file:'没有文件 ...',
+                btn_choose: '选择',
+                btn_change: '修改',
+//                 droppable: false,
+                onchange: null,
+//                 thumbnail: false, //| true | large
+                whitelist: 'gif|png|jpg|jpeg',
+                style: 'well',
+                droppable: true, //html5 browsers only
+                thumbnail: 'small', //html5 browsers only
+
+                maxSize: 10000000, //~10MB
+                allowExt:  ['jpg', 'jpeg', 'png', 'gif'],
+                allowMime: ['image/jpg', 'image/jpeg', 'image/png', 'image/gif'] //html5 browsers only
+            });
+
+            $(document).one('ajaxloadstart.page', function(e) {
+                //in ajax mode, remove remaining elements before leaving page
+                $('[class*=select2]').remove();
+                $('#colorbox, #cboxOverlay').remove();
+            });
+            var $overflow = '';
+            var colorbox_params = {
+                rel: 'colorbox',
+                reposition:true,
+                scalePhotos:true,
+                scrolling:false,
+                previous:'<i class="ace-icon fa fa-arrow-left"></i>',
+                next:'<i class="ace-icon fa fa-arrow-right"></i>',
+                close:'&times;',
+                current:'{current} of {total}',
+                maxWidth:'100%',
+                maxHeight:'100%',
+                onOpen:function(){
+                    $overflow = document.body.style.overflow;
+                    document.body.style.overflow = 'hidden';
+                },
+                onClosed:function(){
+                    document.body.style.overflow = $overflow;
+                },
+                onComplete:function(){
+                    $.colorbox.resize();
+                }
+            };
+
+            $('.ace-thumbnails [data-rel="colorbox"]').colorbox(colorbox_params);
+            $("#cboxLoadingGraphic").html("<i class='ace-icon fa fa-spinner orange fa-spin'></i>");//let's add a custom loading icon
+
+            var editArticle = {
+
+                myForm: $('#editArticle'),
+
+                /**
+                 * 获取表单数据
+                 * @returns {*}
+                 */
+                getFormData: function()
+                {
+                    var myForm = this.myForm;
+
+                    var fd = new FormData();//empty FormData object
+
+                    $.each(myForm.serializeArray(), function(i, item) {
+                        //add form fields one by one to our FormData
+                        fd.append(item.name, item.value);
+                    });
+
+                    myForm.find('input[type=file]').each(function(){
+                        var field_name = $(this).attr('name');
+                        //for fields with "multiple" file support
+                        //field name should be something like `myfile[]`
+
+                        var files = $(this).data('ace_input_files');
+                        if(files && files.length > 0) {
+                            for(var f = 0; f < files.length; f++) {
+                                fd.append(field_name, files[f]);
+                            }
+                        }
+                    });
+                    return fd
+                },
+
+                /**
+                 * 发送数据至后台
+                 * @param action
+                 * @param formData
+                 * @param isRedirect
+                 */
+                sendFormData: function( action, formData, isRedirect )
+                {
+                    $.ajax({
+                        url: action,
+                        type: 'POST',
+                        dataType: 'json',
+                        processData: false,
+                        contentType: false,
+                        data: formData,
+                        beforeSend: function () {
+                        },
+                        success: function (data) {
+                            try{
+                                if( data.success == true )
+                                {
+                                    swal("Good job!", data.message, "success");
+                                    if( isRedirect )
+                                    {
+                                        window.location = data.data.redirect;
+                                    }
+                                }else
+                                {
+                                    swal("错误", data.message, "error");
+                                }
+                            }catch ( err )
+                            {
+                                swal("错误", error, "error");
+                            }
+                        },
+                        error: function (e) {
+                            swal("错误", '啥错？', "error");
+                        }
+                    });
+                }
+            };
+
+        });
+    });
+</script>
+{% stylesheets
+'@AdminBundle/Resources/public/css/colorbox.css'
+%}
+<link rel="stylesheet" href="{{ asset_url }}">
+{% endstylesheets %}

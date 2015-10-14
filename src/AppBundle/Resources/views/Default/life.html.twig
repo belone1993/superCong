@@ -28,7 +28,7 @@
                             <div class="col-md-1 text-center">
                                 <p>{{ post.createdAt|date() }}</p>
                             </div>
-                            <div class="col-md-5" style="max-height: 240px; overflow-y: hidden;">
+                            <div class="col-md-5" style="max-height: 240px;">
                                 <a href="{{ url('life_lifeInfo', {"id": post.id}) }}">
                                     {% if post.image %}
                                     <img class="img-responsive img-hover" src="{{ source_url }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}?imageView/1/w/460/h/240" alt=""/>

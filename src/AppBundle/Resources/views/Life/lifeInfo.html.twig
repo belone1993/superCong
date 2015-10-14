@@ -32,7 +32,7 @@
                 <div class="col-lg-8">
                     <article>
                         <!-- Preview Image -->
-                        <div style="overflow-y: hidden; max-height: 300px; text-align: center; margin:0 auto;">
+                        <div style="max-height: 300px; text-align: center; margin:0 auto;">
                             {#<img class="img-responsive" src="{{ source_url }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}?imageView2/2/h/300" style="margin: auto;">#}
                             {% if post.images.count > 1 %}
                                 <div id="post-slider" class="flexslider">

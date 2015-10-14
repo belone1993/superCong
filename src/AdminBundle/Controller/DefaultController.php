@@ -31,12 +31,13 @@ class DefaultController extends Controller
 
     /**
      * @Route("/dashboard")
+     * @Template()
      *
      * @return array
      */
     public function dashboardAction()
     {
-        return $this->renderView('AdminBundle::Default:dashboard.html.twig');
+        return [];
     }
 
     /**
