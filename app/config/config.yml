@@ -39,6 +39,7 @@ twig:
     globals:
         storage_url: "%storage_url%"
         source_url: "%source_url%"
+        admin_static: "%admin_static%"
 
 # Assetic Configuration
 assetic:

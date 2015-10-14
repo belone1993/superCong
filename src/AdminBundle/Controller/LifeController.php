@@ -64,14 +64,12 @@ class LifeController extends Controller
     /**
      * 编辑文章页面
      * @Route("/editArticle/{id}", name="admin_lifeEditArticle", defaults={"id": 0}, requirements={"id"="\d+"})
-     * @Template()
      *
      * @param integer $id
      * @return array
      */
     public function editArticleAction( $id )
     {
-
         if( !empty( $id ) )
         {
             $postRepository = $this->getDoctrine()->getRepository('StoreBundle:Post');
@@ -106,9 +104,9 @@ class LifeController extends Controller
 
         }
 
-        return [
+        return $this->render('AdminBundle:Life:editArticle.html.twig', [
             'post' => $post
-        ];
+        ]);
     }
 
 }
