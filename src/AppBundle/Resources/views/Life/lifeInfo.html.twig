@@ -44,6 +44,10 @@
                                         {% endfor %}
                                     </ul>
                                 </div>
+                            {% elseif post.images.count == 0 %}
+                                {% for item in post.images %}
+                                    <img src="{{ source_url }}images/{{ item.imageTime|date('Y/m') }}/{{ item.imageName }}?imageView2/1/w/750/h/300">
+                                {% endfor %}
                             {% else %}
                                 <img class="img-responsive" src="{{ source_url }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}?imageView2/1/w/750/h/300" alt="" style="margin: auto;">
                             {% endif %}
