@@ -86,7 +86,7 @@ class PostRepository extends EntityRepository
         {
             $posts->andWhere( "p.id != {$id}" );
         }
-        return $posts->setMaxResults( 3 )
+        return $posts->setMaxResults( 5 )
             ->orderBy("p.readNum", 'DESC')
             ->getQuery()->getResult();
     }
