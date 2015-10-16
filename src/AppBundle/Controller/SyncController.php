@@ -126,6 +126,7 @@ class SyncController extends Controller
                             ->setCreatedAt( $dateTime )
                             ->setCommentIP( $meta['ip'] )
                             ->setThreadId($meta['thread_id'])
+                            ->setApiPostId( $meta['post_id'] )
                             ->setThreadKey( $meta['thread_key'] );
 
 //                        $threadKey = intval($meta['thread_key']);
