@@ -14,7 +14,9 @@ use Doctrine\ORM\EntityManager;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use StoreBundle\Entity\Comment;
+use StoreBundle\Entity\ConnectService;
 use StoreBundle\Entity\Member;
+use StoreBundle\Entity\MemberInfo;
 use StoreBundle\Entity\Post;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -199,6 +201,103 @@ class SyncController extends Controller
                 'signature'  => $signature
             ]
         );
+
+        return new JsonResponse($response, Response::HTTP_OK);
+    }
+
+    /**
+     * 同步用户数据
+     * @Route("/member")
+     *
+     * @return JsonResponse
+     */
+    public function memberAction()
+    {
+        // http://api.duoshuo.com/users/profile.json?user_id=378333
+
+        $memberEntity = $this->getDoctrine()->getRepository('StoreBundle:Member');
+
+        $members = $memberEntity->findAll();
+
+        $response = [];
+
+        if( !$members )
+        {
+            $response = [
+                'success' => 'false',
+                'message' => 'member is null'
+            ];
+
+            return new JsonResponse( $response );
+        }
+
+        try{
+
+            $duoApi = $this->getParameter('duoshuo_api').'users/profile.json';
+
+            $client = new Client();
+
+            $em = $this->getDoctrine()->getManager();
+
+            /** @var  $member Member */
+            foreach( $members as $member )
+            {
+
+                if(!$member->getAuthorId() || $member->getMemberInfo() )
+                    continue;
+
+                $res = $client->get($duoApi."?user_id={$member->getAuthorId()}");
+
+                if($res->getStatusCode()) {
+                    $response = json_decode( $res->getBody()->getContents(), true );
+                    $response = $response[ 'response' ];
+
+                    $memberInfo = new MemberInfo();
+
+                    $memberInfo->setName( $response['name'] )
+                        ->setAvatarUrl( $response['avatar_url'] )
+                        ->setUrl( $response['url'] )
+                        ->setThreads( $response['threads'] )
+                        ->setComments( $response['comments'] )
+                        ->setPostVotes( $response['post_votes'] )
+                        ->setMember( $member );
+
+                    $em->persist($memberInfo);
+                    $em->flush();
+
+                    if( $response['connected_services'] )
+                    {
+                        foreach( $response['connected_services'] as $key => $value )
+                        {
+                            $connectInfo = new ConnectService();
+                            $connectInfo->setName( $value['name'] )
+                                ->setAvatarUrl( $value['avatar_url'] )
+                                ->setUrl( !empty($value['url']) ? $value['url'] : '' )
+                                ->setDescription( !empty($value['description']) ? $value['description'] : '' )
+                                ->setServiceName( $key )
+                                ->setEmail( !empty($value['email']) ? $value['email'] : '' )
+                                ->setMemberInfo( $memberInfo );
+                            if( !empty( $response['social_uid'][$key] ) )
+                            {
+                                $connectInfo->setSocialId( $response['social_uid'][$key] );
+                            }
+                            $em->persist( $connectInfo );
+                        }
+                        $em->flush();
+                    }
+                }
+            }
+
+            $response = [
+                'success' => true
+            ];
+
+            return new JsonResponse( $response, Response::HTTP_OK );
+
+        }catch (ClientException $e)
+        {
+            $response[] = $e->getMessage();
+        }
 
         return new JsonResponse($response, Response::HTTP_OK);
     }

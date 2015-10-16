@@ -63,6 +63,13 @@ class Member
      */
     private $createdAt;
 
+    /**
+     * @var MemberInfo
+     *
+     * @ORM\OneToOne(targetEntity="MemberInfo", mappedBy="member")
+     */
+    private $memberInfo;
+
 
     function __construct()
     {
@@ -215,5 +222,28 @@ class Member
     public function getAuthorUrl()
     {
         return $this->authorUrl;
+    }
+
+    /**
+     * Set memberInfo
+     *
+     * @param \StoreBundle\Entity\MemberInfo $memberInfo
+     * @return Member
+     */
+    public function setMemberInfo(\StoreBundle\Entity\MemberInfo $memberInfo = null)
+    {
+        $this->memberInfo = $memberInfo;
+
+        return $this;
+    }
+
+    /**
+     * Get memberInfo
+     *
+     * @return \StoreBundle\Entity\MemberInfo 
+     */
+    public function getMemberInfo()
+    {
+        return $this->memberInfo;
     }
 }
