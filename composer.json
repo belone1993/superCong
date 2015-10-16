@@ -23,7 +23,8 @@
         "erusev/parsedown": "1.5.3",
         "ircmaxell/password-compat": "~1.0.3",
         "friendsofsymfony/user-bundle": "~2.0@dev",
-        "willdurand/propel-typehintable-behavior": "^1.0"
+        "willdurand/propel-typehintable-behavior": "^1.0",
+        "guzzlehttp/guzzle": "^6.1"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

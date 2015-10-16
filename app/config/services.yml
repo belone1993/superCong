@@ -5,7 +5,7 @@ parameters:
     source_url: http://source.lattecake.com/
     storage_url: http://storage.lattecake.com/
     admin_static: http://demo.lattecake.com/Template/ACE/
-#    parameter_name: value
+    duoshuo_api: http://api.duoshuo.com/
 
 services:
 #    service_name:

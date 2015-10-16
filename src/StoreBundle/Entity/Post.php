@@ -115,6 +115,13 @@ class Post extends PostRepository
     private $status = 0;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="reviews", type="integer", nullable=true, options={"comment": "评论数", "default": 0})
+     */
+    private $reviews = 0;
+
+    /**
      * @var \StoreBundle\Entity\Category
      *
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="posts", cascade={"all"}, fetch="EAGER")
@@ -530,5 +537,28 @@ class Post extends PostRepository
     public function getAuthor()
     {
         return $this->author;
+    }
+
+    /**
+     * Set reviews
+     *
+     * @param integer $reviews
+     * @return Post
+     */
+    public function setReviews($reviews)
+    {
+        $this->reviews = $reviews;
+
+        return $this;
+    }
+
+    /**
+     * Get reviews
+     *
+     * @return integer 
+     */
+    public function getReviews()
+    {
+        return $this->reviews;
     }
 }
