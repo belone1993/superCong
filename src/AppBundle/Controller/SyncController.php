@@ -129,14 +129,13 @@ class SyncController extends Controller
                             ->setApiPostId( $meta['post_id'] )
                             ->setThreadKey( $meta['thread_key'] );
 
-//                        $threadKey = intval($meta['thread_key']);
                         $threadKey = $meta['thread_key'];
 
                         $keys = explode('_', $meta['thread_key']);
                         if( count( $keys ) > 1 )
                         {
                             $threadKey = $keys[1];
-                        }else if( is_string($threadKey) )
+                        }else if( $threadKey == 'guestBook' )
                         {
                             $threadKey = 0;
                         }
