@@ -265,7 +265,7 @@ class SyncController extends Controller
                     $em->persist($memberInfo);
                     $em->flush();
 
-                    if( $response['connected_services'] )
+                    if( !empty($response['connected_services']) )
                     {
                         foreach( $response['connected_services'] as $key => $value )
                         {
