@@ -275,9 +275,9 @@ class SyncController extends Controller
                                 ->setServiceName( $key )
                                 ->setEmail( !empty($value['email']) ? $value['email'] : '' )
                                 ->setMemberInfo( $memberInfo );
-                            if( !empty( $response['social_uid'][$key] ) )
+                            if( !empty( $response['social_uid'][$key] ) || in_array($key, ['qzone', 'qqt']) )
                             {
-                                if( in_array($key, ['qzone', 'qqt', ]) )
+                                if( in_array($key, ['qzone', 'qqt']) )
                                 {
                                     $key = 'qq';
                                 }
