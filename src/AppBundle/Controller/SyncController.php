@@ -73,7 +73,7 @@ class SyncController extends Controller
                 $response = json_decode($res->getBody()->getContents(), true);
                 $response = $response['response'];
 
-                if( !$response || $response['code'] != 0 )
+                if( !$response || @$response['code'] != 0 )
                 {
                     return new JsonResponse( [
                         'success'   => false,

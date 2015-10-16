@@ -54,7 +54,7 @@
                                     <ul class="meta-post">
                                         <li><i class="icon-user"></i><a href="#"> super Cong</a></li>
                                         {#<li><i class="icon-folder-open"></i><a href="#"> Blog</a></li>#}
-                                        <li><i class="icon-comments"></i><a href="{{ url('life_lifeInfo', {"id": post.id}) }}">4 评论</a></li>
+                                        <li><i class="icon-comments"></i><a href="{{ url('life_lifeInfo', {"id": post.id}) }}#comments">{{ post.reviews }} 评论</a></li>
                                     </ul>
                                     <a href="{{ url('life_lifeInfo', {"id": post.id}) }}" class="pull-right">继续阅读 <i class="icon-angle-right"></i></a>
                                 </div>
