@@ -242,10 +242,8 @@ class SyncController extends Controller
             /** @var  $member Member */
             foreach( $members as $member )
             {
-
                 if(!$member->getAuthorId() || $member->getMemberInfo() )
                     continue;
-
                 $res = $client->get($duoApi."?user_id={$member->getAuthorId()}");
 
                 if($res->getStatusCode()) {
@@ -279,6 +277,10 @@ class SyncController extends Controller
                                 ->setMemberInfo( $memberInfo );
                             if( !empty( $response['social_uid'][$key] ) )
                             {
+                                if( in_array($key, ['qzone', 'qqt', ]) )
+                                {
+                                    $key = 'qq';
+                                }
                                 $connectInfo->setSocialId( $response['social_uid'][$key] );
                             }
                             $em->persist( $connectInfo );
