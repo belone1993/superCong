@@ -130,12 +130,15 @@ class SyncController extends Controller
                             ->setThreadKey( $meta['thread_key'] );
 
 //                        $threadKey = intval($meta['thread_key']);
-                        $threadKey = 0;
+                        $threadKey = $meta['thread_key'];
 
                         $keys = explode('_', $meta['thread_key']);
                         if( count( $keys ) > 1 )
                         {
                             $threadKey = $keys[1];
+                        }else if( is_string($threadKey) )
+                        {
+                            $threadKey = 0;
                         }
 
                         if( $threadKey > 0 )
