@@ -128,7 +128,14 @@ class SyncController extends Controller
                             ->setThreadId($meta['thread_id'])
                             ->setThreadKey( $meta['thread_key'] );
 
-                        $threadKey = intval($meta['thread_key']);
+//                        $threadKey = intval($meta['thread_key']);
+                        $threadKey = 0;
+
+                        $keys = explode('_', $meta['thread_key']);
+                        if( count( $keys ) > 1 )
+                        {
+                            $threadKey = $keys[1];
+                        }
 
                         if( $threadKey > 0 )
                         {
