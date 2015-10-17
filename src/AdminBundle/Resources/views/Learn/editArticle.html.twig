@@ -46,7 +46,6 @@
                         <textarea required class="form-control" style="resize: none;" name="description"  placeholder="请输入描述信息..." rows="5">{{ post.description }}</textarea>
                     </div>
                 </div>
-                <input type="hidden" name="postId" value="{{ post.id }}">
             {% endif %}
 
             <div class="form-group">
@@ -63,6 +62,7 @@
                 <label class="col-sm-2 control-label no-padding-right" for="form-field-5">Markdown</label>
 
                 <div class="col-sm-10">
+                    <input type="hidden" name="postId" value="{{ post.id }}">
                     <div class="widget-main no-padding">
                         <label class="line-height-1 blue">
                             <input name="markdown" value="1" {% if post.isMarkdown == 1 %}checked{% endif %} type="radio" class="ace valid" aria-required="true" aria-describedby="gender-error" aria-invalid="true">

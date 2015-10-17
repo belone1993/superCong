@@ -155,7 +155,7 @@ class PostController extends Controller
             ->setDescription( $request->get('description') )
             ->setContent( $request->get('content') )
             ->setAuthorId( 1 )
-            ->setStatus( $request->get('postStatus') );
+            ->setStatus( intval($request->get('postStatus')) );
 
         $em->persist( $postInfo );
         $em->flush();
