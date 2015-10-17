@@ -12,6 +12,27 @@ use Doctrine\ORM\EntityRepository;
  */
 class CommentRepository extends EntityRepository
 {
+    const COMMENT_LIMIT = 10;
+
+    /**
+     * 获取留言信息
+     *
+     * @param int $page
+     * @return array
+     */
+    public function findCommentByGuestBook( $page = 1 )
+    {
+        return $this->_em->createQueryBuilder()
+            ->select("c")
+            ->from('StoreBundle:Comment', 'c')
+            ->where("c.threadKey = :threadKey")
+            ->setParameter('threadKey', 'guestBook')
+            ->orderBy('c.id', 'DESC')
+            ->setMaxResults( self::COMMENT_LIMIT )
+            ->setFirstResult( ($page - 1) * self::COMMENT_LIMIT )
+            ->getQuery()->getResult();
+    }
+
     /**
      * 获取最新一条评论记录
      *
