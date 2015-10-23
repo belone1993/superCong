@@ -129,6 +129,10 @@ class SecurityController extends Controller
 
     /**
      * Receive the confirmation token from user email provider, login the user
+     *
+     * @param Request $request
+     * @param $token
+     * @return null|RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function confirmAction(Request $request, $token)
     {
