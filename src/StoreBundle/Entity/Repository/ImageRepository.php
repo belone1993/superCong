@@ -22,6 +22,7 @@ class ImageRepository extends EntityRepository
         return $this->_em->createQueryBuilder()
             ->select("i")
             ->from('StoreBundle:Image', 'i')
+            ->orderBy('i.id', 'DESC')
             ->getQuery()->getResult();
     }
 }

@@ -12,15 +12,48 @@ use Doctrine\ORM\EntityRepository;
  */
 class CommentRepository extends EntityRepository
 {
-    const COMMENT_LIMIT = 10;
+    const COMMENT_LIMIT = 15;
+
+    /**
+     * 获取留言信息 顺序
+     *
+     * @param string $orderBy
+     * @return array
+     */
+    public function findGuestBookOrderBy( $orderBy = 'DESC' )
+    {
+        return $this->_em->createQueryBuilder()
+            ->select("c")
+            ->from('StoreBundle:Comment', 'c')
+            ->where("c.threadKey = 'guestBook'")
+//            ->setParameter('threadKey', 'guestBook')
+            ->orderBy('c.id', $orderBy)
+//            ->setMaxResults( self::COMMENT_LIMIT )
+//            ->setFirstResult( ($page - 1) * $limit )
+            ->getQuery();
+    }
+
+    /**
+     * 统计留言数量
+     *
+     * @return mixed
+     */
+    public function countComments()
+    {
+        return $this->_em->createQueryBuilder()
+            ->select("COUNT(c.id)")
+            ->from('StoreBundle:Comment', 'c')
+            ->getQuery()->getSingleScalarResult();
+    }
 
     /**
      * 获取留言信息
      *
      * @param int $page
+     * @param int $limit
      * @return array
      */
-    public function findCommentByGuestBook( $page = 1 )
+    public function findCommentByGuestBook( $page = 1, $limit = 1 )
     {
         return $this->_em->createQueryBuilder()
             ->select("c")
@@ -29,7 +62,7 @@ class CommentRepository extends EntityRepository
             ->setParameter('threadKey', 'guestBook')
             ->orderBy('c.id', 'DESC')
             ->setMaxResults( self::COMMENT_LIMIT )
-            ->setFirstResult( ($page - 1) * self::COMMENT_LIMIT )
+            ->setFirstResult( ($page - 1) * $limit )
             ->getQuery()->getResult();
     }
 
