@@ -41,7 +41,7 @@ class PostRepository extends EntityRepository
         return $this->_em->createQueryBuilder()
             ->select('p')
             ->from('StoreBundle:Post', 'p')
-            ->where("p.id = :id AND p.status = 1")
+            ->where("(p.id = :id OR p.oldId = :id) AND p.status = 1")
             ->setParameter( 'id', $id )
             ->getQuery()->getSingleResult();
     }

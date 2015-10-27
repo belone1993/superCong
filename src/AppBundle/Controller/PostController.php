@@ -21,6 +21,50 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PostController extends Controller
 {
+
+    /**
+     *
+     * @Route("/{id}", name="post_detail", requirements={"id"="\d+"})
+     * @Template()
+     *
+     * @param $id
+     * @return array
+     */
+    public function detailAction( $id )
+    {
+        if (!$id) {
+            throw $this->createNotFoundException('get params id is null');
+        }
+
+        /** @var  $post \StoreBundle\Entity\Post */
+        $post = $this->getDoctrine()->getRepository('StoreBundle:Post');
+
+        /** @var  $postInfo  Post */
+        $postInfo = $post->findPostById( $id );
+
+        if( !$postInfo )
+        {
+            throw $this->createNotFoundException('No Article found for id '.$id);
+        }
+
+        $postInfo->setReadNum( $postInfo->getReadNum() + 1 );
+
+        $em = $this->getDoctrine()->getManager();
+
+        $em->persist($postInfo);
+        $em->flush();
+
+        $action = $postInfo->getAction() == 1 ? 'learn' : 'life';
+
+        $parseDown = new \Parsedown();
+
+        return [
+            'parseDown' => $parseDown,
+            'post'      => $postInfo,
+            'action'    => $action
+        ];
+    }
+
     /**
      * @Route("/postInfo/{id}", name="post_postInfo", requirements={"id"="\d+"})
      * @Template()

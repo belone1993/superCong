@@ -29,7 +29,7 @@
                                 <p>{{ post.createdAt|date() }}</p>
                             </div>
                             <div class="col-md-5" style="max-height: 240px;">
-                                <a href="{{ url('life_lifeInfo', {"id": post.id}) }}">
+                                <a href="{{ url('post_detail', {"id": post.id}) }}">
                                     {% if post.image %}
                                     <img class="img-responsive img-hover" src="{{ source_url }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}?imageView/1/w/460/h/240" alt=""/>
                                     {% elseif post.images.count > 0 %}
@@ -47,16 +47,16 @@
                             </div>
                             <div class="col-md-6">
                                 <h3>
-                                    <a href="{{ url('life_lifeInfo', {"id": post.id}) }}">{{ post.title }}</a>
+                                    <a href="{{ url('post_detail', {"id": post.id}) }}">{{ post.title }}</a>
                                 </h3>
                                 <p style="height: 110px;">{{ post.description }}</p>
                                 <div class="bottom-article">
                                     <ul class="meta-post">
                                         <li><i class="icon-user"></i><a href="#"> super Cong</a></li>
                                         {#<li><i class="icon-folder-open"></i><a href="#"> Blog</a></li>#}
-                                        <li><i class="icon-comments"></i><a href="{{ url('life_lifeInfo', {"id": post.id}) }}">4 评论</a></li>
+                                        <li><i class="icon-comments"></i><a href="{{ url('post_detail', {"id": post.id}) }}">4 评论</a></li>
                                     </ul>
-                                    <a href="{{ url('life_lifeInfo', {"id": post.id}) }}" class="pull-right">继续阅读 <i class="icon-angle-right"></i></a>
+                                    <a href="{{ url('post_detail', {"id": post.id}) }}" class="pull-right">继续阅读 <i class="icon-angle-right"></i></a>
                                 </div>
                             </div>
                         </article>
@@ -75,20 +75,7 @@
                 {#</div>#}
                 <div class="col-lg-4">
                     <aside class="right-sidebar">
-                        {% set searchTitle = '玫瑰虽美 但花下荆棘丛生..' %}
-                        {% include "AppBundle:Post:search.html.twig" %}
                         {{ render(controller('AppBundle:Post:topPost')) }}
-                        {#<div class="widget">#}
-                            {#<h5 class="widgetheading">Popular tags</h5>#}
-                            {#<ul class="tags">#}
-                                {#<li><a href="#">Web design</a></li>#}
-                                {#<li><a href="#">Trends</a></li>#}
-                                {#<li><a href="#">Technology</a></li>#}
-                                {#<li><a href="#">Internet</a></li>#}
-                                {#<li><a href="#">Tutorial</a></li>#}
-                                {#<li><a href="#">Development</a></li>#}
-                            {#</ul>#}
-                        {#</div>#}
                     </aside>
                 </div>
             </div>

@@ -10,9 +10,13 @@
                 <div class="col-lg-12">
                     <ul class="breadcrumb">
                         <li><a href="{{ url('homepage') }}"><i class="fa fa-home"></i></a><i class="icon-angle-right"></i></li>
-                        <li><a href="{{ url('learn') }}">慢生活</a><i class="icon-angle-right"></i></li>
-                        <li><a href="{{ url('learn') }}">碎言碎语</a><i class="icon-angle-right"></i></li>
-                        <li class="active">做对生活最有感受的人</li>
+                        {% if post.action == 1 %}
+                            <li><a href="{{ url('learn') }}">学无止镜</a><i class="icon-angle-right"></i></li>
+                            <li class="active">分享是一种博爱的心境，学会分享，就学会了生活。</li>
+                        {% else %}
+                            <li><a href="{{ url('life_grow') }}">慢生活</a><i class="icon-angle-right"></i></li>
+                            <li class="active">做对生活最有感受的人</li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
@@ -78,7 +82,7 @@
                              data-title="{{ post.title }}"
                              data-images="{{ shareImage }}"
                              data-content="{{ post.description }}"
-                             data-url="{{ url('life_lifeInfo', {'id': post.id}) }}">
+                             data-url="{{ url('post_detail', {'id': post.id}) }}">
                             <div class="ds-share-inline">
                                 <ul  class="ds-share-icons-32">
                                     <!--图标可以自定义-->
@@ -96,7 +100,10 @@
 
                         <hr>
                         <!-- 多说评论框 start -->
-                        <div id="comments" class="ds-thread" data-thread-key="{{ post.oldId ? post.oldId : post.id }}" data-title="{{ post.title }}" data-url="{{ url('life_lifeInfo', {'id': post.id}) }}"></div>
+                        <div id="comments" class="ds-thread"
+                             data-thread-key="{{ post.oldId ? post.oldId : post.id }}"
+                             data-title="{{ post.title }}"
+                             data-url="{{ url('post_detail', {'id': post.id}) }}"></div>
                         <!-- 多说评论框 end -->
                         <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
                         <script type="text/javascript">
@@ -116,8 +123,6 @@
                 </div>
                 <div class="col-lg-4">
                     <aside class="right-sidebar">
-                        {#{% set searchTitle = '玫瑰虽美 但花下荆棘丛生..' %}#}
-                        {#{% include "AppBundle:Post:search.html.twig" %}#}
                         {{ render(controller('AppBundle:Post:topPost', {"action": post.action, "id": post.id})) }}
                     </aside>
                 </div>
@@ -129,11 +134,4 @@
             </div>
         </div>
     </section>
-{% endblock %}
-
-{% block Cong_javascripts %}
-    <script src="{{ storage_url }}static/moderna/js/jquery.fancybox.pack.js"></script>
-    <script src="{{ storage_url }}static/moderna/js/jquery.fancybox-media.min.js"></script>
-    <script src="{{ storage_url }}static/moderna/js/jquery.flexslider.min.js"></script>
-    <script src="{{ storage_url }}static/moderna/js/custom.js"></script>
 {% endblock %}

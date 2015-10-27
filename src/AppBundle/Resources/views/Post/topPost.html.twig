@@ -4,12 +4,12 @@
     <ul class="recent">
         {% for row in topPosts if topPosts %}
         <li>
-            <img src="{{ source_url }}images/{{ row.createdAt|date('Y/m') }}/{{ row.image }}?imageView2/1/w/65/h/65" class="pull-left" alt="" />
-            {% set rowHref = "/learn/learnInfo/" %}
-            {% if row.action == 2 %}
-                {% set rowHref = "/life/lifeInfo/" %}
+            {% if row.images.count < 1 %}
+                <img src="{{ source_url }}images/{{ row.createdAt|date('Y/m') }}/{{ row.image }}?imageView2/1/w/65/h/65" class="pull-left" alt="" />
+            {% else %}
+                <img src="{{ source_url }}images/{{ row.images[0].imageTime|date('Y/m') }}/{{ row.images[0].imageName }}?imageView2/1/w/65/h/65" class="pull-left" alt="" />
             {% endif %}
-            <h6><a href="{{ rowHref }}{{ row.id }}">{{ row.title|length > 24 ? row.title|slice(0, 24) ~ '...' : row.title }}</a></h6>
+            <h6><a href="{{ url('post_detail', {'id': row.id}) }}">{{ row.title|length > 24 ? row.title|slice(0, 24) ~ '...' : row.title }}</a></h6>
             <p>
                 {{ row.description|slice(0, 32) }} ...
             </p>
