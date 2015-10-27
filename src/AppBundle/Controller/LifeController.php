@@ -12,6 +12,7 @@ use StoreBundle\Entity\Post;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Class LifeController
@@ -30,38 +31,7 @@ class LifeController extends Controller
      */
     public function lifeInfoAction( $id )
     {
-        if (!$id) {
-            throw $this->createNotFoundException('No product found for id '.$id);
-        }
-
-        /** @var  $post \StoreBundle\Entity\Post */
-        $post = $this->getDoctrine()->getRepository('StoreBundle:Post');
-
-        if( $id < 20000 )
-        {
-            /** @var  $postInfo Post */
-            $postInfo = $post->findPostByOldId( $id, 2 );
-        }else
-        {
-            /** @var  $postInfo Post */
-            $postInfo = $post->findOneBy([
-                'id'     => $id,
-                'action' => 2
-            ]);
-        }
-
-        $postInfo->setReadNum( $postInfo->getReadNum() + 1 );
-
-        $em = $this->getDoctrine()->getManager();
-        $em->flush();
-
-        $parseDown = new \Parsedown();
-
-        return [
-            'parseDown' => $parseDown,
-            'post'      => $postInfo,
-            'action'    => 'life'
-        ];
+        return new RedirectResponse($this->generateUrl('post_detail', ['id' => $id]));
     }
 
     /**
