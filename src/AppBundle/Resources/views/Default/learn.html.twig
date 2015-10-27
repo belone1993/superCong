@@ -25,7 +25,7 @@
                         <article>
                             <div class="post-image">
                                 <div class="post-heading">
-                                    <h3><a href="{{ url('learn_learnInfo', {"id": post.id}) }}">{{ post.title }}</a></h3>
+                                    <h3><a href="{{ url('post_detail', {"id": post.id}) }}">{{ post.title }}</a></h3>
                                 </div>
                                 {% if post.image|trim is not empty %}
                                     <img class="img-responsive img-hover" src="{{ source_url }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}?imageView/1/w/460/h/240" alt=""/>
