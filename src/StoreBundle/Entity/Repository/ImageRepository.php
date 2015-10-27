@@ -12,6 +12,8 @@ use Doctrine\ORM\EntityRepository;
  */
 class ImageRepository extends EntityRepository
 {
+    const LIST_LIMIT = 20;
+
     /**
      * 根据分页查找图片
      * @param int $page
