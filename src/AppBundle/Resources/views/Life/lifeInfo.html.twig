@@ -34,6 +34,7 @@
                         <!-- Preview Image -->
                         <div style="max-height: 300px; text-align: center; margin:0 auto;">
                             {#<img class="img-responsive" src="{{ source_url }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}?imageView2/2/h/300" style="margin: auto;">#}
+                            {% set shareImage = source_url + 'images/' + post.createdAt|date('Y/m') + '/' + post.image %}
                             {% if post.images.count > 1 %}
                                 <div id="post-slider" class="flexslider">
                                     <ul class="slides">
@@ -44,10 +45,12 @@
                                         {% endfor %}
                                     </ul>
                                 </div>
+                                {% set shareImage = source_url + 'images/' + post.images[0].imageTime|date('Y/m') + '/' + post.images[0].imageName %}
                             {% elseif post.images.count == 1 %}
                                 {% for item in post.images %}
                                     <img src="{{ source_url }}images/{{ item.imageTime|date('Y/m') }}/{{ item.imageName }}?imageView2/1/w/750/h/300">
                                 {% endfor %}
+                                {% set shareImage = source_url + 'images/' + post.images[0].imageTime|date('Y/m') + '/' + post.images[0].imageName %}
                             {% else %}
                                 <img class="img-responsive" src="{{ source_url }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}?imageView2/1/w/750/h/300" alt="" style="margin: auto;">
                             {% endif %}
@@ -72,7 +75,7 @@
                         <div class="ds-share flat"
                              data-thread-key="{{ post.id }}"
                              data-title="{{ post.title }}"
-                             data-images="{{ source_url }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}"
+                             data-images="{{ shareImage }}"
                              data-content="{{ post.description }}"
                              data-url="{{ url('post_postInfo', {'id': post.id}) }}">
                             <div class="ds-share-inline">
@@ -92,7 +95,7 @@
 
                         <hr>
                         <!-- 多说评论框 start -->
-                        <div id="comments" class="ds-thread" data-thread-key="{{ post.oldId ? post.oldId : post.id }}" data-title="{{ post.title }}" data-url="{{ url('post_postInfo', {'id': post.id}) }}"></div>
+                        <div id="comments" class="ds-thread" data-thread-key="{{ post.oldId ? post.oldId : post.id }}" data-title="{{ post.title }}" data-url="{{ url('life_lifeInfo', {'id': post.id}) }}"></div>
                         <!-- 多说评论框 end -->
                         <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
                         <script type="text/javascript">
