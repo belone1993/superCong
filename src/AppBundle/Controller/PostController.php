@@ -11,6 +11,7 @@ use StoreBundle\Entity\Post;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -70,11 +71,11 @@ class PostController extends Controller
      * @Template()
      *
      * @param int $id
-     * @return array
+     * @return RedirectResponse
      */
     public function postInfoAction( $id )
     {
-        return $this->detailAction($id);
+        return new RedirectResponse($this->generateUrl('post_detail', ['id' => $id]));
     }
 
     /**
