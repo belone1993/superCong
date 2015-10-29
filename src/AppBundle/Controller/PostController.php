@@ -74,27 +74,7 @@ class PostController extends Controller
      */
     public function postInfoAction( $id )
     {
-        $this->detailAction($id);
-
-        if (!$id) {
-            throw $this->createNotFoundException('No product found for id '.$id);
-        }
-
-        /** @var  $post \StoreBundle\Entity\Post */
-        $post = $this->getDoctrine()->getRepository('StoreBundle:Post');
-
-        $postInfo = $post->findPostByOldId( $id, 1 );
-
-        $em = $this->getDoctrine()->getManager();
-        $em->flush();
-
-        $parseDown = new \Parsedown();
-
-        return [
-            'parseDown' => $parseDown,
-            'post'      => $postInfo,
-            'action'    => 'learn'
-        ];
+        return $this->detailAction($id);
     }
 
     /**
