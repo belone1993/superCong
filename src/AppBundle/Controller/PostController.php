@@ -74,6 +74,8 @@ class PostController extends Controller
      */
     public function postInfoAction( $id )
     {
+        $this->detailAction($id);
+
         if (!$id) {
             throw $this->createNotFoundException('No product found for id '.$id);
         }
