@@ -39,9 +39,9 @@ class Image extends ImageRepository
     /**
      * @var integer
      *
-     * @ORM\Column(name="postId", type="integer", nullable=false, options={"comment": "文章ID"})
+     * @ORM\Column(name="postId", type="integer", nullable=true, options={"comment": "文章ID", "default": 0})
      */
-    private $postId;
+    private $postId = 0;
 
     /**
      * @var string

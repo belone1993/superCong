@@ -1,0 +1,140 @@
+
+<title>批量上传图片 - LatteCake Admin</title>
+
+<link rel="stylesheet" href="{{ storage_url }}static/css/dropzone.min.css">
+
+<style>
+    #dropzone { margin-bottom: 3rem; }
+
+    .dropzone { border: 2px dashed #0087F7; border-radius: 5px; background: white; }
+    .dropzone .dz-message { font-weight: 400; }
+    .dropzone .dz-message .note { font-size: 0.8em; font-weight: 200; display: block; margin-top: 1.4rem; }
+
+    .dropzone,.dropzone *{box-sizing:border-box}.dropzone{position:relative}.dropzone .dz-preview{position:relative;display:inline-block;width:120px;margin:0.5em}.dropzone .dz-preview .dz-progress{display:block;height:15px;border:1px solid #aaa}.dropzone .dz-preview .dz-progress .dz-upload{display:block;height:100%;width:0;background:green}.dropzone .dz-preview .dz-error-message{color:red;display:none}.dropzone .dz-preview.dz-error .dz-error-message,.dropzone .dz-preview.dz-error .dz-error-mark{display:block}.dropzone .dz-preview.dz-success .dz-success-mark{display:block}.dropzone .dz-preview .dz-error-mark,.dropzone .dz-preview .dz-success-mark{position:absolute;display:none;left:30px;top:30px;width:54px;height:58px;left:50%;margin-left:-27px}
+</style>
+
+<!-- ajax layout which only needs content area -->
+<div class="page-header">
+    <h1>
+        批量上传图片
+        <small>
+            <i class="ace-icon fa fa-angle-double-right"></i>
+            拖＆放;拖放文件上传与图像预览
+        </small>
+    </h1>
+</div><!-- /.page-header -->
+
+<div class="row">
+    <div class="col-xs-12">
+        <!-- PAGE CONTENT BEGINS -->
+        <div>
+            <form action="{{ path('admin_imageUpload') }}" class="dropzone" id="dropzone">
+                <div class="fallback">
+                    <input name="image" type="file" multiple="" />
+                </div>
+            </form>
+        </div>
+
+        <!-- PAGE CONTENT ENDS -->
+    </div><!-- /.col -->
+</div><!-- /.row -->
+<script src="{{ storage_url }}static/js/dropzone.min.js"></script>
+<!-- page specific plugin scripts -->
+<script type="text/javascript">
+    var scripts = [null,
+        "{{ storage_url }}static/js/dropzone.min.js", null];
+    $('.page-content-area').ace_ajax('loadScripts', '', function() {
+        //inline scripts related to this page
+        jQuery(function($){
+
+            try {
+                Dropzone.autoDiscover = false;
+                var myDropzone = new Dropzone("#dropzone" , {
+                    paramName: "image", // The name that will be used to transfer the file
+                    maxFilesize: 20, // MB
+
+                    addRemoveLinks : true,
+                    dictDefaultMessage :
+                            '<span class="bigger-150 bolder"><i class="ace-icon fa fa-caret-right red"></i> 拖放文件</span> 上传 \
+                            <span class="smaller-80 grey">（或点击）</span> <br /> \
+                            <i class="upload-icon ace-icon fa fa-cloud-upload blue fa-3x"></i>'
+                    ,
+                    dictResponseError: '在上载文件时出错!',
+                    dictFallbackMessage: "您的浏览器不支持拖放文件上传.",
+//                dictFallbackText: "Please use the fallback form below to upload your files like in the olden days.",
+                    {#dictFileTooBig: "File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB.",#}
+                    dictInvalidFileType: "你不能上传此类型的文件.",
+                    dictCancelUpload: "取消上传",
+                    dictCancelUploadConfirmation: "你确定你要取消这个上传?",
+                    dictRemoveFile: "删除文件",
+                    dictRemoveFileConfirmation: null,
+                    dictMaxFilesExceeded: "You can not upload any more files.",
+
+                    success: function( file, response )
+                    {
+                        console.log( file );
+                        console.log( response );
+                        if (file.previewElement) {
+                            return file.previewElement.classList.add("dz-success");
+                        }
+                    },
+                    removedfile: function( file )
+                    {
+                        var me = this;
+                        swal({
+                            title: "Are you sure?",
+                            text: "您确定要删除该图片？",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "Yes, delete it!",
+                            closeOnConfirm: false
+                        }, function(){
+                            var _ref;
+                            if (file.previewElement) {
+                                if ((_ref = file.previewElement) != null) {
+                                    _ref.parentNode.removeChild(file.previewElement);
+                                }
+                            }
+                            swal("Deleted!", "删除成功.", "success");
+                            return me._updateMaxFilesReachedClass();
+                        });
+                    }
+
+                });
+
+                Dropzone.confirm = function(question, accepted, rejected) {
+                    swal({
+                        title: "Are you sure?",
+                        text: question,
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "Yes, do it!",
+                        cancelButtonText: "No, cancel plx!",
+                        closeOnConfirm: false,
+                        closeOnCancel: false
+                    }, function(isConfirm){
+                        if (isConfirm) {
+                            swal("Deleted!", "Your imaginary file has been deleted.", "success");
+                            return accepted();
+                        } else if( rejected != null ) {
+                            swal("Cancelled", "Your imaginary file is safe :)", "error");
+                            return rejected();
+                        }
+                    });
+                };
+
+                $(document).one('ajaxloadstart.page', function(e) {
+                    try {
+                        myDropzone.destroy();
+                    } catch(e) {}
+                });
+
+            } catch(e) {
+                alert('Dropzone.js does not support older browsers!');
+            }
+
+        });
+    });
+</script>
