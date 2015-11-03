@@ -60,7 +60,7 @@
                     </td>
 
                     <td>
-                        <a target="_blank" href="{{ url('learn_learnInfo', {"id": post.id}) }}">{{ post.title|length > 8 ? post.title|slice(0, 8) ~ '...' : post.title }}</a>
+                        <a target="_blank" href="{{ url('post_detail', {"id": post.id}) }}">{{ post.title|length > 8 ? post.title|slice(0, 8) ~ '...' : post.title }}</a>
                     </td>
                     <td></td>
                     <td>{{ post.description|slice(0, 16) }} ...</td>
