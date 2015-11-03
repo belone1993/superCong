@@ -156,12 +156,25 @@
     <script src="{{ storage_url }}static/moderna/js/jquery.flexslider.min.js"></script>
     <script src="{{ storage_url }}static/moderna/js/custom.js"></script>
     <script>
-        $('.index-page').bind('click', function()
+        $(function()
         {
-//            $(this).hide('slow');
-            $(this).animate({
-                opacity: 0
-            }, 'slow');
+            $('.index-page').bind('click', function()
+            {
+                indexPage.hide();
+            });
+
+            setTimeout("indexPage.hide()", 3000);
         });
+
+        var indexPage = {
+            self: $('.index-page'),
+            hide: function()
+            {
+                this.self.animate({
+                    opacity: 0
+                }, 'slow');
+            }
+        };
+
     </script>
 {% endblock %}
