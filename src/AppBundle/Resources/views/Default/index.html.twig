@@ -171,9 +171,11 @@
             hide: function()
             {
                 this.self.animate({
-                    opacity: 0,
-                    display: 'none'
+                    opacity: 0
                 }, 'slow');
+                this.self.css({
+                    display: 'none'k
+                });
             }
         };
 
