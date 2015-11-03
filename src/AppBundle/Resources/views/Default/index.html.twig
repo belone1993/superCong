@@ -12,7 +12,7 @@
             opacity: 1;
             position: fixed;
             background: #222 no-repeat center center;
-            background-image: url("http://source.lattecake.com/images/2015/11/b3169089fbd93a129c649be028590371.jpeg");
+            background-image: url("http://storage.lattecake.com/static/images/background/bg-20151101.jpg");
             top: 0;
             left: 0;
             z-index: 9999;
@@ -173,9 +173,12 @@
                 this.self.animate({
                     opacity: 0
                 }, 'slow');
-                this.self.css({
-                    display: 'none'
-                });
+                setTimeout(function()
+                {
+                    indexPage.self.css({
+                        display: 'none'
+                    });
+                }, 1000);
             }
         };
 
