@@ -5,6 +5,49 @@
         li .flex-next{
             z-index: 99;
         }
+        .index-page{
+            width: 100%;
+            height: 100%;
+            display: block;
+            opacity: 1;
+            position: fixed;
+            background: #222 no-repeat center center;
+            background-image: url("http://dudulu.me/content/images/2015/09/005tXAWvgw1euhc8bjuj2j31kw0zkasi.jpg");
+            top: 0;
+            left: 0;
+            z-index: 9999;
+        }
+        .vertical {
+            display: block;
+            vertical-align: middle;
+            margin-top: -60px;
+            position: relative;
+            top: 50%;
+        }
+        .inner {
+            position: relative;
+            width: 80%;
+            max-width: 710px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .page-title {
+            margin: 10px 0 10px 0;
+            font-size: 5rem;
+            letter-spacing: -1px;
+            font-weight: 700;
+            font-family: "Open Sans", sans-serif;
+            color: #fff;
+        }
+        .page-description {
+            margin: 0;
+            font-size: 2rem;
+            line-height: 1.5em;
+            font-weight: 400;
+            font-family: "Merriweather", serif;
+            letter-spacing: 0.01rem;
+            color: rgba(255,255,255,0.8);
+        }
     </style>
 {% endblock %}
 
@@ -97,6 +140,14 @@
             </div>
         </div>
     </section>
+    <div class="index-page">
+        <div class="vertical">
+            <div class="main-header-content inner">
+                <h1 class="page-title">嘟～嘟噜</h1>
+                <h2 class="page-description">时间是一个很强大的东西，很容易在回忆里美好沉睡，让人沉溺。</h2>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block Cong_javascripts %}
@@ -104,4 +155,13 @@
     <script src="{{ storage_url }}static/moderna/js/jquery.fancybox-media.min.js"></script>
     <script src="{{ storage_url }}static/moderna/js/jquery.flexslider.min.js"></script>
     <script src="{{ storage_url }}static/moderna/js/custom.js"></script>
+    <script>
+        $('.index-page').bind('click', function()
+        {
+//            $(this).hide('slow');
+            $(this).animate({
+                opacity: 0
+            }, 'slow');
+        });
+    </script>
 {% endblock %}
