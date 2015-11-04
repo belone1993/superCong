@@ -10,9 +10,13 @@
 namespace AppBundle\Controller;
 
 
+use GuzzleHttp\Client;
+use StoreBundle\Entity\Post;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class PublishController
@@ -34,5 +38,47 @@ class PublishController extends Controller
     public function putPostAction( Request $request )
     {
         var_dump($request);die;
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function puBaiDuAction( Request $request )
+    {
+        $postEntity = $this->getDoctrine()->getRepository('StoreBundle:Post');
+
+        $posts = $postEntity->findAll();
+
+        $urls = [];
+
+        /** @var  $post Post */
+        foreach( $posts as $post ) {
+            $urls[] = $this->generateUrl('post_detail', ['id' => $post->getId()]);
+        }
+
+        $api = 'http://data.zz.baidu.com/urls?site=www.lattecake.com&token=nRKurEJqZZFDGQwe';
+
+//        $client = new Client();
+//
+//        $client->post($api, );
+//
+//        $urls = array(
+//            'http://www.example.com/1.html',
+//            'http://www.example.com/2.html',
+//        );
+
+        $ch = curl_init();
+        $options =  array(
+            CURLOPT_URL => $api,
+            CURLOPT_POST => true,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POSTFIELDS => implode("\n", $urls),
+            CURLOPT_HTTPHEADER => array('Content-Type: text/plain'),
+        );
+        curl_setopt_array($ch, $options);
+        $result = curl_exec($ch);
+
+        return new JsonResponse($result, Response::HTTP_OK);
     }
 }
