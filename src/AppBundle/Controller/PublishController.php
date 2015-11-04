@@ -82,6 +82,6 @@ class PublishController extends Controller
         curl_setopt_array($ch, $options);
         $result = curl_exec($ch);
 
-        return new JsonResponse($result, Response::HTTP_OK);
+        return new Response($result, Response::HTTP_OK);
     }
 }
