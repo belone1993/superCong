@@ -56,7 +56,8 @@ class PublishController extends Controller
 
         /** @var  $post Post */
         foreach( $posts as $post ) {
-            $urls[] = $this->generateUrl('post_detail', ['id' => $post->getId()]);
+            //$urls[] = $this->generateUrl('post_detail', ['id' => $post->getId()]);
+            $urls[] = 'http://lattecake.com/post/'.$post->getId();
         }
 
         $api = 'http://data.zz.baidu.com/urls?site=www.lattecake.com&token=nRKurEJqZZFDGQwe';
