@@ -41,6 +41,8 @@ class PublishController extends Controller
     }
 
     /**
+     * @Route("/pushBaiDu")
+     *
      * @param Request $request
      * @return JsonResponse
      */
