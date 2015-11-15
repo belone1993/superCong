@@ -10,6 +10,7 @@ use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Util\SecureRandom;
 
 /**
@@ -57,44 +58,49 @@ class ImageController extends Controller
      */
     public function uploadAction( Request $request )
     {
-        if( $request->files->get('image') )
-        {
-            $em = $this->getDoctrine()->getManager();
+        $response = [];
 
+        /** @var $file \Symfony\Component\HttpFoundation\File\UploadedFile */
+        if( $file = $request->files->get('image') )
+        {
             $dateTime = new \DateTime();
             $dir = 'uploads/images/'.$dateTime->format('Y/m');
 
-            /** @var $file \Symfony\Component\HttpFoundation\File\UploadedFile */
-            foreach ($request->files->get('image') as $file)
+            $generator = new SecureRandom();
+            $random = $generator->nextBytes(10);
+            $hashedRandom = md5($random); // see tip below
+            $name = $hashedRandom.'.'.$file->guessExtension();
+            $fs = new Filesystem();
+            if( !$fs->exists( $dir ) )
             {
-                $generator = new SecureRandom();
-                $random = $generator->nextBytes(10);
-                $hashedRandom = md5($random); // see tip below
-                $name = $hashedRandom.'.'.$file->guessExtension();
-                $fs = new Filesystem();
-                if( !$fs->exists( $dir ) )
-                {
-                    try {
-                        $fs->mkdir( $dir );
-                    } catch (IOException $e) {
-                        echo "An error occurred while creating your directory at ".$e->getPath();
-                    }
+                try {
+                    $fs->mkdir( $dir );
+                } catch (IOException $e) {
+                    echo "An error occurred while creating your directory at ".$e->getPath();
                 }
-                $fileData = $file->move( $dir,  $name );
-
-                $image = new Image();
-                $image->setExtension( $fileData->getExtension() )
-                    ->setImageName( $fileData->getFilename() )
-                    ->setImagePath( $fileData->getPath() )
-                    ->setRealPath( $fileData->getRealPath() )
-                    ->setImageSize( $fileData->getSize() );
-
-                $em->persist( $image );
-                $em->flush();
             }
+            $fileData = $file->move( $dir,  $name );
+
+            $image = new Image();
+            $image->setExtension( $fileData->getExtension() )
+                ->setImageName( $fileData->getFilename() )
+                ->setImagePath( $fileData->getPath() )
+                ->setRealPath( $fileData->getRealPath() )
+                ->setImageSize( $fileData->getSize() );
+
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist( $image );
+            $em->flush();
+
+            $response = [
+                'imagePath'  => $image->getImagePath(),
+                'imageName'  => $image->getImageName(),
+                'imageUrl'   => $this->getParameter('source_url').'images/'.$image->getImageTime()->format('Y/m').'/'.$image->getImageName()
+            ];
         }
 
-        return [];
+        return new JsonResponse($response, Response::HTTP_OK);
     }
 
     /**
