@@ -28,7 +28,7 @@
                                     <h3><a href="{{ url('post_detail', {"id": post.id}) }}">{{ post.title }}</a></h3>
                                 </div>
                                 {% if post.image|trim is not empty %}
-                                    <img class="img-responsive img-hover" src="{{ source_url }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}?imageView/1/w/460/h/240" alt=""/>
+                                    <img class="img-responsive img-hover" src="{{ source_url }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}?imageView/1/w/740/h/240" alt=""/>
                                 {% elseif post.images.count > 1 %}
                                     <div id="post-slider" class="flexslider">
                                         <ul class="slides">
@@ -41,7 +41,7 @@
                                     </div>
                                 {% elseif post.images.count == 1 %}
                                     {% for image in post.images %}
-                                        <img class="img-responsive img-hover" src="{{ source_url }}images/{{ image.imageTime|date('Y/m') }}/{{ image.imageName }}?imageView/1/w/460/h/240" alt=""/>
+                                        <img class="img-responsive img-hover" src="{{ source_url }}images/{{ image.imageTime|date('Y/m') }}/{{ image.imageName }}?imageView/1/w/740/h/240" alt=""/>
                                     {% endfor %}
                                 {% endif %}
                             </div>
