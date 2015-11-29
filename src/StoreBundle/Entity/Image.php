@@ -82,7 +82,7 @@ class Image extends ImageRepository
      * @var Post
      *
      * @ORM\ManyToOne(targetEntity="Post", inversedBy="images", fetch="EAGER")
-     * @ORM\JoinColumn(name="postId", referencedColumnName="id")
+     * @ORM\JoinColumn(name="postId", referencedColumnName="id", nullable=true)
      */
     private $postInfo;
 

@@ -108,9 +108,16 @@ class Post extends PostRepository
     private $createdAt;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="pushTime", type="datetime", nullable=true, options={"comment": "发布时间"})
+     */
+    private $pushTime;
+
+    /**
      * @var integer
      *
-     * @ORM\Column(name="status", type="integer", nullable=true, options={"comment": "状态,1为已发布", "default": 0})
+     * @ORM\Column(name="status", type="integer", nullable=true, options={"comment": "0为草稿,1为已发布", "default": 0})
      */
     private $status = 0;
 
@@ -124,8 +131,8 @@ class Post extends PostRepository
     /**
      * @var \StoreBundle\Entity\Category
      *
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="posts", cascade={"all"}, fetch="EAGER")
-     * @ORM\JoinColumn(name="categoryId", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="posts", fetch="EAGER")
+     * @ORM\JoinColumn(name="categoryId", referencedColumnName="id", nullable=true)
      */
     private $category;
 
@@ -560,5 +567,28 @@ class Post extends PostRepository
     public function getReviews()
     {
         return $this->reviews;
+    }
+
+    /**
+     * Set pushTime
+     *
+     * @param \DateTime $pushTime
+     * @return Post
+     */
+    public function setPushTime($pushTime)
+    {
+        $this->pushTime = $pushTime;
+
+        return $this;
+    }
+
+    /**
+     * Get pushTime
+     *
+     * @return \DateTime 
+     */
+    public function getPushTime()
+    {
+        return $this->pushTime;
     }
 }

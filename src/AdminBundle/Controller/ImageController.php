@@ -39,13 +39,38 @@ class ImageController extends Controller
      * @Route("/list/{page}", name="admin_imageList", defaults={"page":1}, requirements={"page"="\d+"})
      * @Template()
      *
+     * @param Request $request
      * @param $page
      * @return array
      */
-    public function listAction( $page )
+    public function listAction( Request $request, $page )
     {
+        /** @var Image $imageEntity */
+        $imageEntity = $this->getDoctrine()->getRepository('StoreBundle:Image');
+
+        $images = $imageEntity->findImagesByPage( $page );
+
+        $postTotal = $imageEntity->countImages();
+
+        if( $request->isXmlHttpRequest() )
+        {
+            $response = [
+                'html' => $this->renderView('AdminBundle:Image:ajaxList.html.twig', [
+                    'page'       => $page,
+                    'images'     => $images,
+                    'pageTotal'  => ceil( $postTotal / 20 ),
+                    'imageTotal' => $postTotal,
+                    'startPost'  => (($page - 1) * 20) + 1,
+                    'endPost'    => (($page - 1) * 20) + count( $images )
+                ])
+            ];
+
+            return new JsonResponse($response, Response::HTTP_OK);
+        }
+
         return [
-            'page' => $page
+            'page'   => $page,
+            'images' => $images
         ];
     }
 

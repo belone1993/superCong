@@ -3,6 +3,7 @@
 namespace StoreBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use StoreBundle\Entity\Post;
 
 /**
  * ImageRepository
@@ -15,7 +16,56 @@ class ImageRepository extends EntityRepository
     const LIST_LIMIT = 20;
 
     /**
+     * 根据图片id更新图片所关联的post
+     *
+     * @param Post $post
+     * @param $ids
+     * @return mixed
+     */
+    public function updateImagePostByIds( Post $post, $ids )
+    {
+        return $this->_em->createQueryBuilder()
+            ->update('StoreBundle:Image', 'i')
+            ->set('i.postId', $post->getId())
+//            ->set('i.postInfo', $post)
+            ->where('i.id IN(:ids)')
+            ->setParameter('ids', $ids)
+            ->getQuery()->execute();
+    }
+
+    /**
+     * 更新图片所对应的postId
+     *
+     * @param Post $post
+     * @return mixed
+     */
+    public function updateUnImageByPostId( Post $post )
+    {
+        return $this->_em->createQueryBuilder()
+            ->update('StoreBundle:Image', 'i')
+            ->set('i.postId', 0)
+            ->where('i.postId = :postId')
+            ->setParameter('postId', $post->getId())
+            ->getQuery()->execute();
+    }
+
+    /**
+     * 统计图片数量
+     *
+     * @return mixed
+     */
+    public function countImages()
+    {
+        return $this->_em->createQueryBuilder()
+            ->select("COUNT(i.id)")
+            ->from('StoreBundle:Image', 'i')
+            ->where('i.postId = 0')
+            ->getQuery()->getSingleScalarResult();
+    }
+
+    /**
      * 根据分页查找图片
+     *
      * @param int $page
      * @return array
      */
@@ -24,7 +74,10 @@ class ImageRepository extends EntityRepository
         return $this->_em->createQueryBuilder()
             ->select("i")
             ->from('StoreBundle:Image', 'i')
+            ->where('i.postId = 0 OR i.postId IS NULL')
             ->orderBy('i.id', 'DESC')
+            ->setMaxResults( self::LIST_LIMIT )
+            ->setFirstResult( (($page -1 ) * self::LIST_LIMIT ) )
             ->getQuery()->getResult();
     }
 }

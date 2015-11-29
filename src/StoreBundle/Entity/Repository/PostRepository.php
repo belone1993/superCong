@@ -14,6 +14,9 @@ use Doctrine\ORM\EntityRepository;
  */
 class PostRepository extends EntityRepository
 {
+
+
+
     /**
      * 获取最新帖子
      * @return array

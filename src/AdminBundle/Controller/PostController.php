@@ -7,6 +7,7 @@
  */
 
 namespace AdminBundle\Controller;
+use Monolog\Logger;
 use StoreBundle\Entity\Image;
 use StoreBundle\Entity\Post;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -29,6 +30,94 @@ use Symfony\Component\Filesystem\Exception\IOException;
  */
 class PostController extends Controller
 {
+
+    /**
+     * 草稿箱
+     *
+     * @Route("/drafts/{page}", name="admin_postDrafts", requirements={"page"="\d+"}, defaults={"page": 1})
+     *
+     * @param int $page
+     * @return array
+     */
+    public function draftsAction( $page = 1 )
+    {
+        return [];
+    }
+
+    /**
+     * 文章列表
+     *
+     * @Route("/list/{action}/{page}", name="admin_postList", requirements={"action"="\d+", "page"="\d+"}, defaults={"action": 1, "page": 1})
+     * @Template()
+     *
+     * @param $action
+     * @param $page integer
+     * @return array
+     */
+    public function listAction( $action, $page = 1 )
+    {
+        /** @var Logger $logger */
+        $logger = $this->get('logger');
+
+        $actionName = '学无止境';
+        if( $action == 2 )
+            $actionName = '慢生活';
+
+        $logger->info("params.", ['action' => $action, 'actionName' => $actionName]);
+
+        /** @var Post $postEntity */
+        $postEntity = $this->getDoctrine()->getRepository('StoreBundle:Post');
+
+        $posts = $postEntity->findPostsPage( $action, $page );
+        $postTotal = $postEntity->countPosts( $action );
+
+        $logger->info("getData.", ["postCount" => $postTotal]);
+
+        return [
+            'action'     => $action,
+            'actionName' => $actionName,
+            'posts'      => $posts,
+            'pageTotal'  => ceil( $postTotal / 10 ),
+            'page'       => $page,
+            'postTotal'  => $postTotal,
+            'startPost'  => (($page - 1) * 10) + 1,
+            'endPost'    => (($page - 1) * 10) + count( $posts )
+        ];
+    }
+
+    /**
+     * 新建文章
+     *
+     * @Route("/new/{action}", name="admin_postNew", requirements={"action"="\d+"}, defaults={"action": 1})
+     *
+     * @param $action integer
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function newAction( $action )
+    {
+        $post = new Post();
+
+        $post->setAction( $action )
+            ->setAuthor( $this->getUser() );
+
+        $em = $this->getDoctrine()->getManager();
+
+        $em->persist($post);
+        $em->flush();
+
+        $categoryEntity = $this->getDoctrine()->getRepository('StoreBundle:Category');
+
+        $response = [
+            'post' => $post
+        ];
+
+        if( $action == 1 )
+        {
+            $response['categoryList'] = $categoryEntity->findAll();
+        }
+
+        return $this->render('AdminBundle:Post:new.html.twig', $response);
+    }
 
     /**
      * 删除文章
@@ -85,18 +174,6 @@ class PostController extends Controller
             'data'      => ''
         ];
 
-        if( !$request->files )
-        {
-            $response['success'] = false;
-            $response['message'] = '图片不能为空！';
-            return new JsonResponse($response);
-        }
-        if( !$request->get('postTitle') || !$request->get('content') )
-        {
-            $response['success'] = false;
-            $response['message'] = '其他参数不能为空！';
-            return new JsonResponse($response);
-        }
         $em = $this->getDoctrine()->getManager();
         if( $request->get('postId') )
         {
@@ -110,44 +187,8 @@ class PostController extends Controller
                 ->setCategoryId( 0 )
                 ->setIsMarkdown( 1 );
 
-            $em->persist($postInfo);
-            $em->flush();
-        }
-
-        if( $request->files->get('postImage') )
-        {
-            $dateTime = new \DateTime();
-            $dir = 'uploads/images/'.$dateTime->format('Y/m');
-
-            /** @var $file \Symfony\Component\HttpFoundation\File\UploadedFile */
-            foreach ($request->files->get('postImage') as $file)
-            {
-                $generator = new SecureRandom();
-                $random = $generator->nextBytes(10);
-                $hashedRandom = md5($random); // see tip below
-                $name = $hashedRandom.'.'.$file->guessExtension();
-                $fs = new Filesystem();
-                if( !$fs->exists( $dir ) )
-                {
-                    try {
-                        $fs->mkdir( $dir );
-                    } catch (IOException $e) {
-                        echo "An error occurred while creating your directory at ".$e->getPath();
-                    }
-                }
-                $fileData = $file->move( $dir,  $name );
-
-                $image = new Image();
-                $image->setExtension( $fileData->getExtension() )
-                    ->setImageName( $fileData->getFilename() )
-                    ->setImagePath( $fileData->getPath() )
-                    ->setRealPath( $fileData->getRealPath() )
-                    ->setImageSize( $fileData->getSize() )
-                    ->setPostInfo( $postInfo );
-
-                $em->persist( $image );
-                $em->flush();
-            }
+//            $em->persist($postInfo);
+//            $em->flush();
         }
 
         $postInfo->setTitle( $request->get('postTitle') )
@@ -155,10 +196,33 @@ class PostController extends Controller
             ->setDescription( $request->get('description') )
             ->setContent( $request->get('content') )
             ->setAuthorId( 1 )
+            ->setAuthor( $this->getUser() )
             ->setStatus( intval($request->get('postStatus')) );
+
+        if( $request->get('category') )
+        {
+            $categoryEntity = $this->getDoctrine()->getRepository('StoreBundle:Category');
+
+            /** @var  $categoryInfo Category */
+            $categoryInfo = $categoryEntity->find($request->get('category'));
+
+            $postInfo->setCategory( $categoryInfo );
+        }
 
         $em->persist( $postInfo );
         $em->flush();
+
+        if( $request->get('imageIds') )
+        {
+            $imageIds = explode(",", $request->get('imageIds'));
+
+            /** @var Image $imageEntity */
+            $imageEntity = $this->getDoctrine()->getRepository('StoreBundle:Image');
+
+            $imageEntity->updateUnImageByPostId($postInfo);
+
+            $imageEntity->updateImagePostByIds( $postInfo, $imageIds );
+        }
 
         $redirectUrl = '';
 

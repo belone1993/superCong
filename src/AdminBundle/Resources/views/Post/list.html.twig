@@ -1,0 +1,181 @@
+
+<title>文章列表 - Latte Cake Admin</title>
+
+<!-- ajax layout which only needs content area -->
+<div class="page-header">
+    <h1>
+        跌跌撞撞
+        <small>
+            <i class="ace-icon fa fa-angle-double-right"></i>
+            分享是一种博爱的心境，学会分享，就学会了生活
+        </small>
+    </h1>
+</div><!-- /.page-header -->
+
+<div class="col-xs-12">
+
+    <a href="#post/new/{{ action }}" class="btn btn-app btn-primary btn-xs no-radius">
+        <i class="ace-icon fa fa-pencil-square-o bigger-160"></i>
+        添加文章
+    </a>
+
+    <div class="clearfix">
+        <div class="pull-right tableTools-container"></div>
+    </div>
+
+    <div>
+        <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>标题</th>
+                <th>作者</th>
+                <th>描述</th>
+                <th>阅读</th>
+                <th>发布时间</th>
+                <th>更新时间</th>
+                <th>状态</th>
+
+                <th></th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            {% set statusName = {0: '草稿...', 1: '已发布', 2: '已删除'} %}
+
+            {% for key,post in posts if posts %}
+                {% set No = (((page - 1) * 20) + 1) %}
+                <tr id="article-{{ post.id }}">
+                    <td>{{ No + key }}</td>
+                    <td>
+                        <a target="_blank" href="{{ url('life_lifeInfo', {"id": post.id}) }}">{{ post.title|length > 8 ? post.title|slice(0, 8) ~ '...' : post.title }}</a>
+                    </td>
+                    <td>{{ post.author.username }}</td>
+                    <td>{{ post.description|slice(0, 16) }} ...</td>
+
+                    <td>
+                        <span class="badge badge-info">{{ post.readNum }}</span>
+                    </td>
+
+                    <td>
+                        {{ post.createdAt|date('Y/m/d H:i:s') }}
+                    </td>
+                    <td>
+                        {{ post.createdAt|date('Y/m/d H:i:s') }}
+                    </td>
+                    <td>
+                        {{ statusName[post.status] }}
+                    </td>
+                    <td>
+                        <div class="hidden-sm hidden-xs action-buttons">
+                            <a class="green" href="#life/editArticle/{{ post.id }}">
+                                <i class="ace-icon fa fa-pencil bigger-130"></i>
+                            </a>
+
+                            <a class="red removeArticle" data-href="#post/removeArticle" data-id="{{ post.id }}">
+                                <i class="ace-icon fa fa-trash-o bigger-130"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="col-xs-6">
+            <div class="dataTables_info" id="dynamic-table_info" role="status" aria-live="polite">
+                当前 {{ startPost }} 至 {{ endPost }} 共 {{ postTotal }} 条
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="dataTables_paginate paging_simple_numbers">
+                <ul class="pagination">
+                    {% if page == 1 %}
+                    <li class="paginate_button previous disabled">
+                        <a href="#">上一页</a>
+                    </li>
+                    {% else %}
+                    <li class="paginate_button previous">
+                        <a href="#post/list/{{ action }}/{{ page - 1 }}">上一页</a>
+                    </li>
+                    {% endif %}
+                    {% for i in 1..pageTotal %}
+                        <li class="paginate_button {% if page == i %}active{% endif %}" aria-controls="dynamic-table" tabindex="{{ i }}">
+                            <a href="#post/list/{{ action }}/{{ i }}">{{ i }}</a>
+                        </li>
+                    {% endfor %}
+                    {% if page == pageTotal %}
+                        <li class="paginate_button next disabled">
+                            <a href="#">下一页</a>
+                        </li>
+                    {% else %}
+                        <li class="paginate_button next">
+                            <a href="#post/list/{{ action }}/{{ page + 1 }}">下一页</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- page specific plugin scripts -->
+<script type="text/javascript">
+    //    var scripts = [null,"../../assets/js/dataTables/jquery.dataTables.js","../../assets/js/dataTables/jquery.dataTables.bootstrap.js","../../assets/js/dataTables/extensions/TableTools/js/dataTables.tableTools.js","../../assets/js/dataTables/extensions/ColVis/js/dataTables.colVis.js", null]
+    var scripts = [
+    ];
+    $('.page-content-area').ace_ajax('loadScripts', scripts, function() {
+        /** 删除文章 */
+//        $(".removeArticle").on(ace.click_event, function() {
+//            var hash = $(this).attr('data-href'),
+//                    postId = $(this).attr('data-id');
+//            swal({
+//                title: "Are you sure?",
+//                text: "你确定要删除这篇文章？它将会放在垃圾箱里!",
+//                type: "warning",
+//                showCancelButton: true,
+//                confirmButtonColor: "#DD6B55",
+//                confirmButtonText: "Yes, delete it!",
+//                cancelButtonText: "No, cancel plx!",
+//                showLoaderOnConfirm: true,
+//                closeOnConfirm: false,
+//                closeOnCancel: true
+//            }, function(isConfirm){
+//                if (isConfirm) {
+//                    hash = hash.replace(/^(\#\!)?\#/, '');
+//                    $.ajax({
+//                        url: base_url + hash,
+//                        type: 'POST',
+//                        dataType: 'json',
+//                        data: {
+//                            id: postId
+//                        },
+//                        beforeSend: function () {
+//                            $('.page-content-area').append('<div class="message-loading-overlay"><i class="fa-spin ace-icon fa fa-spinner orange2 bigger-160"></i></div>');
+//                        },
+//                        success: function (data) {
+//                            try{
+//                                if( data.success == true )
+//                                {
+//                                    swal("Good job!", data.message, "success")
+//                                    $('#article-' + postId).remove();
+//                                }else
+//                                {
+//                                    swal("错误", data.message, "error");
+//                                }
+//                            }catch ( err )
+//                            {
+//                                swal("错误", error, "error");
+//                            }
+//                            $('.page-content-area').find('.message-loading-overlay').remove();
+//                        },
+//                        error: function (e) {
+//                            $('.page-content-area').find('.message-loading-overlay').remove();
+//                        }
+//                    })
+//                }
+//            });
+//        });
+
+    });
+</script>

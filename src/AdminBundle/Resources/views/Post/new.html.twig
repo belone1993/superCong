@@ -1,0 +1,786 @@
+{#{% trans_default_domain 'FOSUserBundle' %}#}
+<title>编辑文章 - Latte Cake Admin</title>
+
+<style>
+    @-webkit-keyframes passing-through{0%{opacity:0;-webkit-transform:translateY(40px);-moz-transform:translateY(40px);-ms-transform:translateY(40px);-o-transform:translateY(40px);transform:translateY(40px)}30%, 70%{opacity:1;-webkit-transform:translateY(0px);-moz-transform:translateY(0px);-ms-transform:translateY(0px);-o-transform:translateY(0px);transform:translateY(0px)}100%{opacity:0;-webkit-transform:translateY(-40px);-moz-transform:translateY(-40px);-ms-transform:translateY(-40px);-o-transform:translateY(-40px);transform:translateY(-40px)}}@-moz-keyframes passing-through{0%{opacity:0;-webkit-transform:translateY(40px);-moz-transform:translateY(40px);-ms-transform:translateY(40px);-o-transform:translateY(40px);transform:translateY(40px)}30%, 70%{opacity:1;-webkit-transform:translateY(0px);-moz-transform:translateY(0px);-ms-transform:translateY(0px);-o-transform:translateY(0px);transform:translateY(0px)}100%{opacity:0;-webkit-transform:translateY(-40px);-moz-transform:translateY(-40px);-ms-transform:translateY(-40px);-o-transform:translateY(-40px);transform:translateY(-40px)}}@keyframes passing-through{0%{opacity:0;-webkit-transform:translateY(40px);-moz-transform:translateY(40px);-ms-transform:translateY(40px);-o-transform:translateY(40px);transform:translateY(40px)}30%, 70%{opacity:1;-webkit-transform:translateY(0px);-moz-transform:translateY(0px);-ms-transform:translateY(0px);-o-transform:translateY(0px);transform:translateY(0px)}100%{opacity:0;-webkit-transform:translateY(-40px);-moz-transform:translateY(-40px);-ms-transform:translateY(-40px);-o-transform:translateY(-40px);transform:translateY(-40px)}}@-webkit-keyframes slide-in{0%{opacity:0;-webkit-transform:translateY(40px);-moz-transform:translateY(40px);-ms-transform:translateY(40px);-o-transform:translateY(40px);transform:translateY(40px)}30%{opacity:1;-webkit-transform:translateY(0px);-moz-transform:translateY(0px);-ms-transform:translateY(0px);-o-transform:translateY(0px);transform:translateY(0px)}}@-moz-keyframes slide-in{0%{opacity:0;-webkit-transform:translateY(40px);-moz-transform:translateY(40px);-ms-transform:translateY(40px);-o-transform:translateY(40px);transform:translateY(40px)}30%{opacity:1;-webkit-transform:translateY(0px);-moz-transform:translateY(0px);-ms-transform:translateY(0px);-o-transform:translateY(0px);transform:translateY(0px)}}@keyframes slide-in{0%{opacity:0;-webkit-transform:translateY(40px);-moz-transform:translateY(40px);-ms-transform:translateY(40px);-o-transform:translateY(40px);transform:translateY(40px)}30%{opacity:1;-webkit-transform:translateY(0px);-moz-transform:translateY(0px);-ms-transform:translateY(0px);-o-transform:translateY(0px);transform:translateY(0px)}}@-webkit-keyframes pulse{0%{-webkit-transform:scale(1);-moz-transform:scale(1);-ms-transform:scale(1);-o-transform:scale(1);transform:scale(1)}10%{-webkit-transform:scale(1.1);-moz-transform:scale(1.1);-ms-transform:scale(1.1);-o-transform:scale(1.1);transform:scale(1.1)}20%{-webkit-transform:scale(1);-moz-transform:scale(1);-ms-transform:scale(1);-o-transform:scale(1);transform:scale(1)}}@-moz-keyframes pulse{0%{-webkit-transform:scale(1);-moz-transform:scale(1);-ms-transform:scale(1);-o-transform:scale(1);transform:scale(1)}10%{-webkit-transform:scale(1.1);-moz-transform:scale(1.1);-ms-transform:scale(1.1);-o-transform:scale(1.1);transform:scale(1.1)}20%{-webkit-transform:scale(1);-moz-transform:scale(1);-ms-transform:scale(1);-o-transform:scale(1);transform:scale(1)}}@keyframes pulse{0%{-webkit-transform:scale(1);-moz-transform:scale(1);-ms-transform:scale(1);-o-transform:scale(1);transform:scale(1)}10%{-webkit-transform:scale(1.1);-moz-transform:scale(1.1);-ms-transform:scale(1.1);-o-transform:scale(1.1);transform:scale(1.1)}20%{-webkit-transform:scale(1);-moz-transform:scale(1);-ms-transform:scale(1);-o-transform:scale(1);transform:scale(1)}}.dropzone,.dropzone *{box-sizing:border-box}.dropzone{min-height:150px;border:2px solid rgba(0,0,0,0.3);background:white;padding:20px 20px}.dropzone.dz-clickable{cursor:pointer}.dropzone.dz-clickable *{cursor:default}.dropzone.dz-clickable .dz-message,.dropzone.dz-clickable .dz-message *{cursor:pointer}.dropzone.dz-started .dz-message{display:none}.dropzone.dz-drag-hover{border-style:solid}.dropzone.dz-drag-hover .dz-message{opacity:0.5}.dropzone .dz-message{text-align:center;margin:2em 0}.dropzone .dz-preview{position:relative;display:inline-block;vertical-align:top;margin:16px;min-height:100px}.dropzone .dz-preview:hover{z-index:1000}.dropzone .dz-preview:hover .dz-details{opacity:1}.dropzone .dz-preview.dz-file-preview .dz-image{border-radius:20px;background:#999;background:linear-gradient(to bottom, #eee, #ddd)}.dropzone .dz-preview.dz-file-preview .dz-details{opacity:1}.dropzone .dz-preview.dz-image-preview{background:white}.dropzone .dz-preview.dz-image-preview .dz-details{-webkit-transition:opacity 0.2s linear;-moz-transition:opacity 0.2s linear;-ms-transition:opacity 0.2s linear;-o-transition:opacity 0.2s linear;transition:opacity 0.2s linear}.dropzone .dz-preview .dz-remove{font-size:14px;text-align:center;display:block;cursor:pointer;border:none}.dropzone .dz-preview .dz-remove:hover{text-decoration:underline}.dropzone .dz-preview:hover .dz-details{opacity:1}.dropzone .dz-preview .dz-details{z-index:20;position:absolute;top:0;left:0;opacity:0;font-size:13px;min-width:100%;max-width:100%;padding:2em 1em;text-align:center;color:rgba(0,0,0,0.9);line-height:150%}.dropzone .dz-preview .dz-details .dz-size{margin-bottom:1em;font-size:16px}.dropzone .dz-preview .dz-details .dz-filename{white-space:nowrap}.dropzone .dz-preview .dz-details .dz-filename:hover span{border:1px solid rgba(200,200,200,0.8);background-color:rgba(255,255,255,0.8)}.dropzone .dz-preview .dz-details .dz-filename:not(:hover){overflow:hidden;text-overflow:ellipsis}.dropzone .dz-preview .dz-details .dz-filename:not(:hover) span{border:1px solid transparent}.dropzone .dz-preview .dz-details .dz-filename span,.dropzone .dz-preview .dz-details .dz-size span{background-color:rgba(255,255,255,0.4);padding:0 0.4em;border-radius:3px}.dropzone .dz-preview:hover .dz-image img{-webkit-transform:scale(1.05, 1.05);-moz-transform:scale(1.05, 1.05);-ms-transform:scale(1.05, 1.05);-o-transform:scale(1.05, 1.05);transform:scale(1.05, 1.05);-webkit-filter:blur(8px);filter:blur(8px)}.dropzone .dz-preview .dz-image{border-radius:20px;overflow:hidden;width:120px;height:120px;position:relative;display:block;z-index:10}.dropzone .dz-preview .dz-image img{display:block}.dropzone .dz-preview.dz-success .dz-success-mark{-webkit-animation:passing-through 3s cubic-bezier(0.77, 0, 0.175, 1);-moz-animation:passing-through 3s cubic-bezier(0.77, 0, 0.175, 1);-ms-animation:passing-through 3s cubic-bezier(0.77, 0, 0.175, 1);-o-animation:passing-through 3s cubic-bezier(0.77, 0, 0.175, 1);animation:passing-through 3s cubic-bezier(0.77, 0, 0.175, 1)}.dropzone .dz-preview.dz-error .dz-error-mark{opacity:1;-webkit-animation:slide-in 3s cubic-bezier(0.77, 0, 0.175, 1);-moz-animation:slide-in 3s cubic-bezier(0.77, 0, 0.175, 1);-ms-animation:slide-in 3s cubic-bezier(0.77, 0, 0.175, 1);-o-animation:slide-in 3s cubic-bezier(0.77, 0, 0.175, 1);animation:slide-in 3s cubic-bezier(0.77, 0, 0.175, 1)}.dropzone .dz-preview .dz-success-mark,.dropzone .dz-preview .dz-error-mark{pointer-events:none;opacity:0;z-index:500;position:absolute;display:block;top:50%;left:50%;margin-left:-27px;margin-top:-27px}.dropzone .dz-preview .dz-success-mark svg,.dropzone .dz-preview .dz-error-mark svg{display:block;width:54px;height:54px}.dropzone .dz-preview.dz-processing .dz-progress{opacity:1;-webkit-transition:all 0.2s linear;-moz-transition:all 0.2s linear;-ms-transition:all 0.2s linear;-o-transition:all 0.2s linear;transition:all 0.2s linear}.dropzone .dz-preview.dz-complete .dz-progress{opacity:0;-webkit-transition:opacity 0.4s ease-in;-moz-transition:opacity 0.4s ease-in;-ms-transition:opacity 0.4s ease-in;-o-transition:opacity 0.4s ease-in;transition:opacity 0.4s ease-in}.dropzone .dz-preview:not(.dz-processing) .dz-progress{-webkit-animation:pulse 6s ease infinite;-moz-animation:pulse 6s ease infinite;-ms-animation:pulse 6s ease infinite;-o-animation:pulse 6s ease infinite;animation:pulse 6s ease infinite}.dropzone .dz-preview .dz-progress{opacity:1;z-index:1000;pointer-events:none;position:absolute;height:16px;left:50%;top:50%;margin-top:-8px;width:80px;margin-left:-40px;background:rgba(255,255,255,0.9);-webkit-transform:scale(1);border-radius:8px;overflow:hidden}.dropzone .dz-preview .dz-progress .dz-upload{background:#333;background:linear-gradient(to bottom, #666, #444);position:absolute;top:0;left:0;bottom:0;width:0;-webkit-transition:width 300ms ease-in-out;-moz-transition:width 300ms ease-in-out;-ms-transition:width 300ms ease-in-out;-o-transition:width 300ms ease-in-out;transition:width 300ms ease-in-out}.dropzone .dz-preview.dz-error .dz-error-message{display:block}.dropzone .dz-preview.dz-error:hover .dz-error-message{opacity:1;pointer-events:auto}.dropzone .dz-preview .dz-error-message{pointer-events:none;z-index:1000;position:absolute;display:block;display:none;opacity:0;-webkit-transition:opacity 0.3s ease;-moz-transition:opacity 0.3s ease;-ms-transition:opacity 0.3s ease;-o-transition:opacity 0.3s ease;transition:opacity 0.3s ease;border-radius:8px;font-size:13px;top:130px;left:-10px;width:140px;background:#be2626;background:linear-gradient(to bottom, #be2626, #a92222);padding:0.5em 1.2em;color:white}.dropzone .dz-preview .dz-error-message:after{content:'';position:absolute;top:-6px;left:64px;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:6px solid #be2626}
+    .upload-image-dropzone { margin-bottom: 3rem; }
+
+    .dropzone { border: 2px dashed #0087F7; border-radius: 5px; background: white; }
+    .dropzone .dz-message { font-weight: 400; }
+    .dropzone .dz-message .note { font-size: 0.8em; font-weight: 200; display: block; margin-top: 1.4rem; }
+
+    .dropzone,.dropzone *{box-sizing:border-box}.dropzone{position:relative}.dropzone .dz-preview{position:relative;display:inline-block;width:120px;margin:0.5em}.dropzone .dz-preview .dz-progress{display:block;height:15px;border:1px solid #aaa}.dropzone .dz-preview .dz-progress .dz-upload{display:block;height:100%;width:0;background:green}.dropzone .dz-preview .dz-error-message{color:red;display:none}.dropzone .dz-preview.dz-error .dz-error-message,.dropzone .dz-preview.dz-error .dz-error-mark{display:block}.dropzone .dz-preview.dz-success .dz-success-mark{display:block}.dropzone .dz-preview .dz-error-mark,.dropzone .dz-preview .dz-success-mark{position:absolute;display:none;left:30px;top:30px;width:54px;height:58px;left:50%;margin-left:-27px}
+</style>
+
+<link rel="stylesheet" href="http://demo.lattecake.com/Template/ACE/assets/css/jquery.gritter.css" />
+
+<!-- ajax layout which only needs content area -->
+<div class="page-header">
+    <h1>
+        慢生活
+        <small>
+            <i class="ace-icon fa fa-angle-double-right"></i>
+            编辑文章
+        </small>
+    </h1>
+</div><!-- /.page-header -->
+
+<div class="row">
+    <div class="col-xs-9">
+        <!-- PAGE CONTENT BEGINS -->
+        <form class="form-horizontal" id="editArticle" enctype="multipart/form-data" role="form" action="{{ url('admin_postWrite') }}" method="post">
+            <!-- #section:elements.form -->
+            <div class="form-group">
+                <label class="col-sm-1 control-label no-padding-right" for="form-field-postTitle"> 文章标题 </label>
+
+                <div class="col-sm-10">
+                    <div class="widget-main no-padding">
+                        <input type="hidden" name="active" value="2">
+                        <input type="hidden" name="postId" value="{{ post.id }}">
+                        <input type="text" required name="postTitle" id="form-field-postTitle" placeholder="请输入标题" value="{{ post.title }}" class="col-xs-10 col-sm-5" />
+                    </div>
+                    &nbsp; &nbsp; &nbsp;
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-1 control-label no-padding-right" for="form-field-postImage"> 文章头图 </label>
+                <div class="col-sm-11">
+                    <a href="#show-image-modal" class="btn btn-white btn-info btn-bold show-image-modal" data-toggle="modal" role="button">
+                        <i class="ace-icon fa fa-cloud bigger-120"></i>
+                        选择图片
+                    </a>
+                    <input type="hidden" name="imageIds" value="">
+                    &nbsp;&nbsp;&nbsp;
+                    <a href="#show-upload-image-modal" class="btn btn-white btn-info btn-bold" data-toggle="modal" role="button">
+                        <i class="ace-icon fa fa-cloud-upload bigger-120"></i>
+                        上传图片
+                    </a>
+
+                    <div id="show-image-modal" class="modal fade" tabindex="-1">
+                        <div class="modal-dialog" style="width: 70%;">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h3 class="smaller lighter blue no-margin">选择文章头图</h3>
+                                </div>
+
+                                <div class="modal-body">
+
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button class="btn btn-sm btn-danger pull-right" data-dismiss="modal">
+                                        <i class="ace-icon fa fa-times"></i>
+                                        关闭
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                {#<div class="col-sm-11">#}
+                    {#<label class="ace-file-input width-60 inline">#}
+                        {#<input type="file" name="postImage[]" multiple id="chooseImage">#}
+                    {#</label>#}
+                {#</div>#}
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-1 control-label no-padding-right" for="form-field-postImages"> 图片列表 </label>
+                <div class="col-sm-11">
+                    <ul class="ace-thumbnails clearfix" id="image-list-ul">
+                        {% if post.images and post.images.count > 0 %}
+                            {% for image in post.images %}
+                                <li id="selected-image-{{ image.id }}">
+                                    <a href="{{ source_url }}images/{{ image.imageTime|date('Y/m') }}/{{ image.imageName }}?imageView2/1/w/720" data-rel="colorbox">
+                                        <img width="150" height="150" alt="150x150" src="{{ source_url }}images/{{ image.imageTime|date('Y/m') }}/{{ image.imageName }}?imageView2/1/w/150/h/150" />
+                                    </a>
+
+                                    <div class="tools tools-bottom">
+                                        <a href="#">
+                                            <i class="ace-icon fa fa-link"></i>
+                                        </a>
+                                        <a href="#">
+                                            <i class="ace-icon fa fa-pencil"></i>
+                                        </a>
+                                        <a href="#">
+                                            <i class="ace-icon fa fa-share"></i>
+                                        </a>
+                                        <a href="#">
+                                            <i class="ace-icon fa fa-times red"></i>
+                                        </a>
+
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-1 control-label no-padding-right" for="form-field-content">内容</label>
+
+                <div class="col-sm-11">
+                    <div class="widget-main no-padding">
+                        <textarea class="form-control" required style="resize: none;" name="content" data-provide="markdown" data-iconlibrary="fa" placeholder="支持Markdown语法..." rows="12">{{ post.content }}</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 描述 </label>
+
+                <div class="col-sm-8">
+                    <textarea required class="form-control" style="resize: none;" name="description"  placeholder="请输入描述信息..." rows="5">{{ post.description }}</textarea>
+                </div>
+            </div>
+
+            {#<div class="form-group">#}
+                {#<label class="col-sm-1 control-label no-padding-right" for="form-field-5">Markdown</label>#}
+
+                {#<div class="col-sm-11">#}
+                    {#<div class="widget-main no-padding">#}
+                        {#<label class="line-height-1 blue">#}
+                            {#<input name="markdown" value="1" {% if post.isMarkdown == 1 %}checked{% endif %} type="radio" class="ace valid" aria-required="true" aria-describedby="gender-error" aria-invalid="true">#}
+                            {#<span class="lbl"> 是</span>#}
+                        {#</label>#}
+                        {#<label class="line-height-1 blue">#}
+                            {#<input name="markdown" value="0" {% if post.isMarkdown == 0 %}checked{% endif %} type="radio" class="ace valid" aria-required="true" aria-describedby="gender-error" aria-invalid="false">#}
+                            {#<span class="lbl"> 否</span>#}
+                        {#</label>#}
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
+            
+            {% if post.action == 1 %}
+            <div class="form-group">
+                <label class="col-sm-1 control-label no-padding-right" for="form-field-5">分类</label>
+
+                <div class="col-sm-2">
+                    <div class="widget-main no-padding">
+                        <select required class="chosen-select form-control" name="category" id="form-field-select-category" data-placeholder="请选择分类...">
+                            <option value="">请选择分类</option>
+                            {% for category in categoryList if categoryList %}
+                                <option value="{{ category.id }}" {% if post.categoryId == category.id %}selected{% endif %}>{{ category.categoryName }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="clearfix form-actions">
+                <div class="col-md-offset-3 col-md-9">
+                    <input type="hidden" name="postStatus" value="1">
+                    <a href="#life/grow" class="btn btn-light back-page" type="button">
+                        <i class="ace-icon fa fa-reply icon-only"></i>
+                        返回列表
+                    </a>
+
+                    &nbsp; &nbsp; &nbsp;
+                    <button class="btn saveDraft" type="button" data-status="3">
+                        <i class="ace-icon fa fa-floppy-o bigger-110"></i>
+                        保存草稿
+                    </button>
+
+                    &nbsp; &nbsp; &nbsp;
+                    <button class="btn btn-warning savePreview" type="button" data-status="0">
+                        <i class="ace-icon fa fa-th-large"></i>
+                        预览文章
+                    </button>
+
+                    &nbsp; &nbsp; &nbsp;
+                    <button class="btn btn-info sendPost" type="submit" data-status="1">
+                        发布文章
+                        <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div><!-- /.col -->
+
+    <div id="show-upload-image-modal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3 class="smaller lighter blue no-margin">上传图片</h3>
+                </div>
+
+                <div class="modal-body">
+                    <form action="{{ path('admin_imageUpload') }}" class="dropzone" id="upload-image-dropzone">
+                        <div class="fallback">
+                            <input name="image" type="file" multiple="" />
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-sm btn-danger pull-right" data-dismiss="modal">
+                        <i class="ace-icon fa fa-times"></i>
+                        关闭
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-sm-3">
+        <div class="profile-user-info profile-user-info-striped">
+            <div class="profile-info-row">
+                <div class="profile-info-name"> 状态: </div>
+
+                <div class="profile-info-value">
+                    <span class="editable">
+                        {% if post.status == 0 %}
+                            草稿
+                        {% elseif post.status == 1 %}
+                            已发布
+                        {% elseif post.status == 2 %}
+                            已删除
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name"> 阅读量: </div>
+
+                <div class="profile-info-value">
+                    <span class="editable">
+                        {{ post.readNum }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="profile-info-row">
+                <div class="profile-info-name"> 板块: </div>
+
+                <div class="profile-info-value">
+                    <span class="editable">
+                        {% if post.action == 1 %}
+                            学无止境
+                        {% elseif post.action == 2 %}
+                            点点滴滴
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-name"> 评论: </div>
+
+                <div class="profile-info-value">
+                    <span class="editable">
+                        {{ post.reviews }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="profile-info-row">
+                <div class="profile-info-name"> 创建时间: </div>
+
+                <div class="profile-info-value">
+                    <span class="editable">
+                        {{ post.createdAt|date('Y/m/d H:i:s') }}
+                    </span>
+                </div>
+            </div>
+
+            {% if post.status == 1 %}
+                <div class="profile-info-row">
+                    <div class="profile-info-name"> 发布时间: </div>
+
+                    <div class="profile-info-value">
+                    <span class="editable">
+                        {{ post.pushTime|date('Y/m/d H:i:s') }}
+                    </span>
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="profile-info-row">
+                <div class="profile-info-name"> 更新时间: </div>
+
+                <div class="profile-info-value">
+                    <span class="editable">
+
+                    </span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div><!-- /.row -->
+<script src="{{ storage_url }}static/js/dropzone.min.js"></script>
+<!-- page specific plugin scripts -->
+<script type="text/javascript">
+    var scripts = [null,
+        admin_static + "assets/js/jquery.validate.js",
+        admin_static + "assets/js/additional-methods.js",
+        admin_static + "assets/js/ace/elements.fileinput.js",
+        admin_static + "assets/js/jquery.colorbox.js",
+        admin_static + "assets/js/jquery.gritter.js",
+        {#"{{ storage_url }}static/js/dropzone.min.js",#}
+        null];
+    $('.page-content-area').ace_ajax('loadScripts', scripts, function() {
+        //inline scripts related to this page
+        jQuery(function($) {
+
+            $('.show-image-modal').click( function()
+            {
+                postNew.getImageList(1);
+            });
+
+            try {
+                Dropzone.autoDiscover = false;
+                var myDropzone = new Dropzone("#upload-image-dropzone" , {
+                    paramName: "image", // The name that will be used to transfer the file
+                    maxFilesize: 20, // MB
+
+                    addRemoveLinks : false,
+                    dictDefaultMessage :
+                            '<span class="bigger-150 bolder"><i class="ace-icon fa fa-caret-right red"></i> 拖放文件</span> 上传 \
+                            <span class="smaller-80 grey">（或点击）</span> <br /> \
+                            <i class="upload-icon ace-icon fa fa-cloud-upload blue fa-3x"></i>'
+                    ,
+                    dictResponseError: '在上载文件时出错!',
+                    dictFallbackMessage: "您的浏览器不支持拖放文件上传.",
+//                dictFallbackText: "Please use the fallback form below to upload your files like in the olden days.",
+                    {#dictFileTooBig: "File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB.",#}
+                    dictInvalidFileType: "你不能上传此类型的文件.",
+                    dictCancelUpload: "取消上传",
+                    dictCancelUploadConfirmation: "你确定你要取消这个上传?",
+//                    dictRemoveFileConfirmation: null,
+                    dictMaxFilesExceeded: "You can not upload any more files.",
+
+                    success: function( file, response )
+                    {
+                        console.log(response)
+                        console.log(file)
+                    }
+
+                });
+
+                $(document).one('ajaxloadstart.page', function(e) {
+                    try {
+                        myDropzone.destroy();
+                    } catch(e) {}
+                });
+
+            } catch(e) {
+                alert('Dropzone.js does not support older browsers!');
+            }
+
+
+            $('.saveDraft').on(ace.click_event, function(e)
+            {
+                var saveStatus = $(this).attr('data-status');
+                $('input[name=postStatus]').val( saveStatus );
+                swal({
+                    title: "您确写?",
+                    text: "该文章将会保存至草稿箱？",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#abbac3",
+                    confirmButtonText: "Yes, save it!",
+                    cancelButtonText: "No, cancel!",
+                    showLoaderOnConfirm: true,
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+                }, function(isConfirm){
+                    if (isConfirm) {
+                        editArticle.sendFormData( $(editArticle.myForm)[0].action, editArticle.getFormData() );
+                    }
+                });
+            });
+
+            $('.savePreview').on(ace.click_event, function()
+            {
+                var saveStatus = $(this).attr('data-status');
+                $('input[name=postStatus]').val( saveStatus );
+                swal({
+                    title: "您确定?",
+                    text: "下次新建文章时会打开该文章，您也可以将它保存到草稿箱？",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#abbac3",
+                    confirmButtonText: "Yes, preview it!",
+                    cancelButtonText: "No, cancel!",
+                    showLoaderOnConfirm: true,
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+                }, function(isConfirm){
+                    if (isConfirm) {
+                        editArticle.sendFormData( $(editArticle.myForm)[0].action, editArticle.getFormData(), true );
+                    }
+                });
+            });
+
+            $('.sendPost').on(ace.click_event, function () {
+                var saveStatus = $(this).attr('data-status');
+                $('input[name=postStatus]').val( saveStatus );
+            });
+
+            $.extend($.validator.messages, {
+                required: "这是必填字段",
+                remote: "请修正此字段",
+                email: "请输入有效的电子邮件地址",
+                url: "请输入有效的网址",
+                date: "请输入有效的日期",
+                dateISO: "请输入有效的日期 (YYYY-MM-DD)",
+                number: "请输入有效的数字",
+                digits: "只能输入数字",
+                creditcard: "请输入有效的信用卡号码",
+                equalTo: "你的输入不相同",
+                extension: "请输入有效的后缀",
+                maxlength: $.validator.format("最多可以输入 {0} 个字符"),
+                minlength: $.validator.format("最少要输入 {0} 个字符"),
+                rangelength: $.validator.format("请输入长度在 {0} 到 {1} 之间的字符串"),
+                range: $.validator.format("请输入范围在 {0} 到 {1} 之间的数值"),
+                max: $.validator.format("请输入不大于 {0} 的数值"),
+                min: $.validator.format("请输入不小于 {0} 的数值")
+            });
+
+            $('#editArticle').validate({
+                onkeyup: false,
+//                errorClass: 'error',
+                validClass: 'valid',
+                errorElement: 'div',
+                errorClass: 'help-block',
+                focusInvalid: false,
+                highlight: function (e) {
+                    $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+                },
+
+                success: function (e) {
+                    $(e).closest('.form-group').removeClass('has-error');//.addClass('has-info');
+                    $(e).remove();
+                },
+
+                errorPlacement: function (error, element) {
+                    if(element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
+                        var controls = element.closest('div[class*="col-"]');
+                        if(controls.find(':checkbox,:radio').length > 1) controls.append(error);
+                        else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
+                    }
+                    else if(element.is('.select2')) {
+                        error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
+                    }
+                    else if(element.is('.chosen-select')) {
+                        error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
+                    }
+                    else error.insertAfter(element.parent());
+                },
+
+                submitHandler: function (form) {
+                    swal({
+                        title: "您确定要发布这篇文章?",
+                        text: "发布完之后将会在前台展示？",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#87b87f",
+                        confirmButtonText: "Yes, release it!",
+                        cancelButtonText: "No, cancel!",
+                        showLoaderOnConfirm: true,
+                        closeOnConfirm: false,
+                        closeOnCancel: true
+                    }, function(isConfirm){
+                        if (isConfirm) {
+                            editArticle.sendFormData( $(form)[0].action, editArticle.getFormData() );
+                        }
+                    });
+
+                },
+                invalidHandler: function (form) {
+                    swal("错误", '有一些错误', "error");
+                }
+            });
+
+            $('#chooseImage').ace_file_input({
+                no_file:'没有文件 ...',
+                btn_choose: '选择',
+                btn_change: '修改',
+//                 droppable: false,
+                onchange: null,
+//                 thumbnail: false, //| true | large
+                whitelist: 'gif|png|jpg|jpeg',
+                style: 'well',
+                droppable: true, //html5 browsers only
+                thumbnail: 'small', //html5 browsers only
+
+                maxSize: 10000000, //~10MB
+                allowExt:  ['jpg', 'jpeg', 'png', 'gif'],
+                allowMime: ['image/jpg', 'image/jpeg', 'image/png', 'image/gif'] //html5 browsers only
+            });
+
+            $(document).one('ajaxloadstart.page', function(e) {
+                //in ajax mode, remove remaining elements before leaving page
+                $('[class*=select2]').remove();
+                $('#colorbox, #cboxOverlay').remove();
+            });
+            var $overflow = '';
+            var colorbox_params = {
+                rel: 'colorbox',
+                reposition:true,
+                scalePhotos:true,
+                scrolling:false,
+                previous:'<i class="ace-icon fa fa-arrow-left"></i>',
+                next:'<i class="ace-icon fa fa-arrow-right"></i>',
+                close:'&times;',
+                current:'{current} of {total}',
+                maxWidth:'100%',
+                maxHeight:'100%',
+                onOpen:function(){
+                    $overflow = document.body.style.overflow;
+                    document.body.style.overflow = 'hidden';
+                },
+                onClosed:function(){
+                    document.body.style.overflow = $overflow;
+                },
+                onComplete:function(){
+                    $.colorbox.resize();
+                }
+            };
+
+            $('.ace-thumbnails [data-rel="colorbox"]').colorbox(colorbox_params);
+            $("#cboxLoadingGraphic").html("<i class='ace-icon fa fa-spinner orange fa-spin'></i>");//let's add a custom loading icon
+
+            var editArticle = {
+
+                myForm: $('#editArticle'),
+
+                /**
+                 * 获取表单数据
+                 * @returns {*}
+                 */
+                getFormData: function()
+                {
+                    var myForm = this.myForm;
+
+                    var fd = new FormData();//empty FormData object
+
+                    $.each(myForm.serializeArray(), function(i, item) {
+                        //add form fields one by one to our FormData
+                        fd.append(item.name, item.value);
+                    });
+
+                    myForm.find('input[type=file]').each(function(){
+                        var field_name = $(this).attr('name');
+                        //for fields with "multiple" file support
+                        //field name should be something like `myfile[]`
+
+                        var files = $(this).data('ace_input_files');
+                        if(files && files.length > 0) {
+                            for(var f = 0; f < files.length; f++) {
+                                fd.append(field_name, files[f]);
+                            }
+                        }
+                    });
+                    return fd
+                },
+
+                /**
+                 * 发送数据至后台
+                 * @param action
+                 * @param formData
+                 * @param isRedirect
+                 */
+                sendFormData: function( action, formData, isRedirect )
+                {
+                    $.ajax({
+                        url: action,
+                        type: 'POST',
+                        dataType: 'json',
+                        processData: false,
+                        contentType: false,
+                        data: formData,
+                        beforeSend: function () {
+                        },
+                        success: function (data) {
+                            try{
+                                if( data.success == true )
+                                {
+                                    swal("Good job!", data.message, "success");
+                                    if( isRedirect )
+                                    {
+                                        window.location = data.data.redirect;
+                                    }
+                                }else
+                                {
+                                    swal("错误", data.message, "error");
+                                }
+                            }catch ( err )
+                            {
+                                swal("错误", error, "error");
+                            }
+                        },
+                        error: function (e) {
+                            swal("错误", '啥错？', "error");
+                        }
+                    });
+                }
+            };
+
+        });
+    });
+
+    var postNew = {
+
+        getImageList: function( page )
+        {
+            $.get( base_url + 'image/list/' + page, function( response ){
+                try{
+                    $('#show-image-modal .modal-body').html( response.html );
+                    postNew.showColorBox();
+                }catch( error)
+                {
+                    swal("错误", error, "error");
+                }
+            }, 'json' );
+        },
+
+        showColorBox: function()
+        {
+            var me = this;
+            var $overflow = '';
+            var colorbox_params = {
+                rel: 'colorbox',
+                reposition:true,
+                scalePhotos:true,
+                scrolling:false,
+                previous:'<i class="ace-icon fa fa-arrow-left"></i>',
+                next:'<i class="ace-icon fa fa-arrow-right"></i>',
+                close:'&times;',
+                current:'{current} of {total}',
+                maxWidth:'100%',
+                maxHeight:'100%',
+                onOpen:function(){
+                    $overflow = document.body.style.overflow;
+                    document.body.style.overflow = 'hidden';
+                },
+                onClosed:function(){
+                    document.body.style.overflow = $overflow;
+                },
+                onComplete:function(){
+                    $.colorbox.resize();
+                }
+            };
+
+            $('.ace-thumbnails [data-rel="colorbox"]').colorbox(colorbox_params);
+            $("#cboxLoadingGraphic").html("<i class='ace-icon fa fa-spinner orange fa-spin'></i>");
+
+            $('.image-page').bind('click', function(){
+                var page = $.trim($(this).attr('data-page'));
+                postNew.getImageList( page );
+            });
+
+            $('.image-bind').bind('click', function()
+            {
+                var id = $.trim($(this).attr('data-id'));
+                var image = $('#selected-image-' + id),
+                        imageUrl = $(this).attr('data-image'),
+                        imageInput = $('input[name=imageIds]');
+
+                var imageVal = imageInput.val(),
+                        value = [];
+
+                if( imageVal )
+                    value = imageVal.split(",");
+
+                var className = '',
+                        tterTitle = '',
+                        text = '',
+                        tterImage = '';
+
+                if( image.length < 1 )
+                {
+                    var strHtml = '<li id="selected-image-' + id + '"> ' +
+                            '<a href="' + imageUrl + '?imageView2/1/w/720" data-rel="colorbox"> <img width="150" height="150" alt="150x150" src="' + imageUrl + '?imageView2/1/w/150/h/150" /></a> ' +
+                            '<div class="tools tools-bottom"> ' +
+                            '<a href="javascript:;" data-image="' + imageUrl + '" class="show-image-url"> <i class="ace-icon fa fa-link"></i> </a> ' +
+                            '<a href="javascript:;"> <i class="ace-icon fa fa-pencil"></i> </a> ' +
+                            '<a href="javascript:;" title="删除" data-id="' + id + '" class="delete-selected-image"> <i class="ace-icon fa fa-times red"></i> </a> ' +
+                            '</div> </li>';
+                    $('#image-list-ul').append( strHtml );
+                    value.push(id);
+
+                    tterTitle = '选择图片！',
+                            text = '成功选择该图片',
+                            tterImage = imageUrl + '?imageView2/1/w/50/h/50',
+                            className = 'gritter-info gritter-light';
+                    $('.image-bind').unbind('click');
+                    postNew.showColorBox();
+                }else
+                {
+                    image.remove();
+                    var index = value.indexOf(id);
+                    delete value[index];
+                    value = value.filter(function(n){return n});
+
+                    tterTitle = '取消图片',
+                            text = '图片取消成功',
+                            className = 'gritter-error gritter-light';
+
+                }
+                imageInput.val( value.join(",") );
+                $.gritter.add({
+                    title: tterTitle,
+                    text: text,
+                    class_name: className,
+                    image: tterImage
+                });
+                return false;
+            });
+
+            $('.show-image-url').bind( 'click', function()
+            {
+                var _href = $.trim($(this).attr('data-image'));
+                if( _href )
+                {
+                    $.gritter.add({
+                        title: '图片地址',
+                        text: _href,
+                        class_name: 'gritter-info gritter-center gritter-light'
+                    });
+                    return false;
+                }
+            });
+
+            $('.delete-selected-image').bind('click', function()
+            {
+                var id = $.trim($(this).attr('data-id')),
+                        imageInput = $('input[name=imageIds]');
+                var imageVal = imageInput.val(),
+                        value = [];
+                if( imageVal )
+                    value = imageVal.split(",");
+
+                if( id ) {
+                    $('#selected-image-' + id).remove();
+                    var index = value.indexOf(id);
+                    delete value[index];
+                    value = value.filter(function(n){return n});
+                    imageInput.val( value.join(",") );
+
+                    $.gritter.add({
+                        title: '取消图片',
+                        text: '图片取消成功',
+                        class_name: 'gritter-error gritter-light'
+                    });
+                    return false;
+                }
+            });
+
+
+        }
+    };
+
+</script>
+{% stylesheets
+'@AdminBundle/Resources/public/css/colorbox.css'
+%}
+<link rel="stylesheet" href="{{ asset_url }}">
+{% endstylesheets %}
