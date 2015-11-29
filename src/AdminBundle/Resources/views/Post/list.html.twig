@@ -49,7 +49,7 @@
                 <tr id="article-{{ post.id }}">
                     <td>{{ No + key }}</td>
                     <td>
-                        <a target="_blank" href="{{ url('life_lifeInfo', {"id": post.id}) }}">{{ post.title|length > 8 ? post.title|slice(0, 8) ~ '...' : post.title }}</a>
+                        <a target="_blank" href="{{ url('post_detail', {"id": post.id}) }}">{{ post.title|length > 8 ? post.title|slice(0, 8) ~ '...' : post.title }}</a>
                     </td>
                     <td>{{ post.author.username }}</td>
                     <td>{{ post.description|slice(0, 16) }} ...</td>

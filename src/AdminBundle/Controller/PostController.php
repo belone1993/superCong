@@ -100,10 +100,10 @@ class PostController extends Controller
         $post->setAction( $action )
             ->setAuthor( $this->getUser() );
 
-        $em = $this->getDoctrine()->getManager();
+//        $em = $this->getDoctrine()->getManager();
 
-        $em->persist($post);
-        $em->flush();
+//        $em->persist($post);
+//        $em->flush();
 
         $categoryEntity = $this->getDoctrine()->getRepository('StoreBundle:Category');
 
