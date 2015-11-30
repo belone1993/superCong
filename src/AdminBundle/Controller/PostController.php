@@ -8,6 +8,7 @@
 
 namespace AdminBundle\Controller;
 use Monolog\Logger;
+use StoreBundle\Entity\Category;
 use StoreBundle\Entity\Image;
 use StoreBundle\Entity\Post;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
