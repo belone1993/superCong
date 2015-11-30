@@ -115,6 +115,13 @@ class Post extends PostRepository
     private $pushTime;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="modified", type="datetime", nullable=true, options={"comment": "最后修改时间"})
+     */
+    private $modified;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="status", type="integer", nullable=true, options={"comment": "0为草稿,1为已发布", "default": 0})
@@ -590,5 +597,28 @@ class Post extends PostRepository
     public function getPushTime()
     {
         return $this->pushTime;
+    }
+
+    /**
+     * Set modified
+     *
+     * @param \DateTime $modified
+     * @return Post
+     */
+    public function setModified($modified)
+    {
+        $this->modified = $modified;
+
+        return $this;
+    }
+
+    /**
+     * Get modified
+     *
+     * @return \DateTime 
+     */
+    public function getModified()
+    {
+        return $this->modified;
     }
 }

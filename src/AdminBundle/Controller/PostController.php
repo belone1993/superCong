@@ -19,6 +19,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Util\SecureRandom;
 use Symfony\Component\Filesystem\Exception\IOException;
 
@@ -191,6 +192,13 @@ class PostController extends Controller
 //            $em->flush();
         }
 
+        if( (int)$request->get('postStatus') == 1 and empty($request->get('imageIds') ) and $postInfo->getImages()->count() < 1 )
+        {
+            $response['success'] = false;
+            $response['message'] = "请设置文章头图";
+            return new JsonResponse( $response, Response::HTTP_OK );
+        }
+
         $postInfo->setTitle( $request->get('postTitle') )
             ->setIsMarkdown( 1 )
             ->setDescription( $request->get('description') )
@@ -207,6 +215,11 @@ class PostController extends Controller
             $categoryInfo = $categoryEntity->find($request->get('category'));
 
             $postInfo->setCategory( $categoryInfo );
+        }
+
+        if( $postInfo->getStatus() == 1 AND empty($postInfo->getModified()) )
+        {
+            $postInfo->setModified( new \DateTime() );
         }
 
         $em->persist( $postInfo );
