@@ -192,7 +192,7 @@ class PostController extends Controller
         }
 
         $postInfo->setTitle( $request->get('postTitle') )
-            ->setIsMarkdown( $request->get('markdown') )
+            ->setIsMarkdown( 1 )
             ->setDescription( $request->get('description') )
             ->setContent( $request->get('content') )
             ->setAuthorId( 1 )
