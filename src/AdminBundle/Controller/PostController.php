@@ -192,7 +192,7 @@ class PostController extends Controller
 //            $em->flush();
         }
 
-        if( (int)$request->get('postStatus') == 1 and empty($request->get('imageIds') ) and $postInfo->getImages()->count() < 1 )
+        if( (int)$request->get('postStatus') == 1 and empty($request->get('imageIds') ) and empty($postInfo->getImages()) )
         {
             $response['success'] = false;
             $response['message'] = "请设置文章头图";
