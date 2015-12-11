@@ -1,4 +1,14 @@
 {% extends "AppBundle::default_layout.html.twig" %}
+
+{% block Cong_stylesheets %}
+    <style>
+        .row img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+{% endblock %}
+
 {% block banner %}
     <section id="inner-headline">
         <div class="container">
@@ -18,9 +28,12 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <div class="bs-callout bs-callout-info">
-                    <h4>很久以后我们才会明白，所有人来到你的生命里自有它的意义。人最难的就是学会怎么平静的面对离别，而这个世界的吊诡之处就在于：当你平静面对离别时，那个人已经在你心里永远不会走了...</h4>
-                </div>
+
+                <h4>蓦然回首，曾经沧海桑田，已是物是人非。回忆却依然夸饰着伤感。</h4>
+                <img src="http://source.lattecake.com/images/2015/12/9079cad61fbc3d2c8de829fddf38eff2.jpeg?imageView/1/w/1920/h/340" alt="" class="align-left">
+                <span class="pullquote-left">
+                    很久以后我们才会明白，所有人来到你的生命里自有它的意义。人最难的就是学会怎么平静的面对离别，而这个世界的吊诡之处就在于：当你平静面对离别时，那个人已经在你心里永远不会走了...
+                </span>
                 <!-- 多说评论框 start -->
                 <div class="ds-thread" data-thread-key="guestBook" data-title="留言版" data-url="http://lattecake.com/guestBook"></div>
                 <!-- 多说评论框 end -->
