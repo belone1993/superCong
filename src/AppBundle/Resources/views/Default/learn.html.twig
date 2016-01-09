@@ -30,11 +30,11 @@
                                 {% if post.image|trim is not empty %}
                                     <img class="img-responsive img-hover" src="{{ source_url }}images/{{ post.createdAt|date('Y/m') }}/{{ post.image }}?imageView/1/w/740/h/240" alt=""/>
                                 {% elseif post.images.count > 1 %}
-                                    <div id="post-slider" class="flexslider">
+                                    <div class="flexslider post-slider">
                                         <ul class="slides">
                                             {% for image in post.images %}
                                                 <li>
-                                                    <img src="{{ source_url }}images/{{ image.imageTime|date('Y/m') }}/{{ image.imageName }}?imageView/1/w/460/h/240">
+                                                    <img src="{{ source_url }}images/{{ image.imageTime|date('Y/m') }}/{{ image.imageName }}?imageView/1/w/740/h/240">
                                                 </li>
                                             {% endfor %}
                                         </ul>
@@ -97,4 +97,33 @@
             </div>
         </div>
     </section>
+{% endblock %}
+
+{% block Cong_javascripts %}
+    <script src="{{ storage_url }}static/moderna/js/jquery.fancybox.pack.js"></script>
+    <script src="{{ storage_url }}static/moderna/js/jquery.fancybox-media.js"></script>
+    <script src="{{ storage_url }}static/moderna/js/jquery.flexslider.js"></script>
+    <script>
+        $('.post-slider').flexslider({
+            // Primary Controls
+            controlNav          : false,
+            directionNav        : true,
+            prevText            : "上一张",
+            nextText            : "下一张",
+
+            // Secondary Navigation
+            keyboard            : true,
+            multipleKeyboard    : false,
+            mousewheel          : false,
+            pausePlay           : false,
+            pauseText           : '暂停',
+            playText            : '开始',
+
+            // Special properties
+            controlsContainer   : "",
+            manualControls      : "",
+            sync                : "",
+            asNavFor            : "",
+        });
+    </script>
 {% endblock %}

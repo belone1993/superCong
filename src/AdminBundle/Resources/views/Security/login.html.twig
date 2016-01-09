@@ -59,13 +59,12 @@
                                     {% trans_default_domain 'FOSUserBundle' %}
                                     <h4 class="header blue lighter bigger">
                                         <i class="ace-icon fa fa-coffee green"></i>
-                                        {#{% if error %}{{ error }}{% else %}请输入您的信息{% endif %}#}
-                                        {% if error %}
-                                            {{ error.messageKey|trans(error.messageData, 'security') }}
-                                        {% else %}
-                                            请输入您的信息
-                                        {% endif %}
+                                        请输入您的信息
                                     </h4>
+
+                                    {% if error %}
+                                        {{ error.messageKey|trans(error.messageData, 'security') }}
+                                    {% endif %}
 
                                     <div class="space-6"></div>
 
@@ -104,161 +103,44 @@
                                         </fieldset>
                                     </form>
 
-                                    <div class="social-or-login center">
-                                        <span class="bigger-110">或其他方式登陆</span>
-                                    </div>
+                                    {#<div class="social-or-login center">#}
+                                        {#<span class="bigger-110">或其他方式登陆</span>#}
+                                    {#</div>#}
 
-                                    <div class="space-6"></div>
+                                    {#<div class="space-6"></div>#}
 
-                                    <div class="social-login center">
-                                        <a class="btn btn-primary">
-                                            <i class="ace-icon fa fa-facebook"></i>
-                                        </a>
+                                    {#<div class="social-login center">#}
+                                        {#<a class="btn btn-primary">#}
+                                            {#<i class="ace-icon fa fa-facebook"></i>#}
+                                        {#</a>#}
 
-                                        <a class="btn btn-info">
-                                            <i class="ace-icon fa fa-twitter"></i>
-                                        </a>
+                                        {#<a class="btn btn-info">#}
+                                            {#<i class="ace-icon fa fa-twitter"></i>#}
+                                        {#</a>#}
 
-                                        <a class="btn btn-danger">
-                                            <i class="ace-icon fa fa-google-plus"></i>
-                                        </a>
-                                    </div>
+                                        {#<a class="btn btn-danger">#}
+                                            {#<i class="ace-icon fa fa-google-plus"></i>#}
+                                        {#</a>#}
+                                    {#</div>#}
                                 </div><!-- /.widget-main -->
 
-                                <div class="toolbar clearfix">
-                                    <div>
-                                        <a href="#" data-target="#forgot-box" class="forgot-password-link">
-                                            <i class="ace-icon fa fa-arrow-left"></i>
-                                            找回密码
-                                        </a>
-                                    </div>
+                                {#<div class="toolbar clearfix">#}
+                                    {#<div>#}
+                                        {#<a href="#" data-target="#forgot-box" class="forgot-password-link">#}
+                                            {#<i class="ace-icon fa fa-arrow-left"></i>#}
+                                            {#找回密码#}
+                                        {#</a>#}
+                                    {#</div>#}
 
-                                    <div>
-                                        <a href="#" data-target="#signup-box" class="user-signup-link">
-                                            我要注册
-                                            <i class="ace-icon fa fa-arrow-right"></i>
-                                        </a>
-                                    </div>
-                                </div>
+                                    {#<div>#}
+                                        {#<a href="#" data-target="#signup-box" class="user-signup-link">#}
+                                            {#我要注册#}
+                                            {#<i class="ace-icon fa fa-arrow-right"></i>#}
+                                        {#</a>#}
+                                    {#</div>#}
+                                {#</div>#}
                             </div><!-- /.widget-body -->
                         </div><!-- /.login-box -->
-
-                        <div id="forgot-box" class="forgot-box widget-box no-border">
-                            <div class="widget-body">
-                                <div class="widget-main">
-                                    <h4 class="header red lighter bigger">
-                                        <i class="ace-icon fa fa-key"></i>
-                                        找回密码
-                                    </h4>
-
-                                    <div class="space-6"></div>
-                                    <p>
-                                        请输入您的注册邮箱
-                                    </p>
-
-                                    <form>
-                                        <fieldset>
-                                            <label class="block clearfix">
-                                                <span class="block input-icon input-icon-right">
-                                                    <input type="email" class="form-control" placeholder="Email" />
-                                                    <i class="ace-icon fa fa-envelope"></i>
-                                                </span>
-                                            </label>
-
-                                            <div class="clearfix">
-                                                <button type="button" class="width-35 pull-right btn btn-sm btn-danger">
-                                                    <i class="ace-icon fa fa-lightbulb-o"></i>
-                                                    <span class="bigger-110">发送!</span>
-                                                </button>
-                                            </div>
-                                        </fieldset>
-                                    </form>
-                                </div><!-- /.widget-main -->
-
-                                <div class="toolbar center">
-                                    <a href="#" data-target="#login-box" class="back-to-login-link">
-                                        返回登陆
-                                        <i class="ace-icon fa fa-arrow-right"></i>
-                                    </a>
-                                </div>
-                            </div><!-- /.widget-body -->
-                        </div><!-- /.forgot-box -->
-
-                        <div id="signup-box" class="signup-box widget-box no-border">
-                            <div class="widget-body">
-                                <div class="widget-main">
-                                    <h4 class="header green lighter bigger">
-                                        <i class="ace-icon fa fa-users blue"></i>
-                                        注册新的用户
-                                    </h4>
-
-                                    <div class="space-6"></div>
-                                    <p> 请输入注册信息: </p>
-
-                                    <form action="" method="post">
-                                        <fieldset>
-                                            <label class="block clearfix">
-                                                <span class="block input-icon input-icon-right">
-                                                    <input type="email" name="email" class="form-control" placeholder="Email" />
-                                                    <i class="ace-icon fa fa-envelope"></i>
-                                                </span>
-                                            </label>
-
-                                            <label class="block clearfix">
-                                                <span class="block input-icon input-icon-right">
-                                                    <input type="text" name="username" class="form-control" placeholder="用户名" />
-                                                    <i class="ace-icon fa fa-user"></i>
-                                                </span>
-                                            </label>
-
-                                            <label class="block clearfix">
-                                                <span class="block input-icon input-icon-right">
-                                                    <input type="password" name="password" class="form-control" placeholder="请输入密码" />
-                                                    <i class="ace-icon fa fa-lock"></i>
-                                                </span>
-                                            </label>
-
-                                            <label class="block clearfix">
-                                                <span class="block input-icon input-icon-right">
-                                                    <input type="password" name="rePassword" class="form-control" placeholder="再次输入密码" />
-                                                    <i class="ace-icon fa fa-retweet"></i>
-                                                </span>
-                                            </label>
-
-                                            <label class="block">
-                                                <input type="checkbox" class="ace" />
-                                                <span class="lbl">
-                                                    我同意该协议
-                                                    <a href="#">查看协议</a>
-                                                </span>
-                                            </label>
-
-                                            <div class="space-24"></div>
-
-                                            <div class="clearfix">
-                                                <button type="reset" class="width-30 pull-left btn btn-sm">
-                                                    <i class="ace-icon fa fa-refresh"></i>
-                                                    <span class="bigger-110">重置</span>
-                                                </button>
-
-                                                <button type="submit" class="width-65 pull-right btn btn-sm btn-success">
-                                                    <span class="bigger-110">注册</span>
-
-                                                    <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
-                                                </button>
-                                            </div>
-                                        </fieldset>
-                                    </form>
-                                </div>
-
-                                <div class="toolbar center">
-                                    <a href="#" data-target="#login-box" class="back-to-login-link">
-                                        <i class="ace-icon fa fa-arrow-left"></i>
-                                        返回登陆
-                                    </a>
-                                </div>
-                            </div><!-- /.widget-body -->
-                        </div><!-- /.signup-box -->
                     </div><!-- /.position-relative -->
                 </div>
             </div><!-- /.col -->
@@ -284,16 +166,5 @@
     if('ontouchstart' in document.documentElement) document.write("<script src='http://demo.lattecake.com/Template/ACE/assets/js/jquery.mobile.custom.js'>"+"<"+"/script>");
 </script>
 
-<!-- inline scripts related to this page -->
-<script type="text/javascript">
-    jQuery(function($) {
-        $(document).on('click', '.toolbar a[data-target]', function(e) {
-            e.preventDefault();
-            var target = $(this).data('target');
-            $('.widget-box.visible').removeClass('visible');//hide others
-            $(target).addClass('visible');//show target
-        });
-    });
-</script>
 </body>
 </html>
