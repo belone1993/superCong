@@ -2,13 +2,13 @@
 <html lang="zh">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>LatteCake - {% block pageTitle %}个人博客{% endblock %}</title>
-    <meta name="Keywords" content="博客,技术,个人博客,个人技术博客,拿铁蛋糕,拿铁味的摩卡{% block header_keywords %}{% endblock %}" />
-    <meta name="Description" content="{% block pageDescription %}LatteCake个人博客,拿铁味的蛋糕,是一名码农,擅长各种技术.{% endblock %}" />
-    <link rel="shortcut icon" href="http://lattecake.com/favicon.ico?v=2" />
-    <meta name="author" content="http://lattecake.com" />
-    <meta name="baidu-site-verification" content="jVo1caD8zH" />
+    <meta name="Keywords" content="博客,技术,个人博客,个人技术博客,拿铁蛋糕,拿铁味的摩卡{% block header_keywords %}{% endblock %}"/>
+    <meta name="Description" content="{% block pageDescription %}LatteCake个人博客,拿铁味的蛋糕,是一名码农,擅长各种技术.{% endblock %}"/>
+    <link rel="shortcut icon" href="http://lattecake.com/favicon.ico?v=2"/>
+    <meta name="author" content="http://lattecake.com"/>
+    <meta name="baidu-site-verification" content="jVo1caD8zH"/>
     <!-- css -->
     {#<link rel="stylesheet" href="{{ storage_url }}static/moderna/css/bootstrap.min.css">#}
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css"/>
@@ -31,7 +31,7 @@
     </script>
 
     <style>
-        #cnzz_stat_icon_1257356896{
+        #cnzz_stat_icon_1257356896 {
             display: none;
         }
     </style>
@@ -70,21 +70,24 @@
 {% endblock %}
 
 <script>
-    window.onload = function()
-    {
+    window.onload = function () {
         if (!window.applicationCache) {
             alert("你的浏览器不支持HTML5,请升级您的浏览器");
             window.location.href = "http://www.google.cn/intl/zh-CN/chrome/browser/";
         }
-    }
+    };
+
     var _hmt = _hmt || [];
-    (function() {
+    (function () {
         var hm = document.createElement("script");
         hm.src = "//hm.baidu.com/hm.js?325ecd282d3804cd811c4072e0b3ed2a";
         var s = document.getElementsByTagName("script")[0];
         s.parentNode.insertBefore(hm, s);
     })();
+
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan id='cnzz_stat_icon_1257356896'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1257356896' type='text/javascript'%3E%3C/script%3E"));
+
 </script>
-<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1257356896'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1257356896' type='text/javascript'%3E%3C/script%3E"));</script>
 </body>
 </html>
