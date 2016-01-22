@@ -25,6 +25,7 @@
                         {#</ul>#}
                     {#</li>#}
                     <li class="{% if action == 'learn' %}active{% endif %}"><a href="{{ url('learn') }}">学无止境</a></li>
+                    <li class="{% if action == 'reward' %}active{% endif %}"><a href="{{ url('default_reward') }}">打赏</a></li>
                     <li class="{% if action == 'guestBook' %}active{% endif %}"><a href="{{ url('guestBook') }}">留言板</a></li>
                 </ul>
             </div>
