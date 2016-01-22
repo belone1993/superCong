@@ -5,7 +5,8 @@
             <div class="row">
                 <div class="col-lg-12">
                     <ul class="breadcrumb">
-                        <li><a href="{{ url('homepage') }}"><i class="fa fa-home"></i></a><i class="icon-angle-right"></i></li>
+                        <li><a href="{{ url('homepage') }}"><i class="fa fa-home"></i></a><i
+                                    class="icon-angle-right"></i></li>
                         <li class="active">About</li>
                     </ul>
                 </div>
@@ -25,8 +26,10 @@
                     <div class="col-md-6">
                         <h2>Just about me</h2>
                         <ul>
-                            <p>不跑马拉松的摄影师不是好程序员（＾ω＾）, 男, 一名91年天蝎座(光棍节那天 ∑( ° △ °|||)︴)的码农！12年毕业于遥远的南方某学校, 11年来北京并入行, 从业已快4年了。</p>
-                            <p>喜欢点一杯摩卡咖啡, 然后一个人静静地坐在CaffeBene看着窗外发呆，或写点什么。喜欢在每个好天气的周末疯狂的跑步，或许是想在忘掉什么。偶尔有些挑食,立志要长肉的瘦子(会不会被人嫌弃)。</p>
+                            <p>不跑马拉松的摄影师不是好程序员（＾ω＾）, 男, 一名91年天蝎座(光棍节那天 ∑( ° △ °|||)︴)的码农！12年毕业于遥远的南方某学校, 11年来北京并入行,
+                                从业已快4年了。</p>
+                            <p>喜欢点一杯摩卡咖啡,
+                                然后一个人静静地坐在CaffeBene看着窗外发呆，或写点什么。喜欢在每个好天气的周末疯狂的跑步，或许是想在忘掉什么。偶尔有些挑食,立志要长肉的瘦子(会不会被人嫌弃)。</p>
                             <p>座右铭：与其用泪水悔恨昨天，不如用汗水拼搏今天。当眼泪流尽的时候，留下的应该是坚强。</p>
                             <p>爱好：摄影、动漫、旅游、网球、马拉松</p>
                         </ul>
@@ -35,26 +38,40 @@
             </div>
 
             <div class="col-lg-12">
-                <h2 class="page-header">About my blog</h2>
+                <div class="col-md-6">
+                    <h2 class="page-header">About my blog</h2>
+                </div>
+                <div class="col-md-6">
+                    <h2 class="page-header">聪聪实验室</h2>
+                </div>
             </div>
-            <dl class="dl-horizontal">
-                <dt>域名: </dt>
-                <dd><a href="http://lattecake.com/">LatteCake.com</a> 创建于2015年01月05日</dd>
-                <dt>服务器: </dt>
-                <dd>阿里云ECS服务器</dd>
-                <dt>存储服务: </dt>
-                <dd>阿里开放存储服务OSS 与 七牛云存储(镜像存储)</dd>
-                <dt>开发框架: </dt>
-                <dd>Symfony2 框架编写</dd>
-                <dt>移动框架: </dt>
-                <dd>AngularJS</dd>
-                <dt>管理后台: </dt>
-                <dd>ExtJS 5.1</dd>
-                <dt>备案号: </dt>
-                <dd>京ICP备15000265号-1</dd>
-                <dt>GitHub: </dt>
-                <dd><a href="https://github.com/icowan/superCong" target="_blank">https://github.com/icowan/superCong</a></dd>
-            </dl>
+            <div class="about left bs-callout">
+                <div class="row">
+                    <div class="col-md-6">
+                        <dt>域名:</dt>
+                        <dd><a href="http://lattecake.com/">LatteCake.com</a> 创建于2015年01月05日</dd>
+                        <dt>服务器:</dt>
+                        <dd>阿里云ECS服务器</dd>
+                        <dt>存储服务:</dt>
+                        <dd>阿里开放存储服务OSS 与 七牛云存储(镜像存储)</dd>
+                        <dt>开发框架:</dt>
+                        <dd>Symfony2 框架编写</dd>
+                        <dt>移动框架:</dt>
+                        <dd>AngularJS</dd>
+                        <dt>管理后台:</dt>
+                        <dd>ExtJS 5.1</dd>
+                        <dt>备案号:</dt>
+                        <dd>京ICP备15000265号-1</dd>
+                        <dt>GitHub:</dt>
+                        <dd><a href="https://github.com/icowan/superCong" target="_blank">https://github.com/icowan/superCong</a>
+                        </dd>
+                    </div>
+                    <div class="col-md-6">
+                        <img src="{{ storage_url }}static%2Fimages%2Fweixin%2Fqrcode_for_gh_354bc8e8b814_1280.jpg"
+                             alt="" class="col-md-8">
+                    </div>
+                </div>
+            </div>
             <hr>
             <div class="row">
                 <div class="col-lg-12">
