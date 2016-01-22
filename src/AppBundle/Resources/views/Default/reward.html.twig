@@ -1,0 +1,133 @@
+{% extends "AppBundle::default_layout.html.twig" %}
+
+{% block pageTitle %}打赏,奖励{% endblock %}
+
+{% block banner %}
+    <section id="inner-headline">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="breadcrumb">
+                        <li><a href="{{ url('homepage') }}"><i class="fa fa-home"></i></a><i
+                                    class="icon-angle-right"></i></li>
+                        {% if postInfo %}
+                            <li><a href="{{ url('post_detail', {'id': postInfo.id}) }}">{{ postInfo.title }} </a><i
+                                        class="icon-angle-right"></i></li>
+                        {% endif %}
+                        <li class="active">打赏</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block content %}
+    <section id="content">
+        <div class="container">
+            <div class="row">
+                <h1>$ 打赏</h1>
+                {% if postInfo %}
+                    打赏文章: <h3><a href="{{ url('post_detail', {'id': postInfo.id}) }}">《{{ postInfo.title }}》</a></h3>
+                {% endif %}
+                <span class="pullquote-left">
+                    <p>如果您觉得文章写得不错，欢迎打赏打赏博主，您的一点点支持将会是博主无限的动力。</p>
+                    <strong>打赏的方式有两种：微信与支付宝，绝对赤裸裸的金钱打赏！</strong>
+                </span>
+            </div>
+
+            <div class="col-lg-12">
+                <h4>土豪随意</h4>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="pricing-box-alt">
+                    <img src="{{ storage_url }}static%2Fimages%2Freward%2Falipay-RMB-xxx.png" alt=".">
+                    <div class="pricing-terms">
+                        <h6>支付宝</h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="pricing-box-alt">
+                    <img src="{{ storage_url }}static%2Fimages%2Freward%2Fweixin-RMB-xxx.JPG" alt="."
+                         style="width: 100%;">
+                    <div class="pricing-terms">
+                        <h6>微信</h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <h4>微信各种档位</h4>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="pricing-box-alt">
+                    <img src="{{ storage_url }}static%2Fimages%2Freward%2Fweixin-RMB-1.JPG" alt=".">
+                    <div class="pricing-terms">
+                        <h6>$1.00</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="pricing-box-alt">
+                    <img src="{{ storage_url }}static%2Fimages%2Freward%2Fweixin-RMB-2.JPG" alt=".">
+                    <div class="pricing-terms">
+                        <h6>$2.00</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="pricing-box-alt">
+                    <img src="{{ storage_url }}static%2Fimages%2Freward%2Fweixin-RMB-5.JPG" alt=".">
+                    <div class="pricing-terms">
+                        <h6>$5.00</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="pricing-box-alt">
+                    <img src="{{ storage_url }}static%2Fimages%2Freward%2Fweixin-RMB-10.JPG" alt=".">
+                    <div class="pricing-terms">
+                        <h6>$10.00</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="pricing-box-alt">
+                    <img src="{{ storage_url }}static%2Fimages%2Freward%2Fweixin-RMB-20.JPG" alt=".">
+                    <div class="pricing-terms">
+                        <h6>$20.00</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="pricing-box-alt">
+                    <img src="{{ storage_url }}static%2Fimages%2Freward%2Fweixin-RMB-50.JPG" alt=".">
+                    <div class="pricing-terms">
+                        <h6>$50.00</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="pricing-box-alt">
+                    <img src="{{ storage_url }}static%2Fimages%2Freward%2Fweixin-RMB-100.JPG" alt=".">
+                    <div class="pricing-terms">
+                        <h6>$100.00</h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>某一人似曾相识、某一刻似曾经历</p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block Cong_javascripts %}
+
+{% endblock %}

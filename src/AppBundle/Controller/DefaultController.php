@@ -17,6 +17,39 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DefaultController extends Controller
 {
+
+    /**
+     * show reward page
+     *
+     * @Route("/reward", name="default_reward")
+     * @Template()
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function rewardAction( Request $request )
+    {
+
+        $postId = $request->get('postId');
+
+        $postInfo = null;
+
+        if( $postId )
+        {
+            $em = $this->getDoctrine()->getManager();
+
+            $postEntity = $em->getRepository('StoreBundle:Post');
+
+            /** @var Post $postInfo */
+            $postInfo = $postEntity->find($postId);
+        }
+
+        return [
+            'action'   => 'reward',
+            'postInfo' => $postInfo
+        ];
+    }
+
     /**
      * @Route("/", name="homepage")
      * @Template()
