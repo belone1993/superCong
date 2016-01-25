@@ -3,6 +3,7 @@
 {% block header_keywords %},{{ post.title }}{% endblock %}
 
 {% block Cong_stylesheets %}
+    <link rel="stylesheet" href="http://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css">
     <style>
         video {
             max-width: 100%;
@@ -171,6 +172,15 @@
     </section>
 {% endblock %}
 {% block Cong_javascripts %}
+
+    <script src="http://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>
+    <script>
+        $(function()
+        {
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+
     <script src="{{ storage_url }}static/moderna/js/jquery.fancybox.pack.js"></script>
     <script src="{{ storage_url }}static/moderna/js/jquery.fancybox-media.min.js"></script>
     <script src="{{ storage_url }}static/moderna/js/jquery.flexslider.min.js"></script>
