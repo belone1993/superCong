@@ -12,11 +12,14 @@ namespace AppBundle\Controller;
 
 use GuzzleHttp\Client;
 use StoreBundle\Entity\Category;
+use StoreBundle\Entity\Image;
 use StoreBundle\Entity\Post;
 use StoreBundle\Entity\User;
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,6 +38,85 @@ class PublishController extends Controller
      * @var Logger
      */
     private $logger;
+
+    /**
+     *  @Route("/putImages")
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function putImagesAction(Request $request)
+    {
+        $response = [];
+
+        /** @var $file \Symfony\Component\HttpFoundation\File\UploadedFile */
+        if( $file = $request->files->get('MarkdownImage') )
+        {
+            $md5File = md5($file);
+
+            $logger = $this->get('logger');
+            $logger->info("controller listeners. file------", [$md5File]);
+
+            $dateTime = new \DateTime();
+            $dir = 'uploads/images/'.$dateTime->format('Y/m');
+
+            $random = random_bytes(10);
+            $hashedRandom = md5($random); // see tip below
+            $name = $hashedRandom.'.'.$file->guessExtension();
+            $fs = new Filesystem();
+            if( !$fs->exists( $dir ) ) {
+                try {
+                    $fs->mkdir( $dir );
+                } catch (IOException $e) {
+                    echo "An error occurred while creating your directory at ".$e->getPath();
+                }
+            }
+            $fileData = $file->move( $dir,  $name );
+
+            $image = new Image();
+            $image->setExtension( $fileData->getExtension() )
+                ->setImageName( $fileData->getFilename() )
+                ->setImagePath( $fileData->getPath() )
+                ->setRealPath( $fileData->getRealPath() )
+                ->setMd5($md5File)
+                ->setImageSize( $fileData->getSize() );
+
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist( $image );
+//            $em->flush();
+
+            $response = [
+                'code' => 'success',
+                'data' => [
+                    'width'     => '',
+                    'height'    => '',
+                    'filename'  => $image->getImageName(),
+                    'storename' => $file->getClientOriginalName(),
+                    'size'      => $fileData->getSize(),
+                    'path'      => $fileData->getPath(),
+                    'hash'      => $md5File,
+                    'timestamp' => $dateTime->getTimestamp(),
+                    'url'       => $this->getParameter('source_url') . 'image/' . $dateTime->format('Y/m/') . $image->getImageName(),
+                    'delete'    => $this->generateUrl('publish_delete_image', ['name' => $file->getFilename()])
+                ],
+            ];
+        }
+
+        return new JsonResponse($response, Response::HTTP_OK);
+    }
+
+    /**
+     *
+     * @Route("/delImage", name="publish_delete_image")
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function deleteImageAction(Request $request)
+    {
+        return new JsonResponse($request->get('name'));
+    }
 
     /**
      *
@@ -80,6 +162,7 @@ class PublishController extends Controller
                 case 'metaWeblog.getCategories':
                     $response = $this->getCreates();
                     break;
+                case 'metaWeblog.newMediaObject':
                 case 'metaWeblog.newPost':
                     $response = $this->createPost(0, $xmlObject->params->param[3]->value->struct->asXML(),
                         (boolean)$xmlObject->params->param[4]->value->boolean->asXML());
@@ -274,5 +357,10 @@ class PublishController extends Controller
         $result = curl_exec($ch);
 
         return new Response($result, Response::HTTP_OK);
+    }
+
+    public function imagesAction(Request $request)
+    {
+        return $this->container;
     }
 }

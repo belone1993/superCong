@@ -8,7 +8,7 @@ use StoreBundle\Entity\Repository\ImageRepository;
 /**
  * Image
  *
- * @ORM\Table(name="image", options={"collate": "utf8_general_ci", "character": "utf8"})
+ * @ORM\Table(name="image", options={"collate": "utf8_general_ci", "character": "utf8"}, indexes={@ORM\Index(name="md5", columns={"md5"})})
  * @ORM\Entity(repositoryClass="StoreBundle\Entity\Repository\ImageRepository")
  */
 class Image extends ImageRepository
@@ -77,6 +77,13 @@ class Image extends ImageRepository
      * @ORM\Column(name="imageSize", type="string", nullable=true, options={"comment": "图片大小", "default": 0})
      */
     private $imageSize = 0;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="md5", type="string", nullable=true, unique=true, options={"comment": "文件md5值"})
+     */
+    private $md5;
 
     /**
      * @var Post
@@ -306,5 +313,28 @@ class Image extends ImageRepository
     public function getImageStatus()
     {
         return $this->imageStatus;
+    }
+
+    /**
+     * Set md5
+     *
+     * @param string $md5
+     * @return Image
+     */
+    public function setMd5($md5)
+    {
+        $this->md5 = $md5;
+
+        return $this;
+    }
+
+    /**
+     * Get md5
+     *
+     * @return string 
+     */
+    public function getMd5()
+    {
+        return $this->md5;
     }
 }
