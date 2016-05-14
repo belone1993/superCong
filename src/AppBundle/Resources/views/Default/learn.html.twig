@@ -65,7 +65,6 @@
                                     </li>
                                     <li><i class="icon-user"></i><a href="http://weibo.com/solacowa">
                                             不跑马拉松的摄影师不是好城续猿 </a></li>
-                                    {#<li><i class="icon-folder-open"></i><a href="#"> Blog</a></li>#}
                                     <li><i class="icon-comments"></i><a
                                                 href="{{ url('post_detail', {"id": post.id}) }}#comments">{{ post.reviews }}
                                             评论</a></li>
@@ -75,10 +74,7 @@
                             </div>
                         </article>
                     {% endfor %}
-                    {#<div id="pagination">#}
-                        {#<span class="all"> {{ page }} / {{ pagination.getTotalItemCount }} 页</span>#}
                         {{ knp_pagination_render(pagination) }}
-                    {#</div>#}
                 </div>
                 <div class="col-lg-4">
                     <aside class="right-sidebar">

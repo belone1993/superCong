@@ -52,7 +52,6 @@
                                 <ul class="meta-post">
                                     <li><i class="icon-user"></i><a href="http://weibo.com/solacowa">
                                             不跑马拉松的摄影师不是好城续猿 </a></li>
-                                    {#<li><i class="icon-folder-open"></i><a href="#"> Blog</a></li>#}
                                     <li><i class="icon-comments"></i><a href="{{ url('post_detail', {"id": post.id}) }}#comments">{{ post.reviews }} 评论</a></li>
                                 </ul>
                                 <a href="{{ url('post_detail', {"id": post.id}) }}" class="pull-right">继续阅读 <i class="icon-angle-right"></i></a>
@@ -63,16 +62,6 @@
                 {% endfor %}
 
                 {{ knp_pagination_render(pagination) }}
-                {#<div id="pagination">#}
-                    {#<span class="all"> {{ page }} / {{ postTotal }} 页</span>#}
-                    {#{% for i in 1..postTotal %}#}
-                        {#{% if i == page %}#}
-                            {#<span class="current">{{ page }}</span>#}
-                        {#{% else %}#}
-                            {#<a href="{{ url('life_grow', {"page": i}) }}" class="inactive">{{ i }}</a>#}
-                        {#{% endif %}#}
-                    {#{% endfor %}#}
-                {#</div>#}
             </div>
             <div class="row">
                 <div class="col-lg-12">
@@ -88,25 +77,22 @@
     <script src="{{ storage_url }}static/moderna/js/jquery.flexslider.js"></script>
     <script>
         $('.post-slider').flexslider({
-            // Primary Controls
-            controlNav          : false,              //Boolean: Create navigation for paging control of each clide? Note: Leave true for manualControls usage
-            directionNav        : true,              //Boolean: Create navigation for previous/next navigation? (true/false)
-            prevText            : "上一张",        //String: Set the text for the "previous" directionNav item
-            nextText            : "下一张",            //String: Set the text for the "next" directionNav item
+            controlNav          : false,
+            directionNav        : true,
+            prevText            : "上一张",
+            nextText            : "下一张",
 
-            // Secondary Navigation
-            keyboard            : true,              //Boolean: Allow slider navigating via keyboard left/right keys
-            multipleKeyboard    : false,             //{NEW} Boolean: Allow keyboard navigation to affect multiple sliders. Default behavior cuts out keyboard navigation with more than one slider present.
-            mousewheel          : false,             //{UPDATED} Boolean: Requires jquery.mousewheel.js (https://github.com/brandonaaron/jquery-mousewheel) - Allows slider navigating via mousewheel
-            pausePlay           : false,             //Boolean: Create pause/play dynamic element
-            pauseText           : '暂停',           //String: Set the text for the "pause" pausePlay item
-            playText            : '开始',            //String: Set the text for the "play" pausePlay item
+            keyboard            : true,
+            multipleKeyboard    : false,
+            mousewheel          : false,
+            pausePlay           : false,
+            pauseText           : '暂停',
+            playText            : '开始',
 
-            // Special properties
-            controlsContainer   : "",                //{UPDATED} Selector: USE CLASS SELECTOR. Declare which container the navigation elements should be appended too. Default container is the FlexSlider element. Example use would be ".flexslider-container". Property is ignored if given element is not found.
-            manualControls      : "",                //Selector: Declare custom control navigation. Examples would be ".flex-control-nav li" or "#tabs-nav li img", etc. The number of elements in your controlNav should match the number of slides/tabs.
-            sync                : "",                //{NEW} Selector: Mirror the actions performed on this slider with another slider. Use with care.
-            asNavFor            : "",                //{NEW} Selector: Internal property exposed for turning the slider into a thumbnail navigation for another slider
+            controlsContainer   : "",
+            manualControls      : "",
+            sync                : "",
+            asNavFor            : ""
         });
     </script>
 {% endblock %}
