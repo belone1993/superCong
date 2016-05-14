@@ -107,14 +107,13 @@ class DefaultController extends Controller
 
         $posts = $post->findPostsPage( 1, $page, $categoryId );
 
-        $postTotal = $post->countPosts( 1, $categoryId );
+        $pagination = $this->get('knp_paginator');
 
-        return [
-            'posts'     => $posts,
-            'postTotal' => ceil( $postTotal / 10 ),
-            'page'      => $page,
-            'action'    => 'learn'
-        ];
+        $pagination = $pagination->paginate($posts, $page, 10);
+
+        $action = 'learn';
+
+        return compact('page', 'action', 'pagination');
     }
 
     /**

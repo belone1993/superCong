@@ -48,14 +48,13 @@ class LifeController extends Controller
 
         $posts = $post->findPostsPage( 2, $page );
 
-        $postTotal = $post->countPosts( 2 );
+        $pagination = $this->get('knp_paginator');
 
-        return [
-            'posts'     => $posts,
-            'postTotal' => ceil( $postTotal / 10 ),
-            'page'      => $page,
-            'action'    => 'life'
-        ];
+        $pagination = $pagination->paginate($posts, $page, 10);
+
+        $action = 'life';
+
+        return compact('page', 'action', 'pagination');
     }
 
     /**

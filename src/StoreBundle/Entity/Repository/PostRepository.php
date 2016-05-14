@@ -123,10 +123,10 @@ class PostRepository extends EntityRepository
         }
 
         return $post->setParameter( 'action', $action )
-            ->setMaxResults( 10 )
-            ->setFirstResult( ($page - 1) * 10 )
-            ->orderBy("p.id", 'DESC')
-            ->getQuery()->getResult();
+//            ->setMaxResults( 10 )
+//            ->setFirstResult( ($page - 1) * 10 )
+            ->orderBy("p.id", 'DESC');
+//            ->getQuery()->getResult();
     }
 
     /**
@@ -148,5 +148,41 @@ class PostRepository extends EntityRepository
         }
         return $post->setParameter('action', $action)
             ->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * 获取文章列表
+     *
+     * @param $action
+     * @param int $page
+     * @param null $categoryId
+     * @param array $status
+     * @return array
+     */
+    public function findPostsAction( $action, $page = 1, $categoryId = null, $status = [] )
+    {
+        $post = $this->_em->createQueryBuilder()
+            ->select("p")
+            ->from("StoreBundle:Post", "p")
+            ->where('p.action = :action');
+        if( !is_null( $categoryId ) )
+        {
+            $post->andWhere('p.categoryId = :categoryId')
+                ->setParameter('categoryId', $categoryId);
+        }
+        if( !empty( $status ) )
+        {
+            $post->andWhere('p.status IN(:status)')
+                ->setParameter('status', $status);
+        }else
+        {
+            $post->andWhere('p.status = 1');
+        }
+
+        return $post->setParameter( 'action', $action )
+            ->setMaxResults( 10 )
+            ->setFirstResult( ($page - 1) * 10 )
+            ->orderBy("p.id", 'DESC')
+            ->getQuery()->getResult();
     }
 }

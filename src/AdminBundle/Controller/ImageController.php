@@ -51,7 +51,8 @@ class ImageController extends Controller
         $imageEntity = $this->getDoctrine()->getRepository('StoreBundle:Image');
 
         $images = $imageEntity->createQueryBuilder('i')
-            ->where('i.postId IS NULL');
+            ->where('i.postId IS NULL')
+            ->orderBy('i.id', 'DESC');
 
         $pagination = $paginator->paginate($images, $page, 15);
         $response = [

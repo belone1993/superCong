@@ -70,7 +70,7 @@ class PostController extends Controller
         /** @var Post $postEntity */
         $postEntity = $this->getDoctrine()->getRepository('StoreBundle:Post');
 
-        $posts = $postEntity->findPostsPage( $action, $page );
+        $posts = $postEntity->findPostsAction( $action, $page );
         $postTotal = $postEntity->countPosts( $action );
 
         $logger->info("getData.", ["postCount" => $postTotal]);

@@ -22,7 +22,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8">
-                    {% for key, post in posts if posts %}
+                    {% for key, post in pagination if pagination %}
                         <article>
                             <div class="post-image">
                                 <div class="post-heading">
@@ -75,34 +75,14 @@
                             </div>
                         </article>
                     {% endfor %}
-                    <div id="pagination">
-                        <span class="all"> {{ page }} / {{ postTotal }} 页</span>
-                        {% for i in 1..postTotal %}
-                            {% if i == page %}
-                                <span class="current">{{ page }}</span>
-                            {% else %}
-                                <a href="{{ url('learn', {"page": i}) }}" class="inactive">{{ i }}</a>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
+                    {#<div id="pagination">#}
+                        {#<span class="all"> {{ page }} / {{ pagination.getTotalItemCount }} 页</span>#}
+                        {{ knp_pagination_render(pagination) }}
+                    {#</div>#}
                 </div>
                 <div class="col-lg-4">
                     <aside class="right-sidebar">
-                        {#{% set searchTitle = '路漫漫而修远兮，吾将上下而求索..' %}#}
-                        {#{% include "AppBundle:Post:search.html.twig" %}#}
-                        {#{{ render(controller('AppBundle:Category:bar')) }}#}
                         {{ render(controller('AppBundle:Post:topPost', {"action": 1})) }}
-                        {#<div class="widget">#}
-                        {#<h5 class="widgetheading">Popular tags</h5>#}
-                        {#<ul class="tags">#}
-                        {#<li><a href="#">Web design</a></li>#}
-                        {#<li><a href="#">Trends</a></li>#}
-                        {#<li><a href="#">Technology</a></li>#}
-                        {#<li><a href="#">Internet</a></li>#}
-                        {#<li><a href="#">Tutorial</a></li>#}
-                        {#<li><a href="#">Development</a></li>#}
-                        {#</ul>#}
-                        {#</div>#}
                     </aside>
                 </div>
             </div>
@@ -121,13 +101,11 @@
     <script src="{{ storage_url }}static/moderna/js/jquery.flexslider.js"></script>
     <script>
         $('.post-slider').flexslider({
-            // Primary Controls
             controlNav: false,
             directionNav: true,
             prevText: "上一张",
             nextText: "下一张",
 
-            // Secondary Navigation
             keyboard: true,
             multipleKeyboard: false,
             mousewheel: false,
@@ -135,11 +113,10 @@
             pauseText: '暂停',
             playText: '开始',
 
-            // Special properties
             controlsContainer: "",
             manualControls: "",
             sync: "",
-            asNavFor: "",
+            asNavFor: ""
         });
     </script>
 {% endblock %}
