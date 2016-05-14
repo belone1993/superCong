@@ -325,13 +325,16 @@
         admin_static + "assets/js/jquery.gritter.js",
         {#"{{ storage_url }}static/js/dropzone.min.js",#}
         null];
+
+    var page_url = "{{ url('admin_imageList', {'page': 1}) }}";
+
     $('.page-content-area').ace_ajax('loadScripts', scripts, function() {
         //inline scripts related to this page
         jQuery(function($) {
 
             $('.show-image-modal').click( function()
             {
-                postNew.getImageList(1);
+                postNew.getImageList(page_url);
             });
 
             try {
@@ -629,9 +632,9 @@
 
     var postNew = {
 
-        getImageList: function( page )
+        getImageList: function( url )
         {
-            $.get( base_url + 'image/list/' + page, function( response ){
+            $.get( url, function( response ){
                 try{
                     $('#show-image-modal .modal-body').html( response.html );
                     postNew.showColorBox();
@@ -672,9 +675,11 @@
             $('.ace-thumbnails [data-rel="colorbox"]').colorbox(colorbox_params);
             $("#cboxLoadingGraphic").html("<i class='ace-icon fa fa-spinner orange fa-spin'></i>");
 
-            $('.image-page').bind('click', function(){
-                var page = $.trim($(this).attr('data-page'));
-                postNew.getImageList( page );
+            $('.pagination a').bind('click', function(){
+                var url = $.trim($(this).attr('href'));
+                postNew.getImageList( url );
+
+                return false;
             });
 
             $('.image-bind').bind('click', function()

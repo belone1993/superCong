@@ -45,33 +45,20 @@ class ImageController extends Controller
      */
     public function listAction( Request $request, $page )
     {
+        $paginator = $this->get('knp_paginator');
+
         /** @var Image $imageEntity */
         $imageEntity = $this->getDoctrine()->getRepository('StoreBundle:Image');
 
-        $images = $imageEntity->findImagesByPage( $page );
+        $images = $imageEntity->createQueryBuilder('i')
+            ->where('i.postId IS NULL');
 
-        $postTotal = $imageEntity->countImages();
-
-        if( $request->isXmlHttpRequest() )
-        {
-            $response = [
-                'html' => $this->renderView('AdminBundle:Image:ajaxList.html.twig', [
-                    'page'       => $page,
-                    'images'     => $images,
-                    'pageTotal'  => ceil( $postTotal / 20 ),
-                    'imageTotal' => $postTotal,
-                    'startPost'  => (($page - 1) * 20) + 1,
-                    'endPost'    => (($page - 1) * 20) + count( $images )
-                ])
-            ];
-
-            return new JsonResponse($response, Response::HTTP_OK);
-        }
-
-        return [
-            'page'   => $page,
-            'images' => $images
+        $pagination = $paginator->paginate($images, $page, 15);
+        $response = [
+            'html' => $this->renderView('AdminBundle:Image:ajaxList.html.twig', compact('pagination'))
         ];
+
+        return new JsonResponse($response, Response::HTTP_OK);
     }
 
     /**

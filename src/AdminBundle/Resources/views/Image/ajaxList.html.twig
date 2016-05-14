@@ -1,6 +1,5 @@
 <ul class="ace-thumbnails clearfix">
-
-    {% for image in images %}
+    {% for image in pagination %}
     <li>
         <div>
             <img width="150" height="150" alt="150x150" src="{{ source_url }}images/{{ image.imageTime|date('Y/m') }}/{{ image.imageName }}?imageView2/1/w/150/h/150" />
@@ -19,7 +18,5 @@
     {% endfor %}
 </ul>
 <p>
-    {% for i in 1..pageTotal %}
-        <a href="javascript:;" data-href="{{ url('admin_imageList', {'page': i}) }}" data-page="{{ i }}" class="badge badge-success image-page">{{ i }}</a>
-    {% endfor %}
+    {{ knp_pagination_render(pagination) }}
 </p>

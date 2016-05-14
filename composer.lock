@@ -1200,16 +1200,16 @@
         },
         {
             "name": "knplabs/knp-paginator-bundle",
-            "version": "2.5.1",
+            "version": "2.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/KnpPaginatorBundle.git",
-                "reference": "5147740faff4d32e6f42acf64475314c35320fa4"
+                "reference": "c988761005504007c6c87d6a557641281194a0e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "http://packagist.phpcomposer.com/files/KnpLabs/KnpPaginatorBundle/5147740faff4d32e6f42acf64475314c35320fa4.zip",
-                "reference": "5147740faff4d32e6f42acf64475314c35320fa4",
+                "url": "https://packagist.phpcomposer.com/files/KnpLabs/KnpPaginatorBundle/c988761005504007c6c87d6a557641281194a0e5.zip",
+                "reference": "c988761005504007c6c87d6a557641281194a0e5",
                 "shasum": ""
             },
             "require": {
@@ -1224,7 +1224,7 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.4.x-dev"
+                    "dev-master": "2.5.x-dev"
                 }
             },
             "autoload": {
@@ -1257,7 +1257,7 @@
                 "pagination",
                 "paginator"
             ],
-            "time": "2015-11-23 17:51:40"
+            "time": "2016-04-20 11:40:30"
         },
         {
             "name": "kriswallsmith/assetic",
