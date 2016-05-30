@@ -44,5 +44,22 @@ monolog:
 assetic:
     use_controller: true
 
+doctrine:
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+        metadata_cache_driver: redis
+        query_cache_driver:
+            type: redis
+            host: localhost
+            port: 6379
+            instance_class: Redis
+        result_cache_driver:
+            type: redis
+            host: localhost
+            port: 6379
+            instance_class: Redis
+
 #swiftmailer:
 #    delivery_address: me@example.com

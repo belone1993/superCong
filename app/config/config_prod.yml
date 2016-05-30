@@ -7,11 +7,19 @@ imports:
 #    serializer:
 #        cache: serializer.mapping.cache.apc
 
-#doctrine:
-#    orm:
-#        metadata_cache_driver: apc
-#        result_cache_driver: apc
-#        query_cache_driver: apc
+doctrine:
+    orm:
+        metadata_cache_driver: redis
+        query_cache_driver:
+            type: redis
+            host: localhost
+            port: 6379
+            instance_class: Redis
+        result_cache_driver:
+            type: redis
+            host: localhost
+            port: 6379
+            instance_class: Redis
 
 monolog:
     handlers:
