@@ -86,6 +86,13 @@ class Image extends ImageRepository
     private $md5;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="client_original_mame", type="string", nullable=true, unique=true, options={"comment": "上传时的文件名"})
+     */
+    private $clientOriginalName;
+
+    /**
      * @var Post
      *
      * @ORM\ManyToOne(targetEntity="Post", inversedBy="images", fetch="EAGER")
@@ -336,5 +343,28 @@ class Image extends ImageRepository
     public function getMd5()
     {
         return $this->md5;
+    }
+
+    /**
+     * Set clientOriginalName
+     *
+     * @param string $clientOriginalName
+     * @return Image
+     */
+    public function setClientOriginalName($clientOriginalName)
+    {
+        $this->clientOriginalName = $clientOriginalName;
+
+        return $this;
+    }
+
+    /**
+     * Get clientOriginalName
+     *
+     * @return string 
+     */
+    public function getClientOriginalName()
+    {
+        return $this->clientOriginalName;
     }
 }
