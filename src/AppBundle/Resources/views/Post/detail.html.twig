@@ -64,20 +64,20 @@
                                     <ul class="slides">
                                         {% for item in post.images %}
                                             <li>
-                                                {% set image_url = item.imagePath|replace({"/mnt/storage/": "", "uploads/": ""}) ~ item.createdAt('Ymd-') %}
+                                                {% set image_url = item.imagePath|replace({"/mnt/storage/": "", "uploads/": ""}) %}
                                                 <img src="{{ source_url ~ image_url }}/{{ item.imageName }}?imageView2/1/w/750/h/300">
                                             </li>
                                         {% endfor %}
                                     </ul>
                                 </div>
-                                {% set image_url = post.images[0].imagePath|replace({"/mnt/storage/": "", "uploads/": ""}) ~ post.images[0].createdAt('Ymd-') %}
+                                {% set image_url = post.images[0].imagePath|replace({"/mnt/storage/": "", "uploads/": ""}) %}
                                 {% set shareImage = source_url ~ image_url ~ '/' ~ post.images[0].imageName %}
                             {% elseif post.images.count == 1 %}
                                 {% for item in post.images %}
-                                    {% set image_url = item.imagePath|replace({"/mnt/storage/": "", "uploads/": ""}) ~ item.createdAt('Ymd-') %}
+                                    {% set image_url = item.imagePath|replace({"/mnt/storage/": "", "uploads/": ""}) %}
                                     <img src="{{ source_url ~ image_url }}/{{ item.imageName }}?imageView2/1/w/750/h/300">
                                 {% endfor %}
-                                {% set image_url = post.images[0].imagePath|replace({"/mnt/storage/": "", "uploads/": ""}) ~ post.images[0].createdAt('Ymd-') %}
+                                {% set image_url = post.images[0].imagePath|replace({"/mnt/storage/": "", "uploads/": ""}) %}
                                 {% set shareImage = source_url ~ image_url ~ '/' ~ post.images[0].imageName %}
                             {% else %}
                                 <img class="img-responsive"
