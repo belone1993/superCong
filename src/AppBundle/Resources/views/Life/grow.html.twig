@@ -35,7 +35,8 @@
                                         <ul class="slides">
                                             {% for image in post.images %}
                                                 <li>
-                                                    <img src="{{ source_url }}images/{{ image.imageTime|date('Y/m') }}/{{ image.imageName }}?imageView/1/w/460/h/240">
+                                                    {% set image_url = item.imagePath|replace({"/mnt/storage/": "", "uploads/": ""}) %}
+                                                    <img src="{{ source_url ~ image_url }}/{{ image.imageName }}?imageView/1/w/460/h/240">
                                                 </li>
                                             {% endfor %}
                                         </ul>
