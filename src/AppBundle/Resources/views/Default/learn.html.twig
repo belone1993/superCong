@@ -39,7 +39,8 @@
                                             {% for image in post.images %}
                                                 <li>
                                                     <a href="{{ url('post_detail', {"id": post.id}) }}">
-                                                        <img src="{{ source_url }}images/{{ image.imageTime|date('Y/m') }}/{{ image.imageName }}?imageView/1/w/740/h/240">
+                                                        {% set image_url = image.imagePath|replace({"/mnt/storage/": "", "uploads/": ""}) %}
+                                                        <img src="{{ source_url ~ image_url }}/{{ image.imageName }}?imageView/1/w/460/h/240">
                                                     </a>
                                                 </li>
                                             {% endfor %}
@@ -48,9 +49,8 @@
                                 {% elseif post.images.count == 1 %}
                                     {% for image in post.images %}
                                         <a href="{{ url('post_detail', {"id": post.id}) }}">
-                                            <img class="img-responsive img-hover"
-                                                 src="{{ source_url }}images/{{ image.imageTime|date('Y/m') }}/{{ image.imageName }}?imageView/1/w/740/h/240"
-                                                 alt=""/>
+                                            {% set image_url = image.imagePath|replace({"/mnt/storage/": "", "uploads/": ""}) %}
+                                            <img src="{{ source_url ~ image_url }}/{{ image.imageName }}?imageView/1/w/460/h/240">
                                         </a>
                                     {% endfor %}
                                 {% endif %}
