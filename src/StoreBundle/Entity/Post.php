@@ -160,7 +160,7 @@ class Post extends PostRepository
 
     public function __construct()
     {
-        $this->createdAt = new \DateTime('now');
+        $this->createdAt = $this->pushTime = new \DateTime('now');
         $this->readNum   = 1;
     }
 

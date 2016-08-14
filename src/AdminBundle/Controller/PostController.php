@@ -206,6 +206,7 @@ class PostController extends Controller
             ->setContent( $request->get('content') )
             ->setAuthorId( 1 )
             ->setAuthor( $this->getUser() )
+            ->setAction(1)
             ->setStatus( intval($request->get('postStatus')) );
 
         if( $request->get('category') )
