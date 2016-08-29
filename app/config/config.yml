@@ -95,7 +95,7 @@ snc_redis:
             type: predis
             alias: default
             dsn: redis://localhost
-            logging: %kernel.debug%
+            logging: false
         session:
             type: predis
             alias: session
@@ -104,10 +104,10 @@ snc_redis:
             type: predis
             alias: cache
             dsn: redis://localhost/1
-            logging: true
+            logging: false
     session:
         client: session
-        prefix: www:
+        prefix: ying:
         ttl: 7200
     doctrine:
         metadata_cache:

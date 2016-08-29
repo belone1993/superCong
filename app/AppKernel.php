@@ -21,6 +21,8 @@ class AppKernel extends Kernel
             new StoreBundle\StoreBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new Snc\RedisBundle\SncRedisBundle(),
+
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
