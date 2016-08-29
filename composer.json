@@ -25,7 +25,8 @@
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "willdurand/propel-typehintable-behavior": "^1.0",
         "guzzlehttp/guzzle": "^6.1",
-        "knplabs/knp-paginator-bundle": "^2.5"
+        "knplabs/knp-paginator-bundle": "^2.5",
+        "snc/redis-bundle": "^2.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
