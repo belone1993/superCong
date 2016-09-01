@@ -7,7 +7,8 @@
             {% if row.images.count < 1 %}
                 <img src="{{ source_url }}images/{{ row.createdAt|date('Y/m') }}/{{ row.image }}?imageView2/1/w/65/h/65" class="pull-left" alt="" />
             {% else %}
-                <img src="{{ source_url }}images/{{ row.images[0].imageTime|date('Y/m') }}/{{ row.images[0].imageName }}?imageView2/1/w/65/h/65" class="pull-left" alt="" />
+                {% set image_url = row.images[0].imagePath|replace({"/mnt/storage/": "", "uploads/": ""}) %}
+                <img src="{{ source_url ~ image_url }}/{{ row.images[0].imageName }}?imageView2/1/w/65/h/65" class="pull-left" alt="" />
             {% endif %}
             <h6><a href="{{ url('post_detail', {'id': row.id}) }}">{{ row.title|length > 24 ? row.title|slice(0, 24) ~ '...' : row.title }}</a></h6>
             <p>
